@@ -159,7 +159,7 @@ def page(lang, path, title, desc, body, alt_path):
 <link rel="alternate" hreflang="{other}" href="{ou(alt_path)}">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/style.css">
+<link rel="stylesheet" href="/assets/style.css?v=3">
 </head>
 <body>
 <a class="skip" href="#main">{t("skip", lang)}</a>
@@ -195,7 +195,7 @@ def page(lang, path, title, desc, body, alt_path):
 <a class="wa-float" href="https://wa.me/{PHONE_WA}?text={esc(wa_msg)}" target="_blank" rel="noopener" aria-label="WhatsApp">
  <svg viewBox="0 0 32 32" width="28" height="28" fill="#fff" aria-hidden="true"><path d="M16 3C9 3 3.3 8.6 3.3 15.5c0 2.3.6 4.4 1.7 6.3L3 29l7.4-1.9c1.8 1 3.800 1.500 5.900 1.500 7 0 12.700-5.600 12.700-12.500S23 3 16 3zm0 22.800c-1.900 0-3.700-.5-5.300-1.500l-.4-.2-4.400 1.100 1.200-4.200-.3-.4c-1.100-1.700-1.600-3.600-1.600-5.600C5.200 9.700 10 5 16 5s10.800 4.700 10.800 10.500S21.900 25.800 16 25.800zm5.900-7.800c-.3-.2-1.900-.9-2.200-1-.3-.1-.5-.2-.7.200-.2.300-.8 1-1 1.200-.2.200-.4.200-.7.100-.3-.2-1.400-.5-2.600-1.600-1-.9-1.600-1.900-1.800-2.200-.2-.3 0-.5.100-.7l.5-.6c.2-.2.200-.3.300-.5.100-.2.100-.4 0-.6l-1-2.300c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.6.100-.9.400-.3.300-1.200 1.100-1.200 2.700s1.200 3.200 1.400 3.400c.2.200 2.300 3.500 5.600 4.900.8.300 1.400.5 1.900.6.8.2 1.500.2 2.100.1.600-.1 1.900-.8 2.200-1.500.3-.8.3-1.400.2-1.500-.1-.2-.3-.3-.6-.4z"/></svg>
 </a>
-<script src="/assets/main.js" defer></script>
+<script src="/assets/main.js?v=3" defer></script>
 </body>
 </html>'''
 
@@ -234,10 +234,9 @@ def home(lang):
 </section>
 
 <section class="about" id="about">
- {net_svg().replace('class="net"','class="net net-about"')}
  <div class="wrap about-in">
   <div class="about-txt reveal">
-   <p class="eyebrow">{L("Qui sommes-nous","Who we are")}</p>
+   <p class="eyebrow dark">{L("Qui sommes-nous","Who we are")}</p>
    <h2>{L("Une vitrine de confiance pour faire des <em>affaires</em> en Afrique.","A trusted gateway to doing <em>business</em> in Africa.")}</h2>
    <p>{L("Africa Connect Group SARL s’inscrit dans une dynamique de développement économique, de conseil stratégique, de facilitation des affaires, de commerce international et de création de partenariats en Afrique.","Africa Connect Group SARL is part of a drive for economic development, strategic advisory, business facilitation, international trade and partnership creation across Africa.")}</p>
    <p>{L("Notre ambition : valoriser les richesses africaines, accompagner les entreprises et les entrepreneurs, et bâtir des relations commerciales durables entre acteurs africains et partenaires internationaux.","Our ambition: to add value to Africa’s wealth, support businesses and entrepreneurs, and build lasting commercial relationships between African players and international partners.")}</p>
@@ -247,10 +246,10 @@ def home(lang):
     <li><b>{L("Partenariats","Partnerships")}</b><span>{L("durables","lasting")}</span></li>
    </ul>
    <div class="actions"><a class="btn btn-gold" href="{pre}/about">{L("En savoir plus sur nous","More about us")}</a>
-   <a class="btn btn-ghost" href="{pre}/contact">{L("Nous contacter","Contact us")}</a></div>
+   <a class="btn btn-line" href="{pre}/contact">{L("Nous contacter","Contact us")}</a></div>
   </div>
   <div class="about-vis reveal">
-   <div class="stripe"></div><div class="ring"></div>
+   <div class="ring"></div>
    <img src="/assets/people.png" alt="{L("Une poignée de main entre deux partenaires d’affaires","A handshake between two business partners")}" width="554" height="942" loading="lazy">
    <span class="tag t1">{L("Producteurs & acheteurs","Producers & buyers")}</span>
    <span class="tag t2">{L("Investisseurs & institutions","Investors & institutions")}</span>
