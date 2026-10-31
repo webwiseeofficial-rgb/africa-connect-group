@@ -159,7 +159,7 @@ def page(lang, path, title, desc, body, alt_path):
 <link rel="alternate" hreflang="{other}" href="{ou(alt_path)}">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/style.css?v=4">
+<link rel="stylesheet" href="/assets/style.css?v=5">
 </head>
 <body>
 <a class="skip" href="#main">{t("skip", lang)}</a>
@@ -209,10 +209,10 @@ def write(lang, path, html_):
 def li(items): return "<ul class='ticks'>" + "".join(f"<li>{esc(i)}</li>" for i in items) + "</ul>"
 
 def pole_card(p, lang, pre):
-    return f'''<a class="card pole reveal" href="{pre}/poles/{p["slug"]}">
- <span class="ico-wrap">{icon(p["icon"])}</span>
- <h3>{p["name"][lang]}</h3><p>{esc(p["short"][lang])}</p>
- <span class="more">{"Découvrir" if lang=="fr" else "Explore"} →</span></a>'''
+    return f'''<a class="card pole has-photo reveal" href="{pre}/poles/{p["slug"]}">
+ <span class="pole-photo"><img src="/assets/poles/{p["slug"]}.jpg" alt="{p["name"][lang]}" width="736" height="552" loading="lazy"><span class="ico-wrap">{icon(p["icon"])}</span></span>
+ <span class="pole-body"><h3>{p["name"][lang]}</h3><p>{esc(p["short"][lang])}</p>
+ <span class="more">{"Découvrir" if lang=="fr" else "Explore"} →</span></span></a>'''
 
 # ----------------------------------------------------------------- PAGES
 WWA_CSS = """<style>
