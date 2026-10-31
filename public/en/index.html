@@ -101,6 +101,44 @@
  .stat span{font-size:.82rem}.stat b{font-size:1.25rem}
 }
 .wwa{padding-top:clamp(3.5rem,8vw,6rem)}
+
+.vm{position:relative;background:linear-gradient(180deg,#f4f7fd,#fff);padding:clamp(3.5rem,8vw,6rem) 0;overflow:hidden}
+.vm-vision{position:relative;overflow:hidden;border-radius:28px;color:#fff;background:radial-gradient(120% 140% at 100% 0,#1d4a9a 0,#10264a 45%,#0a1a33 100%);padding:clamp(2rem,5vw,3.8rem);display:grid;grid-template-columns:1.5fr 1fr;gap:2rem;align-items:center;box-shadow:0 30px 70px rgba(10,26,51,.25)}
+.vm-vision .vm-net{position:absolute;right:-8%;top:-20%;width:min(620px,100%);opacity:.5;pointer-events:none}
+.vm-vision .vm-net .net-l line{stroke:#e3b650;stroke-width:1;opacity:.35}
+.vm-vision .vm-net .net-d circle{fill:#e3b650;animation:none;opacity:.6}
+.vm-eyebrow{display:inline-flex;align-items:center;gap:.6rem;text-transform:uppercase;letter-spacing:.16em;font-size:.76rem;font-weight:700;color:#e3b650;margin:0 0 1rem}
+.vm-eyebrow::before{content:"";width:34px;height:2px;background:#e3b650}
+.vm-vision h2{font-size:clamp(1.5rem,3.2vw,2.35rem);line-height:1.25;color:#fff;margin:0;max-width:34rem;position:relative}
+.vm-vision h2 em{color:#e3b650}
+.vm-vision>div{position:relative;z-index:1}
+.vm-orb{justify-self:center;width:min(230px,60vw);aspect-ratio:1;border-radius:50%;display:grid;place-items:center;border:1.5px dashed rgba(227,182,80,.6);position:relative}
+.vm-orb::before{content:"";position:absolute;inset:14%;border-radius:50%;border:1px solid rgba(255,255,255,.25)}
+.vm-orb span{width:46%;aspect-ratio:1;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,#e3b650,#c8962a);color:#0a1a33;box-shadow:0 14px 34px rgba(0,0,0,.35)}
+.vm-orb svg{width:52%;height:52%}
+.vm-head{text-align:center;max-width:36rem;margin:clamp(3rem,6vw,4.5rem) auto 2rem}
+.vm-head .vm-eyebrow{color:#c8962a}.vm-head .vm-eyebrow::before{background:#c8962a}
+.vm-head h3{font-size:clamp(1.6rem,3.4vw,2.3rem);color:#0a1a33}
+.vm-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.1rem}
+.vm-card{position:relative;background:#fff;border:1px solid #e3eaf6;border-radius:20px;padding:1.5rem 1.4rem 1.4rem;overflow:hidden;transition:.25s;box-shadow:0 8px 24px rgba(16,38,74,.05)}
+.vm-card:hover{transform:translateY(-6px);border-color:#c8962a;box-shadow:0 20px 44px rgba(16,38,74,.14)}
+.vm-card::after{content:"";position:absolute;left:0;top:0;height:3px;width:0;background:#c8962a;transition:width .35s}
+.vm-card:hover::after{width:100%}
+.vm-num{position:absolute;right:1rem;top:.6rem;font-family:Fraunces,Georgia,serif;font-size:2.6rem;line-height:1;color:#eef2fa;font-weight:600}
+.vm-ico{width:50px;height:50px;border-radius:14px;display:grid;place-items:center;background:linear-gradient(135deg,#2457b5,#10264a);color:#e3b650;margin-bottom:1.1rem;position:relative}
+.vm-ico svg{width:25px;height:25px}
+.vm-card h4{font-family:Fraunces,Georgia,serif;font-size:1.2rem;color:#0a1a33;margin:0 0 .4rem;position:relative}
+.vm-card p{color:#5a6578;font-size:.9rem;line-height:1.55;margin:0;position:relative}
+.vm-cta{display:flex;flex-direction:column;justify-content:center;gap:.8rem;background:linear-gradient(135deg,#c8962a,#e3b650);border:0;color:#1a1200}
+.vm-cta h4,.vm-cta p{color:#1a1200}
+.vm-cta b{font-weight:700;font-size:.95rem}
+@media(max-width:1000px){.vm-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:860px){
+ .vm-vision{grid-template-columns:1fr;border-radius:22px}
+ .vm-orb{width:150px;order:-1;justify-self:start}
+ .vm-vision .vm-net{opacity:.3}
+}
+@media(max-width:520px){.vm-grid{grid-template-columns:1fr}.vm-card{display:grid;grid-template-columns:50px 1fr;column-gap:1rem;padding:1.2rem}.vm-ico{grid-row:span 2;margin:0}.vm-card h4{margin-bottom:.2rem}.vm-num{font-size:2rem}.vm-card.vm-cta{display:flex;grid-template-columns:none}}
 </style>
 <div class="statwrap"><div class="wrap"><div class="statbar reveal">
  <div class="stat"><b>7</b><i></i><span>complementary areas of activity</span></div>
@@ -131,15 +169,15 @@
  </div>
 </section>
 
-<section class="sec" id="vision">
- <div class="wrap cols2">
-  <div class="panel reveal"><h3>Our vision</h3>
-   <p>To become a reference company in connecting economic opportunities, adding value to African resources and developing strategic partnerships between Africa and the rest of the world.</p></div>
-  <div class="panel reveal"><h3>Our mission</h3>
-   <ul class="ticks gold"><li>Support companies in their development and commercial strategy.</li><li>Facilitate business relationships between producers, suppliers, buyers, investors and partners.</li><li>Contribute to the value-addition of African raw materials.</li><li>Promote export opportunities and access to international markets.</li></ul>
-   <a class="link gold" href="/en/about#mission">See the full mission →</a></div>
+<section class="vm" id="vision"><div class="wrap">
+ <div class="vm-vision reveal"><svg class="vm-net" viewBox="0 0 600 500" aria-hidden="true"><g class="net-l"><line x1="351" y1="97" x2="326" y2="147"/><line x1="351" y1="97" x2="269" y2="61"/><line x1="424" y1="353" x2="394" y2="318"/><line x1="424" y1="353" x2="371" y2="393"/><line x1="69" y1="57" x2="146" y2="134"/><line x1="69" y1="57" x2="205" y2="72"/><line x1="568" y1="68" x2="573" y2="80"/><line x1="568" y1="68" x2="454" y2="50"/><line x1="394" y1="318" x2="424" y2="353"/><line x1="394" y1="318" x2="335" y2="306"/><line x1="79" y1="279" x2="84" y2="308"/><line x1="79" y1="279" x2="83" y2="315"/><line x1="239" y1="39" x2="246" y2="43"/><line x1="239" y1="39" x2="269" y2="61"/><line x1="108" y1="242" x2="79" y2="279"/><line x1="108" y1="242" x2="119" y2="300"/><line x1="448" y1="55" x2="454" y2="50"/><line x1="448" y1="55" x2="426" y2="45"/><line x1="266" y1="66" x2="269" y2="61"/><line x1="266" y1="66" x2="246" y2="43"/><line x1="454" y1="50" x2="448" y2="55"/><line x1="454" y1="50" x2="426" y2="45"/><line x1="146" y1="134" x2="156" y2="168"/><line x1="146" y1="134" x2="205" y2="72"/><line x1="83" y1="315" x2="84" y2="308"/><line x1="83" y1="315" x2="81" y2="336"/><line x1="426" y1="45" x2="448" y2="55"/><line x1="426" y1="45" x2="454" y2="50"/><line x1="246" y1="43" x2="239" y2="39"/><line x1="246" y1="43" x2="269" y2="61"/><line x1="156" y1="168" x2="146" y2="134"/><line x1="156" y1="168" x2="212" y2="210"/><line x1="449" y1="93" x2="448" y2="55"/><line x1="449" y1="93" x2="454" y2="50"/><line x1="573" y1="80" x2="568" y2="68"/><line x1="573" y1="80" x2="454" y2="50"/><line x1="335" y1="306" x2="327" y2="288"/><line x1="335" y1="306" x2="341" y2="258"/><line x1="205" y1="72" x2="239" y2="39"/><line x1="205" y1="72" x2="246" y2="43"/><line x1="212" y1="210" x2="230" y2="274"/><line x1="212" y1="210" x2="156" y2="168"/><line x1="119" y1="300" x2="84" y2="308"/><line x1="119" y1="300" x2="83" y2="315"/><line x1="84" y1="308" x2="83" y2="315"/><line x1="84" y1="308" x2="81" y2="336"/><line x1="81" y1="336" x2="83" y2="315"/><line x1="81" y1="336" x2="84" y2="308"/><line x1="230" y1="274" x2="212" y2="210"/><line x1="230" y1="274" x2="327" y2="288"/><line x1="564" y1="238" x2="484" y2="205"/><line x1="564" y1="238" x2="573" y2="80"/><line x1="341" y1="258" x2="327" y2="288"/><line x1="341" y1="258" x2="335" y2="306"/><line x1="484" y1="205" x2="564" y2="238"/><line x1="484" y1="205" x2="449" y2="93"/><line x1="326" y1="147" x2="351" y2="97"/><line x1="326" y1="147" x2="266" y2="66"/><line x1="204" y1="377" x2="230" y2="274"/><line x1="204" y1="377" x2="119" y2="300"/><line x1="269" y1="61" x2="266" y2="66"/><line x1="269" y1="61" x2="246" y2="43"/><line x1="327" y1="288" x2="335" y2="306"/><line x1="327" y1="288" x2="341" y2="258"/><line x1="526" y1="468" x2="424" y2="353"/><line x1="526" y1="468" x2="371" y2="393"/><line x1="371" y1="393" x2="424" y2="353"/><line x1="371" y1="393" x2="394" y2="318"/></g><g class="net-d"><circle cx="351" cy="97" r="5" style="animation-delay:0.00s"/><circle cx="424" cy="353" r="4" style="animation-delay:0.37s"/><circle cx="69" cy="57" r="2.5" style="animation-delay:0.74s"/><circle cx="568" cy="68" r="2.5" style="animation-delay:1.11s"/><circle cx="394" cy="318" r="5" style="animation-delay:1.48s"/><circle cx="79" cy="279" r="3" style="animation-delay:1.85s"/><circle cx="239" cy="39" r="4" style="animation-delay:2.22s"/><circle cx="108" cy="242" r="3" style="animation-delay:2.59s"/><circle cx="448" cy="55" r="5" style="animation-delay:2.96s"/><circle cx="266" cy="66" r="5" style="animation-delay:3.33s"/><circle cx="454" cy="50" r="2.5" style="animation-delay:3.70s"/><circle cx="146" cy="134" r="2.5" style="animation-delay:0.07s"/><circle cx="83" cy="315" r="4" style="animation-delay:0.44s"/><circle cx="426" cy="45" r="4" style="animation-delay:0.81s"/><circle cx="246" cy="43" r="4" style="animation-delay:1.18s"/><circle cx="156" cy="168" r="5" style="animation-delay:1.55s"/><circle cx="449" cy="93" r="5" style="animation-delay:1.92s"/><circle cx="573" cy="80" r="2.5" style="animation-delay:2.29s"/><circle cx="335" cy="306" r="2.5" style="animation-delay:2.66s"/><circle cx="205" cy="72" r="4" style="animation-delay:3.03s"/><circle cx="212" cy="210" r="5" style="animation-delay:3.40s"/><circle cx="119" cy="300" r="2.5" style="animation-delay:3.77s"/><circle cx="84" cy="308" r="2.5" style="animation-delay:0.14s"/><circle cx="81" cy="336" r="4" style="animation-delay:0.51s"/><circle cx="230" cy="274" r="5" style="animation-delay:0.88s"/><circle cx="564" cy="238" r="4" style="animation-delay:1.25s"/><circle cx="341" cy="258" r="5" style="animation-delay:1.62s"/><circle cx="484" cy="205" r="4" style="animation-delay:1.99s"/><circle cx="326" cy="147" r="2.5" style="animation-delay:2.36s"/><circle cx="204" cy="377" r="5" style="animation-delay:2.73s"/><circle cx="269" cy="61" r="4" style="animation-delay:3.10s"/><circle cx="327" cy="288" r="3" style="animation-delay:3.47s"/><circle cx="526" cy="468" r="2.5" style="animation-delay:3.84s"/><circle cx="371" cy="393" r="5" style="animation-delay:0.21s"/></g></svg>
+  <div><p class="vm-eyebrow">Our vision</p>
+  <h2>To become the reference in connecting <em>economic opportunities</em> between Africa and the rest of the world.</h2></div>
+  <div class="vm-orb"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></span></div>
  </div>
-</section>
+ <div class="vm-head reveal"><p class="vm-eyebrow">Our mission</p><h3>Seven commitments to move your projects forward.</h3></div>
+ <div class="vm-grid"><div class="vm-card reveal"><span class="vm-num">01</span><div class="vm-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/></svg></div><h4>Support</h4><p>Helping companies grow and shape their commercial strategy.</p></div><div class="vm-card reveal"><span class="vm-num">02</span><div class="vm-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="5" cy="12" r="2"/><circle cx="19" cy="5" r="2"/><circle cx="19" cy="19" r="2"/><path d="M7 12l10-6M7 12l10 6"/></svg></div><h4>Connect</h4><p>Linking producers, suppliers, buyers, investors and partners.</p></div><div class="vm-card reveal"><span class="vm-num">03</span><div class="vm-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h12l4 6-10 12L2 9zM2 9h20M9 3l3 6 3-6M12 9v12"/></svg></div><h4>Add value</h4><p>Adding value to African raw materials.</p></div><div class="vm-card reveal"><span class="vm-num">04</span><div class="vm-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/></svg></div><h4>Export</h4><p>Opening access to international markets.</p></div><div class="vm-card reveal"><span class="vm-num">05</span><div class="vm-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></svg></div><h4>Partnerships</h4><p>Facilitating commercial and institutional partnerships.</p></div><div class="vm-card reveal"><span class="vm-num">06</span><div class="vm-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17l6-6 4 4 8-8M15 7h6v6"/></svg></div><h4>Entrepreneurs</h4><p>Structuring and growing SME and entrepreneur projects.</p></div><div class="vm-card reveal"><span class="vm-num">07</span><div class="vm-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 19c0-8 5-14 15-14 0 10-6 15-14 15M5 19l8-8"/></svg></div><h4>Sustainability</h4><p>Promoting sustainable, value-creating initiatives in Africa.</p></div><a class="vm-card vm-cta reveal" href="/en/about#mission"><h4>Our full mission</h4><p>See how we work.</p><b>Learn more →</b></a></div>
+</div></section>
 
 <section class="sec" id="poles">
  <div class="wrap">
