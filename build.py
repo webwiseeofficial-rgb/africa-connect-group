@@ -276,7 +276,7 @@ WWA_CSS = """<style>
 }
 .wwa{padding-top:clamp(3.5rem,8vw,6rem)}
 
-.vm{position:relative;background:linear-gradient(180deg,#f4f7fd,#fff);padding:clamp(3.5rem,8vw,6rem) 0;overflow:hidden}
+.vm{position:relative;background:linear-gradient(180deg,#fff 0,#f4f7fd 26%,#f4f7fd 74%,#fff 100%);padding:clamp(3.5rem,8vw,6rem) 0;overflow:hidden}
 .vm-vision{position:relative;overflow:hidden;border-radius:28px;color:#fff;background:radial-gradient(120% 140% at 100% 0,#1d4a9a 0,#10264a 45%,#0a1a33 100%);padding:clamp(2rem,5vw,3.8rem);display:grid;grid-template-columns:1.5fr 1fr;gap:2rem;align-items:center;box-shadow:0 30px 70px rgba(10,26,51,.25)}
 .vm-vision .vm-net{position:absolute;right:-8%;top:-20%;width:min(620px,100%);opacity:.5;pointer-events:none}
 .vm-vision .vm-net .net-l line{stroke:#e3b650;stroke-width:1;opacity:.35}
@@ -317,6 +317,12 @@ WWA_CSS = """<style>
  .vm-vision>.vm-photo{position:relative;width:auto;height:220px;margin:calc(-1*clamp(1.5rem,5vw,2rem)) calc(-1*clamp(1.5rem,5vw,2rem)) 0}
  .vm-photo img{-webkit-mask-image:linear-gradient(180deg,#000 55%,transparent);mask-image:linear-gradient(180deg,#000 55%,transparent)}
 
+}
+@media(max-width:860px){
+ .wwa-vis{display:none}
+ .wwa::before{content:"";position:absolute;right:-56px;bottom:-30px;width:280px;height:476px;background:url(/assets/people.png) center/contain no-repeat;opacity:.12;pointer-events:none;z-index:0}
+ .wwa-in{gap:0}
+ .wwa{padding:2.8rem 0 3.4rem}
 }
 </style>"""
 
