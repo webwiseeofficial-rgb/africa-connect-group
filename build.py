@@ -324,6 +324,28 @@ WWA_CSS = """<style>
  .wwa-in{gap:0}
  .wwa{padding:2.8rem 0 3.4rem}
 }
+
+.vm-mission{display:grid;grid-template-columns:5fr 7fr;gap:clamp(2rem,6vw,5rem);margin-top:clamp(3.5rem,7vw,5.5rem);align-items:start}
+.vm-side{position:sticky;top:110px}
+.vm-side .vm-eyebrow{color:#c8962a}.vm-side .vm-eyebrow::before{background:#c8962a}
+.vm-side h3{font-size:clamp(1.8rem,3.4vw,2.6rem);line-height:1.15;color:#0a1a33;margin:0 0 1.6rem}
+.vm-link{display:inline-flex;gap:.6rem;font-weight:700;color:#0a1a33;border-bottom:2px solid #c8962a;padding-bottom:3px}
+.vm-link span{transition:transform .2s}.vm-link:hover span{transform:translateX(4px)}
+.vm-list{list-style:none;margin:0;padding:0;border-bottom:1px solid #d5dcea}
+.vm-row{display:grid;grid-template-columns:3.2rem 1fr 1.5fr;gap:0 1.4rem;align-items:baseline;padding:1.5rem 0;border-top:1px solid #d5dcea;position:relative;transition:padding .25s}
+.vm-row::before{content:"";position:absolute;left:0;top:-1px;height:1px;width:0;background:#c8962a;transition:width .4s}
+.vm-row:hover::before{width:100%}
+.vm-row:hover{padding-left:.6rem}
+.vm-n{font-family:Fraunces,Georgia,serif;font-size:1rem;color:#c8962a;font-weight:600}
+.vm-row h4{font-family:Fraunces,Georgia,serif;font-size:1.4rem;color:#0a1a33;margin:0;font-weight:600}
+.vm-row p{color:#5a6578;font-size:.98rem;line-height:1.6;margin:0}
+@media(max-width:900px){
+ .vm-mission{grid-template-columns:1fr;gap:1.8rem}
+ .vm-side{position:static}
+ .vm-row{grid-template-columns:2.6rem 1fr;padding:1.2rem 0}
+ .vm-row p{grid-column:2;margin-top:.35rem}
+ .vm-row:hover{padding-left:0}
+}
 </style>"""
 
 def vm_section(lang, pre):
@@ -338,8 +360,7 @@ def vm_section(lang, pre):
      (ic(ICONS["invest"]), L("Entrepreneurs","Entrepreneurs"), L("Structurer et développer les projets des PME et entrepreneurs.","Structuring and growing SME and entrepreneur projects.")),
      (ic(ICONS["sustain"]), L("Durabilité","Sustainability"), L("Promouvoir des initiatives durables, créatrices de valeur en Afrique.","Promoting sustainable, value-creating initiatives in Africa.")),
     ]
-    cards = "".join(f'<div class="vm-card reveal"><span class="vm-num">0{i+1}</span><div class="vm-ico">{i_}</div><h4>{t_}</h4><p>{d_}</p></div>' for i, (i_, t_, d_) in enumerate(items))
-    cards += f'<a class="vm-card vm-cta reveal" href="{pre}/about#mission"><h4>{L("Toute notre mission","Our full mission")}</h4><p>{L("Découvrez comment nous agissons.","See how we work.")}</p><b>{L("En savoir plus","Learn more")} →</b></a>'
+    cards = "".join(f'<li class="vm-row reveal"><span class="vm-n">0{i+1}</span><h4>{t_}</h4><p>{d_}</p></li>' for i, (i_, t_, d_) in enumerate(items))
     net = net_svg().replace('class="net"', 'class="vm-net"')
     return f"""<section class="vm" id="vision"><div class="wrap">
  <div class="vm-vision reveal">{net}
@@ -347,8 +368,12 @@ def vm_section(lang, pre):
   <h2>{L("Devenir la référence dans la connexion des <em>opportunités économiques</em> entre l’Afrique et le reste du monde.","To become the reference in connecting <em>economic opportunities</em> between Africa and the rest of the world.")}</h2></div>
   <div class="vm-photo"><img src="/assets/handshake.jpg" alt="{L("Poignée de main devant une carte du monde","Handshake in front of a world map")}" width="1024" height="1024" loading="lazy"></div>
  </div>
- <div class="vm-head reveal"><p class="vm-eyebrow">{L("Notre mission","Our mission")}</p><h3>{L("Sept engagements pour faire avancer vos projets.","Seven commitments to move your projects forward.")}</h3></div>
- <div class="vm-grid">{cards}</div>
+ <div class="vm-mission">
+  <div class="vm-side reveal"><p class="vm-eyebrow">{L("Notre mission","Our mission")}</p>
+   <h3>{L("Sept engagements pour faire avancer vos projets.","Seven commitments to move your projects forward.")}</h3>
+   <a class="vm-link" href="{pre}/about#mission">{L("Lire toute la mission","Read the full mission")} <span>→</span></a></div>
+  <ol class="vm-list">{cards}</ol>
+ </div>
 </div></section>"""
 
 
