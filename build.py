@@ -275,7 +275,71 @@ WWA_CSS = """<style>
  .stat span{font-size:.82rem}.stat b{font-size:1.25rem}
 }
 .wwa{padding-top:clamp(3.5rem,8vw,6rem)}
+
+.vm{position:relative;background:linear-gradient(180deg,#f4f7fd,#fff);padding:clamp(3.5rem,8vw,6rem) 0;overflow:hidden}
+.vm-vision{position:relative;overflow:hidden;border-radius:28px;color:#fff;background:radial-gradient(120% 140% at 100% 0,#1d4a9a 0,#10264a 45%,#0a1a33 100%);padding:clamp(2rem,5vw,3.8rem);display:grid;grid-template-columns:1.5fr 1fr;gap:2rem;align-items:center;box-shadow:0 30px 70px rgba(10,26,51,.25)}
+.vm-vision .vm-net{position:absolute;right:-8%;top:-20%;width:min(620px,100%);opacity:.5;pointer-events:none}
+.vm-vision .vm-net .net-l line{stroke:#e3b650;stroke-width:1;opacity:.35}
+.vm-vision .vm-net .net-d circle{fill:#e3b650;animation:none;opacity:.6}
+.vm-eyebrow{display:inline-flex;align-items:center;gap:.6rem;text-transform:uppercase;letter-spacing:.16em;font-size:.76rem;font-weight:700;color:#e3b650;margin:0 0 1rem}
+.vm-eyebrow::before{content:"";width:34px;height:2px;background:#e3b650}
+.vm-vision h2{font-size:clamp(1.5rem,3.2vw,2.35rem);line-height:1.25;color:#fff;margin:0;max-width:34rem;position:relative}
+.vm-vision h2 em{color:#e3b650}
+.vm-vision>div{position:relative;z-index:1}
+.vm-orb{justify-self:center;width:min(230px,60vw);aspect-ratio:1;border-radius:50%;display:grid;place-items:center;border:1.5px dashed rgba(227,182,80,.6);position:relative}
+.vm-orb::before{content:"";position:absolute;inset:14%;border-radius:50%;border:1px solid rgba(255,255,255,.25)}
+.vm-orb span{width:46%;aspect-ratio:1;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,#e3b650,#c8962a);color:#0a1a33;box-shadow:0 14px 34px rgba(0,0,0,.35)}
+.vm-orb svg{width:52%;height:52%}
+.vm-head{text-align:center;max-width:36rem;margin:clamp(3rem,6vw,4.5rem) auto 2rem}
+.vm-head .vm-eyebrow{color:#c8962a}.vm-head .vm-eyebrow::before{background:#c8962a}
+.vm-head h3{font-size:clamp(1.6rem,3.4vw,2.3rem);color:#0a1a33}
+.vm-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.1rem}
+.vm-card{position:relative;background:#fff;border:1px solid #e3eaf6;border-radius:20px;padding:1.5rem 1.4rem 1.4rem;overflow:hidden;transition:.25s;box-shadow:0 8px 24px rgba(16,38,74,.05)}
+.vm-card:hover{transform:translateY(-6px);border-color:#c8962a;box-shadow:0 20px 44px rgba(16,38,74,.14)}
+.vm-card::after{content:"";position:absolute;left:0;top:0;height:3px;width:0;background:#c8962a;transition:width .35s}
+.vm-card:hover::after{width:100%}
+.vm-num{position:absolute;right:1rem;top:.6rem;font-family:Fraunces,Georgia,serif;font-size:2.6rem;line-height:1;color:#eef2fa;font-weight:600}
+.vm-ico{width:50px;height:50px;border-radius:14px;display:grid;place-items:center;background:linear-gradient(135deg,#2457b5,#10264a);color:#e3b650;margin-bottom:1.1rem;position:relative}
+.vm-ico svg{width:25px;height:25px}
+.vm-card h4{font-family:Fraunces,Georgia,serif;font-size:1.2rem;color:#0a1a33;margin:0 0 .4rem;position:relative}
+.vm-card p{color:#5a6578;font-size:.9rem;line-height:1.55;margin:0;position:relative}
+.vm-cta{display:flex;flex-direction:column;justify-content:center;gap:.8rem;background:linear-gradient(135deg,#c8962a,#e3b650);border:0;color:#1a1200}
+.vm-cta h4,.vm-cta p{color:#1a1200}
+.vm-cta b{font-weight:700;font-size:.95rem}
+@media(max-width:1000px){.vm-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:860px){
+ .vm-vision{grid-template-columns:1fr;border-radius:22px}
+ .vm-orb{width:150px;order:-1;justify-self:start}
+ .vm-vision .vm-net{opacity:.3}
+}
+@media(max-width:520px){.vm-grid{grid-template-columns:1fr}.vm-card{display:grid;grid-template-columns:50px 1fr;column-gap:1rem;padding:1.2rem}.vm-ico{grid-row:span 2;margin:0}.vm-card h4{margin-bottom:.2rem}.vm-num{font-size:2rem}.vm-card.vm-cta{display:flex;grid-template-columns:none}}
 </style>"""
+
+def vm_section(lang, pre):
+    L = lambda fr, en: fr if lang == "fr" else en
+    def ic(paths): return f'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{paths}</svg>'
+    items = [
+     (ic('<circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/>'), L("Accompagner","Support"), L("Aider les entreprises dans leur développement et leur stratégie commerciale.","Helping companies grow and shape their commercial strategy.")),
+     (ic('<circle cx="5" cy="12" r="2"/><circle cx="19" cy="5" r="2"/><circle cx="19" cy="19" r="2"/><path d="M7 12l10-6M7 12l10 6"/>'), L("Connecter","Connect"), L("Relier producteurs, fournisseurs, acheteurs, investisseurs et partenaires.","Linking producers, suppliers, buyers, investors and partners.")),
+     (ICONS["mining"] and ic(ICONS["mining"]), L("Valoriser","Add value"), L("Mettre en valeur les matières premières africaines.","Adding value to African raw materials.")),
+     (ic(ICONS["export"]), L("Exporter","Export"), L("Ouvrir l’accès aux marchés internationaux.","Opening access to international markets.")),
+     (ic('<path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M8.5 12l2.5 2.5 4.5-5"/>'), L("Partenariats","Partnerships"), L("Faciliter les partenariats commerciaux et institutionnels.","Facilitating commercial and institutional partnerships.")),
+     (ic(ICONS["invest"]), L("Entrepreneurs","Entrepreneurs"), L("Structurer et développer les projets des PME et entrepreneurs.","Structuring and growing SME and entrepreneur projects.")),
+     (ic(ICONS["sustain"]), L("Durabilité","Sustainability"), L("Promouvoir des initiatives durables, créatrices de valeur en Afrique.","Promoting sustainable, value-creating initiatives in Africa.")),
+    ]
+    cards = "".join(f'<div class="vm-card reveal"><span class="vm-num">0{i+1}</span><div class="vm-ico">{i_}</div><h4>{t_}</h4><p>{d_}</p></div>' for i, (i_, t_, d_) in enumerate(items))
+    cards += f'<a class="vm-card vm-cta reveal" href="{pre}/about#mission"><h4>{L("Toute notre mission","Our full mission")}</h4><p>{L("Découvrez comment nous agissons.","See how we work.")}</p><b>{L("En savoir plus","Learn more")} →</b></a>'
+    net = net_svg().replace('class="net"', 'class="vm-net"')
+    return f"""<section class="vm" id="vision"><div class="wrap">
+ <div class="vm-vision reveal">{net}
+  <div><p class="vm-eyebrow">{L("Notre vision","Our vision")}</p>
+  <h2>{L("Devenir la référence dans la connexion des <em>opportunités économiques</em> entre l’Afrique et le reste du monde.","To become the reference in connecting <em>economic opportunities</em> between Africa and the rest of the world.")}</h2></div>
+  <div class="vm-orb"><span>{ic('<path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>')}</span></div>
+ </div>
+ <div class="vm-head reveal"><p class="vm-eyebrow">{L("Notre mission","Our mission")}</p><h3>{L("Sept engagements pour faire avancer vos projets.","Seven commitments to move your projects forward.")}</h3></div>
+ <div class="vm-grid">{cards}</div>
+</div></section>"""
+
 
 def home(lang):
     pre = "" if lang == "fr" else "/en"
@@ -325,15 +389,7 @@ def home(lang):
  </div>
 </section>
 
-<section class="sec" id="vision">
- <div class="wrap cols2">
-  <div class="panel reveal"><h3>{L("Notre vision","Our vision")}</h3>
-   <p>{L("Devenir une entreprise de référence dans la connexion des opportunités économiques, la valorisation des ressources africaines et le développement de partenariats stratégiques entre l’Afrique et le reste du monde.","To become a reference company in connecting economic opportunities, adding value to African resources and developing strategic partnerships between Africa and the rest of the world.")}</p></div>
-  <div class="panel reveal"><h3>{L("Notre mission","Our mission")}</h3>
-   <ul class="ticks gold">{"".join(f"<li>{esc(m)}</li>" for m in MISSION[lang][:4])}</ul>
-   <a class="link gold" href="{pre}/about#mission">{L("Voir toute la mission","See the full mission")} →</a></div>
- </div>
-</section>
+{vm_section(lang, pre)}
 
 <section class="sec" id="poles">
  <div class="wrap">
