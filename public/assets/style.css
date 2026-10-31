@@ -172,3 +172,14 @@ input:focus,select:focus,textarea:focus{outline:0;border-color:var(--gold);box-s
  .tag{font-size:.74rem}.t1{left:0}.t2{right:0}.t3{left:2%}
 }
 @media(max-width:560px){.pillars{gap:.5rem}.pillars b{font-size:.95rem}.about-vis{min-height:400px}.about-vis img{height:350px}.about-in .actions .btn{width:100%}}
+
+/* pole cards with photo */
+.card.pole.has-photo{padding:0;gap:0;overflow:hidden}
+.pole-photo{position:relative;display:block;aspect-ratio:4/3;overflow:hidden;background:var(--navy)}
+.pole-photo img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s ease}
+.pole-photo::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,26,51,0) 55%,rgba(10,26,51,.45));pointer-events:none}
+.card.pole.has-photo:hover .pole-photo img{transform:scale(1.06)}
+.pole-photo .ico-wrap{position:absolute;left:1.2rem;bottom:-1px;z-index:2;width:48px;height:48px;border-radius:14px 14px 0 0;box-shadow:0 -4px 14px rgba(10,26,51,.18)}
+.pole-body{display:flex;flex-direction:column;gap:.7rem;flex:1;padding:1.5rem 1.7rem 1.7rem}
+.pole-body h3{margin:0}
+.pole-body p{color:var(--mut);font-size:.95rem;flex:1;margin:0}
