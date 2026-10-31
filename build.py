@@ -165,7 +165,7 @@ def page(lang, path, title, desc, body, alt_path):
 <a class="skip" href="#main">{t("skip", lang)}</a>
 <header class="hdr" id="hdr">
  <div class="wrap hdr-in">
-  <a class="brand" href="{u("/")}" aria-label="Africa Connect Group"><img src="/assets/logo-wide.jpg" alt="Africa Connect Group" width="260" height="130"></a>
+  <a class="brand" href="{u("/")}" aria-label="Africa Connect Group"><img src="/assets/logo-wide.png" alt="Africa Connect Group" width="798" height="394"></a>
   <nav class="nav" id="nav" aria-label="Main">{links}
    <a class="btn btn-gold nav-cta" href="{u("/contact")}">{t("cta", lang)}</a></nav>
   <a class="lang" href="{ou(alt_path)}" hreflang="{other}" aria-label="Switch language">{other.upper()}</a>
@@ -178,7 +178,7 @@ def page(lang, path, title, desc, body, alt_path):
 <footer class="ftr">
  <div class="wrap ftr-grid">
   <div>
-   <a class="ftr-logo" href="{u("/")}"><img src="/assets/logo-wide.jpg" alt="Africa Connect Group" width="260" height="130"></a>
+   <a class="ftr-logo" href="{u("/")}"><img src="/assets/logo-wide.png" alt="Africa Connect Group" width="798" height="394"></a>
    <p class="muted">{tagline}</p>
    <p class="muted small">Africa Connect Group SARL · RDC</p>
   </div>
@@ -257,6 +257,24 @@ WWA_CSS = """<style>
  .wc1{left:3%;top:9%}.wc2{right:3%;top:auto;bottom:9%}
  .wwa-card{font-size:.76rem}
 }
+
+.hero .hero-in{padding-bottom:clamp(6rem,12vw,9.5rem)}
+.statwrap{position:relative;z-index:5;margin-top:-4.2rem}
+.statbar{display:grid;grid-template-columns:repeat(4,1fr);background:#fff;border-radius:24px;border:1px solid #e3eaf6;box-shadow:0 24px 60px rgba(10,26,51,.16);overflow:hidden}
+.stat{padding:1.6rem 1.7rem 1.5rem;border-left:1px solid #e3eaf6}
+.stat:first-child{border-left:0}
+.stat b{display:block;font-family:Fraunces,Georgia,serif;font-size:clamp(1.3rem,2.1vw,1.7rem);line-height:1.15;white-space:nowrap;color:#0a1a33}
+.stat i{display:block;width:34px;height:3px;border-radius:3px;background:#c8962a;margin:.7rem 0 .6rem}
+.stat span{color:#5a6578;font-size:.92rem;line-height:1.4}
+@media(max-width:860px){
+ .statwrap{margin-top:-3rem}
+ .statbar{grid-template-columns:1fr 1fr;border-radius:20px}
+ .stat{padding:1.1rem 1.1rem 1rem;border-left:0;border-top:1px solid #e3eaf6}
+ .stat:nth-child(2n){border-left:1px solid #e3eaf6}
+ .stat:nth-child(-n+2){border-top:0}
+ .stat span{font-size:.82rem}.stat b{font-size:1.25rem}
+}
+.wwa{padding-top:clamp(3.5rem,8vw,6rem)}
 </style>"""
 
 def home(lang):
@@ -278,6 +296,12 @@ def home(lang):
 </section>
 
 {WWA_CSS}
+<div class="statwrap"><div class="wrap"><div class="statbar reveal">
+ <div class="stat"><b>7</b><i></i><span>{L("pôles d’activité complémentaires","complementary areas of activity")}</span></div>
+ <div class="stat"><b>RDC</b><i></i><span>{L("notre point d’ancrage","our home base")}</span></div>
+ <div class="stat"><b>{L("Afrique australe","Southern Africa")}</b><i></i><span>{L("notre marché d’expansion","our expansion market")}</span></div>
+ <div class="stat"><b>{L("International","International")}</b><i></i><span>{L("partenaires et acheteurs du monde entier","partners and buyers worldwide")}</span></div>
+</div></div></div>
 <section class="wwa" id="about">
  {net_svg().replace('class="net"','class="wwa-net"')}
  <div class="wrap wwa-in">
