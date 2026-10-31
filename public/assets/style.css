@@ -79,10 +79,6 @@ em{font-style:italic;color:var(--gold2)}
 .cta-card p,.cta-card .more{color:#1a1200}
 .chips{list-style:none;padding:0;display:flex;flex-wrap:wrap;gap:.7rem}
 .chips li{background:#fff;border:1px solid var(--line);padding:.7rem 1.2rem;border-radius:99px;font-weight:600;font-size:.95rem}
-.steps{list-style:none;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.5rem}
-.steps li{border-top:2px solid var(--gold);padding-top:1rem}
-.n{font-family:Fraunces,serif;font-size:2.4rem;color:var(--gold);line-height:1}
-.steps h3{margin:.4rem 0}.steps p{color:var(--mut)}
 .opp{display:grid;grid-template-columns:1.3fr 1fr;gap:3rem;align-items:center}
 .opp h2{margin-bottom:1rem}
 .opp-box{background:var(--navy2);border:1px solid rgba(255,255,255,.12);border-radius:var(--r);padding:2rem;display:grid;gap:1.5rem}
@@ -195,12 +191,6 @@ input:focus,select:focus,textarea:focus{outline:0;border-color:var(--gold);box-s
  .vm .vm-list .vm-n{display:block;font-size:.85rem;margin-bottom:.35rem}
  .vm .vm-list .vm-row h4{font-size:1.08rem;margin-bottom:.3rem}
  .vm .vm-list .vm-row p{grid-column:auto;margin:0;font-size:.82rem;line-height:1.45}
- /* approach: 2x2 cards */
- .steps{grid-template-columns:1fr 1fr;gap:.7rem}
- .steps li{background:#f4f7fd;border:1px solid #e3eaf6;border-top:3px solid var(--gold);border-radius:14px;padding:1rem .95rem 1.05rem}
- .steps .n{font-size:1.5rem}
- .steps h3{font-size:1.05rem;margin:.3rem 0 .25rem}
- .steps p{font-size:.82rem;line-height:1.45}
  /* poles: 2 per row */
  .grid{grid-template-columns:1fr 1fr;gap:.7rem}
  .grid .card:last-child:nth-child(odd){grid-column:1/-1}
@@ -214,4 +204,38 @@ input:focus,select:focus,textarea:focus{outline:0;border-color:var(--gold);box-s
  .card.pole.cta-card{padding:1rem .9rem}
  .cta-card h3{font-size:1.05rem}
  .cta-card p{font-size:.8rem}
+}
+
+/* ===== spacing between mission and poles ===== */
+section.vm{padding-bottom:clamp(.5rem,2vw,1.5rem)}
+section.sec#poles{padding-top:clamp(1.5rem,4vw,3rem)}
+
+/* ===== approach steps (gradient cards) ===== */
+.steps{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(4,1fr);gap:1.2rem}
+.step{position:relative;display:flex;flex-direction:column;justify-content:flex-end;min-height:300px;padding:1.6rem;border-radius:22px;color:#fff;overflow:hidden;border:1px solid rgba(255,255,255,.08);box-shadow:0 14px 34px rgba(10,26,51,.16)}
+.step::before{content:"";position:absolute;left:0;right:0;top:0;height:4px;background:linear-gradient(90deg,var(--gold),var(--gold2))}
+.step.s1{background:linear-gradient(160deg,#10264a,#0a1a33)}
+.step.s2{background:linear-gradient(160deg,#16346a,#10264a)}
+.step.s3{background:linear-gradient(160deg,#1d4a92,#16346a)}
+.step.s4{background:linear-gradient(160deg,#2a63b8,#1d4a92)}
+.step-ico{position:absolute;left:1.6rem;top:1.6rem;width:52px;height:52px;border-radius:15px;background:rgba(255,255,255,.1);color:var(--gold2);display:grid;place-items:center}
+.step-ico svg{width:26px;height:26px}
+.step-bg{position:absolute;right:1rem;top:.5rem;font-family:Fraunces,Georgia,serif;font-size:6.2rem;line-height:1;font-weight:600;color:transparent;-webkit-text-stroke:1.5px rgba(255,255,255,.16);pointer-events:none}
+.step-txt{position:relative;margin-top:5.5rem}
+.step-k{display:block;font-size:.74rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--gold2);margin-bottom:.35rem}
+.step h3{color:#fff;font-size:1.45rem;margin:0 0 .5rem}
+.step p{color:rgba(255,255,255,.84);font-size:.95rem;line-height:1.55;margin:0}
+.steps-dots{display:none}
+@media(max-width:900px) and (min-width:601px){.steps{grid-template-columns:1fr 1fr}}
+@media(max-width:600px){
+ .steps{display:flex;gap:.8rem;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;margin-inline:-1rem;padding:.2rem 1rem 1rem;scroll-padding-inline:1rem}
+ .steps::-webkit-scrollbar{display:none}
+ .step{flex:0 0 80%;min-height:270px;scroll-snap-align:start;padding:1.3rem}
+ .step-ico{left:1.3rem;top:1.3rem;width:46px;height:46px}
+ .step-bg{font-size:5rem}
+ .step-txt{margin-top:4.6rem}
+ .step h3{font-size:1.3rem}
+ .steps-dots{display:flex;justify-content:center;gap:.45rem;margin-top:.2rem}
+ .steps-dots i{width:8px;height:8px;border-radius:50%;background:#d5dcea;transition:.25s}
+ .steps-dots i.on{width:22px;border-radius:99px;background:var(--gold)}
 }
