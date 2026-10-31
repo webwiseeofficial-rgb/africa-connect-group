@@ -233,21 +233,33 @@ def home(lang):
  </div>
 </section>
 
-<section class="sec" id="about">
- <div class="wrap split">
-  <div class="reveal">
-   <p class="eyebrow dark">{L("Qui sommes-nous","Who we are")}</p>
-   <h2>{L("Une vitrine de confiance pour faire des affaires en Afrique.","A trusted gateway to doing business in Africa.")}</h2>
-  </div>
-  <div class="reveal">
+<section class="about" id="about">
+ {net_svg().replace('class="net"','class="net net-about"')}
+ <div class="wrap about-in">
+  <div class="about-txt reveal">
+   <p class="eyebrow">{L("Qui sommes-nous","Who we are")}</p>
+   <h2>{L("Une vitrine de confiance pour faire des <em>affaires</em> en Afrique.","A trusted gateway to doing <em>business</em> in Africa.")}</h2>
    <p>{L("Africa Connect Group SARL s’inscrit dans une dynamique de développement économique, de conseil stratégique, de facilitation des affaires, de commerce international et de création de partenariats en Afrique.","Africa Connect Group SARL is part of a drive for economic development, strategic advisory, business facilitation, international trade and partnership creation across Africa.")}</p>
    <p>{L("Notre ambition : valoriser les richesses africaines, accompagner les entreprises et les entrepreneurs, et bâtir des relations commerciales durables entre acteurs africains et partenaires internationaux.","Our ambition: to add value to Africa’s wealth, support businesses and entrepreneurs, and build lasting commercial relationships between African players and international partners.")}</p>
-   <a class="link" href="{pre}/about">{L("En savoir plus sur nous","More about us")} →</a>
+   <ul class="pillars">
+    <li><b>{L("Conseil","Advisory")}</b><span>{L("stratégique","strategic")}</span></li>
+    <li><b>{L("Commerce","Trade")}</b><span>{L("international","international")}</span></li>
+    <li><b>{L("Partenariats","Partnerships")}</b><span>{L("durables","lasting")}</span></li>
+   </ul>
+   <div class="actions"><a class="btn btn-gold" href="{pre}/about">{L("En savoir plus sur nous","More about us")}</a>
+   <a class="btn btn-ghost" href="{pre}/contact">{L("Nous contacter","Contact us")}</a></div>
+  </div>
+  <div class="about-vis reveal">
+   <div class="stripe"></div><div class="ring"></div>
+   <img src="/assets/people.png" alt="{L("Une poignée de main entre deux partenaires d’affaires","A handshake between two business partners")}" width="554" height="942" loading="lazy">
+   <span class="tag t1">{L("Producteurs & acheteurs","Producers & buyers")}</span>
+   <span class="tag t2">{L("Investisseurs & institutions","Investors & institutions")}</span>
+   <span class="tag t3">{L("RDC · Afrique australe · Monde","DRC · Southern Africa · World")}</span>
   </div>
  </div>
 </section>
 
-<section class="sec sec-navy" id="vision">
+<section class="sec" id="vision">
  <div class="wrap cols2">
   <div class="panel reveal"><h3>{L("Notre vision","Our vision")}</h3>
    <p>{L("Devenir une entreprise de référence dans la connexion des opportunités économiques, la valorisation des ressources africaines et le développement de partenariats stratégiques entre l’Afrique et le reste du monde.","To become a reference company in connecting economic opportunities, adding value to African resources and developing strategic partnerships between Africa and the rest of the world.")}</p></div>
