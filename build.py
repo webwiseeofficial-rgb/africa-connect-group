@@ -215,6 +215,50 @@ def pole_card(p, lang, pre):
  <span class="more">{"Découvrir" if lang=="fr" else "Explore"} →</span></a>'''
 
 # ----------------------------------------------------------------- PAGES
+WWA_CSS = """<style>
+.wwa{position:relative;background:#fff;padding:clamp(3rem,7vw,5.5rem) 0;overflow:hidden}
+.wwa .wwa-net{position:absolute;left:-6%;bottom:-25%;width:min(700px,110vw);opacity:.55;pointer-events:none;z-index:0}
+.wwa .wwa-net .net-l line{stroke:#cfdaef;stroke-width:1;opacity:1}
+.wwa .wwa-net .net-d circle{fill:#9db4de;animation:none;opacity:.8}
+.wwa-in{position:relative;z-index:1;display:grid;grid-template-columns:1fr 1fr;gap:clamp(1.5rem,5vw,4rem);align-items:center}
+.wwa-eyebrow{display:inline-flex;align-items:center;gap:.6rem;text-transform:uppercase;letter-spacing:.16em;font-size:.76rem;font-weight:700;color:#c8962a;margin:0 0 1rem}
+.wwa-eyebrow::before{content:"";width:34px;height:2px;background:#c8962a}
+.wwa h2{color:#0a1a33;font-size:clamp(1.9rem,4.2vw,2.9rem);margin:0 0 1rem}
+.wwa h2 em{color:#c8962a}
+.wwa-p{color:#5a6578;font-size:1.05rem;max-width:30rem;margin:0 0 1.5rem}
+.wwa-pills{list-style:none;padding:0;margin:0 0 1.8rem;display:grid;gap:.7rem;max-width:26rem}
+.wwa-pills li{display:flex;align-items:center;gap:.9rem;background:#fff;color:#0a1a33;font-weight:700;font-size:.95rem;padding:.7rem 1rem;border-radius:14px;border:1px solid #e3eaf6;box-shadow:0 6px 18px rgba(16,38,74,.06)}
+.wwa-pills i{flex:none;width:34px;height:34px;border-radius:10px;display:grid;place-items:center;background:linear-gradient(135deg,#2457b5,#10264a);color:#e3b650}
+.wwa-pills svg{width:18px;height:18px}
+.wwa-btn{display:inline-flex;align-items:center;gap:.6rem}
+.wwa-btn b{transition:transform .2s}.wwa-btn:hover b{transform:translateX(4px)}
+.wwa-vis{position:relative;display:grid;place-items:center;min-height:520px}
+.wwa-glow{position:absolute;left:50%;top:50%;width:92%;aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle,#e6edfa 0,#f4f7fd 55%,transparent 72%)}
+.wwa-ring{position:absolute;left:50%;top:50%;width:84%;aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;border:1.5px dashed rgba(200,150,42,.55)}
+.wwa-dots{position:absolute;right:2%;bottom:4%;width:120px;height:120px;background-image:radial-gradient(#c8962a 1.6px,transparent 1.9px);background-size:16px 16px;opacity:.55}
+.wwa-strip{position:absolute;left:24%;top:0;bottom:0;width:22%;border-radius:16px;background:linear-gradient(180deg,#2457b5,#10264a 70%,#0a1a33);box-shadow:0 20px 40px rgba(16,38,74,.25)}
+.wwa-strip::after{content:"";position:absolute;inset:0;border-radius:inherit;background-image:radial-gradient(rgba(255,255,255,.3) 1.2px,transparent 1.5px);background-size:14px 14px;opacity:.55}
+.wwa-vis img{position:relative;z-index:2;height:480px;width:auto;max-width:100%;filter:drop-shadow(0 18px 22px rgba(10,26,51,.28))}
+.wwa-card{position:absolute;z-index:3;display:flex;align-items:center;gap:.6rem;background:#fff;color:#0a1a33;font-weight:700;font-size:.82rem;padding:.55rem .9rem .55rem .55rem;border-radius:14px;box-shadow:0 12px 30px rgba(16,38,74,.18);animation:wwaf 6s ease-in-out infinite}
+.wwa-card i{width:32px;height:32px;border-radius:9px;display:grid;place-items:center;background:#c8962a;color:#fff}
+.wwa-card svg{width:17px;height:17px}
+.wwa-card small{display:block;font-weight:600;font-size:.7rem;color:#5a6578}
+.wc1{left:0;top:16%}.wc2{right:-2%;top:56%;animation-delay:-3s}
+@keyframes wwaf{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+@media(max-width:860px){
+ .wwa{padding:2.5rem 0 3rem}
+ .wwa-in{grid-template-columns:1fr;gap:2rem}
+ .wwa-pills{max-width:none}
+ .wwa .btn{width:100%;justify-content:center}
+ .wwa-vis{min-height:400px;border-radius:26px;background:linear-gradient(180deg,#eef3fc,#fff);border:1px solid #e3eaf6;overflow:hidden}
+ .wwa-vis img{height:340px}
+ .wwa-strip{left:50%;transform:translateX(-98%);width:25%;top:6%;bottom:6%}
+ .wwa-glow{width:110%}.wwa-ring{width:92%}
+ .wc1{left:3%;top:9%}.wc2{right:3%;top:auto;bottom:9%}
+ .wwa-card{font-size:.76rem}
+}
+</style>"""
+
 def home(lang):
     pre = "" if lang == "fr" else "/en"
     L = lambda fr, en: fr if lang == "fr" else en
@@ -233,27 +277,26 @@ def home(lang):
  </div>
 </section>
 
-<section class="about" id="about">
- <div class="wrap about-in">
-  <div class="about-txt reveal">
-   <p class="eyebrow dark">{L("Qui sommes-nous","Who we are")}</p>
-   <h2>{L("Une vitrine de confiance pour faire des <em>affaires</em> en Afrique.","A trusted gateway to doing <em>business</em> in Africa.")}</h2>
-   <p>{L("Africa Connect Group SARL s’inscrit dans une dynamique de développement économique, de conseil stratégique, de facilitation des affaires, de commerce international et de création de partenariats en Afrique.","Africa Connect Group SARL is part of a drive for economic development, strategic advisory, business facilitation, international trade and partnership creation across Africa.")}</p>
-   <p>{L("Notre ambition : valoriser les richesses africaines, accompagner les entreprises et les entrepreneurs, et bâtir des relations commerciales durables entre acteurs africains et partenaires internationaux.","Our ambition: to add value to Africa’s wealth, support businesses and entrepreneurs, and build lasting commercial relationships between African players and international partners.")}</p>
-   <ul class="pillars">
-    <li><b>{L("Conseil","Advisory")}</b><span>{L("stratégique","strategic")}</span></li>
-    <li><b>{L("Commerce","Trade")}</b><span>{L("international","international")}</span></li>
-    <li><b>{L("Partenariats","Partnerships")}</b><span>{L("durables","lasting")}</span></li>
+{WWA_CSS}
+<section class="wwa" id="about">
+ {net_svg().replace('class="net"','class="wwa-net"')}
+ <div class="wrap wwa-in">
+  <div class="wwa-txt reveal">
+   <p class="wwa-eyebrow">{L("Qui sommes-nous","Who we are")}</p>
+   <h2>{L("Votre partenaire de confiance pour faire des <em>affaires</em> en Afrique.","Your trusted partner for doing <em>business</em> in Africa.")}</h2>
+   <p class="wwa-p">{L("Conseil, commerce international et partenariats : nous connectons les opportunités africaines au reste du monde.","Advisory, international trade and partnerships: we connect African opportunities to the rest of the world.")}</p>
+   <ul class="wwa-pills">
+    <li><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 20h18M5 20V9l7-5 7 5v11M9 20v-6h6v6"/></svg></i>{L("Conseil stratégique","Strategic advisory")}</li>
+    <li><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/></svg></i>{L("Commerce international","International trade")}</li>
+    <li><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 12l3 3 5-6M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/></svg></i>{L("Partenariats durables","Lasting partnerships")}</li>
    </ul>
-   <div class="actions"><a class="btn btn-gold" href="{pre}/about">{L("En savoir plus sur nous","More about us")}</a>
-   <a class="btn btn-line" href="{pre}/contact">{L("Nous contacter","Contact us")}</a></div>
+   <a class="btn btn-gold wwa-btn" href="{pre}/about">{L("En savoir plus","Learn more")} <b>→</b></a>
   </div>
-  <div class="about-vis reveal">
-   <div class="glow"></div><div class="stripe"></div>
-   <img src="/assets/people.png" alt="{L("Une poignée de main entre deux partenaires d’affaires","A handshake between two business partners")}" width="554" height="942" loading="lazy">
-   <span class="tag t1">{L("Producteurs & acheteurs","Producers & buyers")}</span>
-   <span class="tag t2">{L("Investisseurs & institutions","Investors & institutions")}</span>
-   <span class="tag t3">{L("RDC · Afrique australe · Monde","DRC · Southern Africa · World")}</span>
+  <div class="wwa-vis reveal">
+   <div class="wwa-glow"></div><div class="wwa-ring"></div><div class="wwa-dots"></div><div class="wwa-strip"></div>
+   <img src="/assets/people.png" alt="{L("Poignée de main entre deux partenaires d’affaires","Handshake between two business partners")}" width="554" height="942" loading="lazy">
+   <div class="wwa-card wc1"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h16M14 6l6 6-6 6"/></svg></i><span>{L("Producteurs","Producers")}<small>{L("↔ acheteurs","↔ buyers")}</small></span></div>
+   <div class="wwa-card wc2"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8M15 7h6v6"/></svg></i><span>{L("Investisseurs","Investors")}<small>{L("& partenaires","& partners")}</small></span></div>
   </div>
  </div>
 </section>
