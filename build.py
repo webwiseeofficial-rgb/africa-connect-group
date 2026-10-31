@@ -286,10 +286,6 @@ WWA_CSS = """<style>
 .vm-vision h2{font-size:clamp(1.5rem,3.2vw,2.35rem);line-height:1.25;color:#fff;margin:0;max-width:34rem;position:relative}
 .vm-vision h2 em{color:#e3b650}
 .vm-vision>div{position:relative;z-index:1}
-.vm-orb{justify-self:center;width:min(230px,60vw);aspect-ratio:1;border-radius:50%;display:grid;place-items:center;border:1.5px dashed rgba(227,182,80,.6);position:relative}
-.vm-orb::before{content:"";position:absolute;inset:14%;border-radius:50%;border:1px solid rgba(255,255,255,.25)}
-.vm-orb span{width:46%;aspect-ratio:1;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,#e3b650,#c8962a);color:#0a1a33;box-shadow:0 14px 34px rgba(0,0,0,.35)}
-.vm-orb svg{width:52%;height:52%}
 .vm-head{text-align:center;max-width:36rem;margin:clamp(3rem,6vw,4.5rem) auto 2rem}
 .vm-head .vm-eyebrow{color:#c8962a}.vm-head .vm-eyebrow::before{background:#c8962a}
 .vm-head h3{font-size:clamp(1.6rem,3.4vw,2.3rem);color:#0a1a33}
@@ -309,10 +305,19 @@ WWA_CSS = """<style>
 @media(max-width:1000px){.vm-grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:860px){
  .vm-vision{grid-template-columns:1fr;border-radius:22px}
- .vm-orb{width:150px;order:-1;justify-self:start}
- .vm-vision .vm-net{opacity:.3}
+  .vm-vision .vm-net{opacity:.3}
 }
 @media(max-width:520px){.vm-grid{grid-template-columns:1fr}.vm-card{display:grid;grid-template-columns:50px 1fr;column-gap:1rem;padding:1.2rem}.vm-ico{grid-row:span 2;margin:0}.vm-card h4{margin-bottom:.2rem}.vm-num{font-size:2rem}.vm-card.vm-cta{display:flex;grid-template-columns:none}}
+.vm-vision{grid-template-columns:1fr;padding-right:42%}
+.vm-vision>.vm-photo{position:absolute;right:0;top:0;bottom:0;width:48%;z-index:0}
+.vm-photo img{width:100%;height:100%;object-fit:cover;object-position:50% 55%;display:block;-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 38%);mask-image:linear-gradient(90deg,transparent 0,#000 38%)}
+.vm-vision{min-height:340px;align-content:center}
+@media(max-width:860px){
+ .vm-vision{padding-right:clamp(1.5rem,5vw,2rem);min-height:0}
+ .vm-vision>.vm-photo{position:relative;width:auto;height:220px;margin:calc(-1*clamp(1.5rem,5vw,2rem)) calc(-1*clamp(1.5rem,5vw,2rem)) 0}
+ .vm-photo img{-webkit-mask-image:linear-gradient(180deg,#000 55%,transparent);mask-image:linear-gradient(180deg,#000 55%,transparent)}
+
+}
 </style>"""
 
 def vm_section(lang, pre):
@@ -334,7 +339,7 @@ def vm_section(lang, pre):
  <div class="vm-vision reveal">{net}
   <div><p class="vm-eyebrow">{L("Notre vision","Our vision")}</p>
   <h2>{L("Devenir la référence dans la connexion des <em>opportunités économiques</em> entre l’Afrique et le reste du monde.","To become the reference in connecting <em>economic opportunities</em> between Africa and the rest of the world.")}</h2></div>
-  <div class="vm-orb"><span>{ic('<path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>')}</span></div>
+  <div class="vm-photo"><img src="/assets/handshake.jpg" alt="{L("Poignée de main devant une carte du monde","Handshake in front of a world map")}" width="1024" height="1024" loading="lazy"></div>
  </div>
  <div class="vm-head reveal"><p class="vm-eyebrow">{L("Notre mission","Our mission")}</p><h3>{L("Sept engagements pour faire avancer vos projets.","Seven commitments to move your projects forward.")}</h3></div>
  <div class="vm-grid">{cards}</div>
