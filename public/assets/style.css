@@ -183,3 +183,35 @@ input:focus,select:focus,textarea:focus{outline:0;border-color:var(--gold);box-s
 .pole-body{display:flex;flex-direction:column;gap:.7rem;flex:1;padding:1.5rem 1.7rem 1.7rem}
 .pole-body h3{margin:0}
 .pole-body p{color:var(--mut);font-size:.95rem;flex:1;margin:0}
+
+/* ===== mobile refinements (2-col compact cards) ===== */
+@media(max-width:600px){
+ /* mission: 7 engagements as compact cards */
+ .vm .vm-list{display:grid;grid-template-columns:1fr 1fr;gap:.7rem;border-bottom:0}
+ .vm .vm-list .vm-row{display:block;padding:1rem .95rem 1.05rem;background:#fff;border:1px solid #e3eaf6;border-top:3px solid #c8962a;border-radius:14px;box-shadow:0 6px 16px rgba(16,38,74,.05)}
+ .vm .vm-list .vm-row::before{display:none}
+ .vm .vm-list .vm-row:hover{padding-left:.95rem}
+ .vm .vm-list .vm-row:last-child{grid-column:1/-1}
+ .vm .vm-list .vm-n{display:block;font-size:.85rem;margin-bottom:.35rem}
+ .vm .vm-list .vm-row h4{font-size:1.08rem;margin-bottom:.3rem}
+ .vm .vm-list .vm-row p{grid-column:auto;margin:0;font-size:.82rem;line-height:1.45}
+ /* approach: 2x2 cards */
+ .steps{grid-template-columns:1fr 1fr;gap:.7rem}
+ .steps li{background:#f4f7fd;border:1px solid #e3eaf6;border-top:3px solid var(--gold);border-radius:14px;padding:1rem .95rem 1.05rem}
+ .steps .n{font-size:1.5rem}
+ .steps h3{font-size:1.05rem;margin:.3rem 0 .25rem}
+ .steps p{font-size:.82rem;line-height:1.45}
+ /* poles: 2 per row */
+ .grid{grid-template-columns:1fr 1fr;gap:.7rem}
+ .grid .card:last-child:nth-child(odd){grid-column:1/-1}
+ .card.pole.has-photo{border-radius:14px}
+ .pole-photo .ico-wrap{left:.6rem;width:36px;height:36px;border-radius:10px 10px 0 0}
+ .pole-photo .ico-wrap .ico{width:18px;height:18px}
+ .pole-body{padding:.9rem .85rem 1rem;gap:.45rem}
+ .pole-body h3{font-size:1rem;line-height:1.2}
+ .pole-body p{font-size:.78rem;line-height:1.4}
+ .pole-body .more{font-size:.8rem}
+ .card.pole.cta-card{padding:1rem .9rem}
+ .cta-card h3{font-size:1.05rem}
+ .cta-card p{font-size:.8rem}
+}
