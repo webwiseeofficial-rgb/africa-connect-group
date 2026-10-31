@@ -557,6 +557,7 @@ def build():
             path = f"/poles/{p['slug']}"
             write(lang, path, page(lang, path, f"{p['name'][lang]} — {base}", p["intro"][lang], pole_page(p, lang), path))
     (OUT / "404.html").write_text((OUT / "index.html").read_text(encoding="utf-8"), encoding="utf-8")
+    (OUT / "version.txt").write_text("Africa Connect Group site - build " + __import__("datetime").datetime.now().strftime("%Y-%m-%d %H:%M") + " - vision photo + stat card + transparent logo\n", encoding="utf-8")
     print("built:", len(list(OUT.rglob('*.html'))), "pages")
 
 if __name__ == "__main__":
