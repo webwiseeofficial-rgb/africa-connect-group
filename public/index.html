@@ -150,6 +150,28 @@
  .wwa-in{gap:0}
  .wwa{padding:2.8rem 0 3.4rem}
 }
+
+.vm-mission{display:grid;grid-template-columns:5fr 7fr;gap:clamp(2rem,6vw,5rem);margin-top:clamp(3.5rem,7vw,5.5rem);align-items:start}
+.vm-side{position:sticky;top:110px}
+.vm-side .vm-eyebrow{color:#c8962a}.vm-side .vm-eyebrow::before{background:#c8962a}
+.vm-side h3{font-size:clamp(1.8rem,3.4vw,2.6rem);line-height:1.15;color:#0a1a33;margin:0 0 1.6rem}
+.vm-link{display:inline-flex;gap:.6rem;font-weight:700;color:#0a1a33;border-bottom:2px solid #c8962a;padding-bottom:3px}
+.vm-link span{transition:transform .2s}.vm-link:hover span{transform:translateX(4px)}
+.vm-list{list-style:none;margin:0;padding:0;border-bottom:1px solid #d5dcea}
+.vm-row{display:grid;grid-template-columns:3.2rem 1fr 1.5fr;gap:0 1.4rem;align-items:baseline;padding:1.5rem 0;border-top:1px solid #d5dcea;position:relative;transition:padding .25s}
+.vm-row::before{content:"";position:absolute;left:0;top:-1px;height:1px;width:0;background:#c8962a;transition:width .4s}
+.vm-row:hover::before{width:100%}
+.vm-row:hover{padding-left:.6rem}
+.vm-n{font-family:Fraunces,Georgia,serif;font-size:1rem;color:#c8962a;font-weight:600}
+.vm-row h4{font-family:Fraunces,Georgia,serif;font-size:1.4rem;color:#0a1a33;margin:0;font-weight:600}
+.vm-row p{color:#5a6578;font-size:.98rem;line-height:1.6;margin:0}
+@media(max-width:900px){
+ .vm-mission{grid-template-columns:1fr;gap:1.8rem}
+ .vm-side{position:static}
+ .vm-row{grid-template-columns:2.6rem 1fr;padding:1.2rem 0}
+ .vm-row p{grid-column:2;margin-top:.35rem}
+ .vm-row:hover{padding-left:0}
+}
 </style>
 <div class="statwrap"><div class="wrap"><div class="statbar reveal">
  <div class="stat"><b>7</b><i></i><span>pôles d’activité complémentaires</span></div>
@@ -186,8 +208,12 @@
   <h2>Devenir la référence dans la connexion des <em>opportunités économiques</em> entre l’Afrique et le reste du monde.</h2></div>
   <div class="vm-photo"><img src="/assets/handshake.jpg" alt="Poignée de main devant une carte du monde" width="1024" height="1024" loading="lazy"></div>
  </div>
- <div class="vm-head reveal"><p class="vm-eyebrow">Notre mission</p><h3>Sept engagements pour faire avancer vos projets.</h3></div>
- <div class="vm-grid"><div class="vm-card reveal"><span class="vm-num">01</span><div class="vm-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/></svg></div><h4>Accompagner</h4><p>Aider les entreprises dans leur développement et leur stratégie commerciale.</p></div><div class="vm-card reveal"><span class="vm-num">02</span><div class="vm-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="5" cy="12" r="2"/><circle cx="19" cy="5" r="2"/><circle cx="19" cy="19" r="2"/><path d="M7 12l10-6M7 12l10 6"/></svg></div><h4>Connecter</h4><p>Relier producteurs, fournisseurs, acheteurs, investisseurs et partenaires.</p></div><div class="vm-card reveal"><span class="vm-num">03</span><div class="vm-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h12l4 6-10 12L2 9zM2 9h20M9 3l3 6 3-6M12 9v12"/></svg></div><h4>Valoriser</h4><p>Mettre en valeur les matières premières africaines.</p></div><div class="vm-card reveal"><span class="vm-num">04</span><div class="vm-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/></svg></div><h4>Exporter</h4><p>Ouvrir l’accès aux marchés internationaux.</p></div><div class="vm-card reveal"><span class="vm-num">05</span><div class="vm-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></svg></div><h4>Partenariats</h4><p>Faciliter les partenariats commerciaux et institutionnels.</p></div><div class="vm-card reveal"><span class="vm-num">06</span><div class="vm-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17l6-6 4 4 8-8M15 7h6v6"/></svg></div><h4>Entrepreneurs</h4><p>Structurer et développer les projets des PME et entrepreneurs.</p></div><div class="vm-card reveal"><span class="vm-num">07</span><div class="vm-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 19c0-8 5-14 15-14 0 10-6 15-14 15M5 19l8-8"/></svg></div><h4>Durabilité</h4><p>Promouvoir des initiatives durables, créatrices de valeur en Afrique.</p></div><a class="vm-card vm-cta reveal" href="/about#mission"><h4>Toute notre mission</h4><p>Découvrez comment nous agissons.</p><b>En savoir plus →</b></a></div>
+ <div class="vm-mission">
+  <div class="vm-side reveal"><p class="vm-eyebrow">Notre mission</p>
+   <h3>Sept engagements pour faire avancer vos projets.</h3>
+   <a class="vm-link" href="/about#mission">Lire toute la mission <span>→</span></a></div>
+  <ol class="vm-list"><li class="vm-row reveal"><span class="vm-n">01</span><h4>Accompagner</h4><p>Aider les entreprises dans leur développement et leur stratégie commerciale.</p></li><li class="vm-row reveal"><span class="vm-n">02</span><h4>Connecter</h4><p>Relier producteurs, fournisseurs, acheteurs, investisseurs et partenaires.</p></li><li class="vm-row reveal"><span class="vm-n">03</span><h4>Valoriser</h4><p>Mettre en valeur les matières premières africaines.</p></li><li class="vm-row reveal"><span class="vm-n">04</span><h4>Exporter</h4><p>Ouvrir l’accès aux marchés internationaux.</p></li><li class="vm-row reveal"><span class="vm-n">05</span><h4>Partenariats</h4><p>Faciliter les partenariats commerciaux et institutionnels.</p></li><li class="vm-row reveal"><span class="vm-n">06</span><h4>Entrepreneurs</h4><p>Structurer et développer les projets des PME et entrepreneurs.</p></li><li class="vm-row reveal"><span class="vm-n">07</span><h4>Durabilité</h4><p>Promouvoir des initiatives durables, créatrices de valeur en Afrique.</p></li></ol>
+ </div>
 </div></section>
 
 <section class="sec" id="poles">
