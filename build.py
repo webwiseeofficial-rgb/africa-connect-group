@@ -184,7 +184,7 @@ def page(lang, path, title, desc, body, alt_path):
 <link rel="alternate" hreflang="{other}" href="{ou(alt_path)}">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/style.css?v=18">
+<link rel="stylesheet" href="/assets/style.css?v=17">
 </head>
 <body>
 <a class="skip" href="#main">{t("skip", lang)}</a>
