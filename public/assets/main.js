@@ -7,14 +7,6 @@
  var els=d.querySelectorAll('.reveal');
  if('IntersectionObserver' in window){var io=new IntersectionObserver(function(es){es.forEach(function(x){if(x.isIntersecting){x.target.classList.add('in');io.unobserve(x.target)}})},{threshold:.12});els.forEach(function(e){io.observe(e)})}
  else els.forEach(function(e){e.classList.add('in')});
- var st=d.querySelector('.steps');
- if(st&&st.children.length){var dw=d.createElement('div');dw.className='steps-dots';dw.setAttribute('aria-hidden','true');
-  for(var k=0;k<st.children.length;k++)dw.appendChild(d.createElement('i'));
-  st.parentNode.insertBefore(dw,st.nextSibling);
-  var upd=function(){var kids=st.children,w=kids[0].offsetWidth+12,i=Math.round(st.scrollLeft/w);
-   if(st.scrollLeft+st.clientWidth>=st.scrollWidth-4)i=kids.length-1;
-   for(var m=0;m<dw.children.length;m++)dw.children[m].classList.toggle('on',m===i)};
-  st.addEventListener('scroll',upd,{passive:true});upd()}
  var f=d.getElementById('cform');if(!f)return;
  var q=new URLSearchParams(location.search).get('pole');if(q&&f.pole)f.pole.value=q;
  var fr=f.dataset.lang==='fr';
