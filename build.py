@@ -184,7 +184,7 @@ def page(lang, path, title, desc, body, alt_path):
 <link rel="alternate" hreflang="{other}" href="{ou(alt_path)}">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/style.css?v=10">
+<link rel="stylesheet" href="/assets/style.css?v=11">
 </head>
 <body>
 <a class="skip" href="#main">{t("skip", lang)}</a>
@@ -508,21 +508,19 @@ def contact_band(lang, pre):
     mail = ic('<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/>')
     tel = ic('<path d="M5 4h4l2 5-2.500 1.500a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/>')
     wa = ic('<path d="M21 12a8 8 0 0 1-11.600 7.100L4 20.500l1.400-4.600A8 8 0 1 1 21 12z"/><path d="M9 9.500c.5 2.500 2.500 4.500 5 5l1.200-1.200-2-1-.8.800c-.8-.4-1.600-1.200-2-2l.8-.8-1-2z"/>')
-    return f'''<section class="cta"><div class="wrap">
- <div class="cta-card reveal">
-  <div class="cta-main">
-   <p class="cta-eyebrow">{L("Parlons-en","Get in touch")}</p>
-   <h2>{L("Construisons ensemble votre prochaine <em>opportunité.</em>","Let’s build your next <em>opportunity</em> together.")}</h2>
-   <p class="cta-sub">{L("Un interlocuteur unique pour orienter votre projet vers le bon pôle. Réponse rapide par WhatsApp, e-mail ou téléphone.","A single point of contact to guide your project to the right division. Quick reply by WhatsApp, email or phone.")}</p>
-   <div class="cta-actions"><a class="btn btn-gold" href="{pre}/contact">{L("Nous contacter","Contact us")} <span aria-hidden="true">→</span></a>
-   <a class="btn btn-ghost" href="https://wa.me/{PHONE_WA}" target="_blank" rel="noopener">WhatsApp</a></div>
-  </div>
-  <ul class="cta-side">
+    return f'''<section class="cta"><div class="cta-rings" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+ <div class="wrap cta-in">
+  <p class="cta-eyebrow reveal">{L("Parlons-en","Get in touch")}</p>
+  <h2 class="reveal">{L("Construisons ensemble votre prochaine <em>opportunité.</em>","Let’s build your next <em>opportunity</em> together.")}</h2>
+  <p class="cta-sub reveal">{L("Un interlocuteur unique pour orienter votre projet vers le bon pôle. Réponse rapide par WhatsApp, e-mail ou téléphone.","A single point of contact to guide your project to the right division. Quick reply by WhatsApp, email or phone.")}</p>
+  <div class="cta-actions reveal"><a class="btn btn-navy" href="{pre}/contact">{L("Nous contacter","Contact us")} <span aria-hidden="true">→</span></a>
+   <a class="btn btn-line" href="https://wa.me/{PHONE_WA}" target="_blank" rel="noopener">{wa} WhatsApp</a></div>
+  <ul class="cta-ch reveal">
    <li><a href="mailto:{EMAIL}"><span class="cta-i">{mail}</span><span><small>E-mail</small><b>{EMAIL}</b></span></a></li>
    <li><a href="tel:{PHONE1}"><span class="cta-i">{tel}</span><span><small>{L("Téléphone","Phone")}</small><b>{PHONE1_D}</b></span></a></li>
    <li><a href="https://wa.me/{PHONE_WA}" target="_blank" rel="noopener"><span class="cta-i">{wa}</span><span><small>WhatsApp</small><b>{PHONE1_D}</b></span></a></li>
   </ul>
- </div></div></section>'''
+ </div></section>'''
 
 def about(lang):
     pre = "" if lang == "fr" else "/en"
