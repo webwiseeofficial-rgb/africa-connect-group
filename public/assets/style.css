@@ -442,24 +442,34 @@ section#opportunities .opp-box{background:rgba(10,26,51,.5);border:1px solid rgb
  .mb-go{flex:1 1 auto;min-width:0;background:var(--gold);border-color:var(--gold);color:#1a1200}
 }
 
-/* ===== who we are: handshake panel ===== */
+/* ===== who we are: Africa map ===== */
 .wwa .wwa-in{align-items:center}
-.wwa .wwa-vis{display:block;position:relative;width:100%;max-width:500px;margin-inline:auto;aspect-ratio:5/6;min-height:0;border:0;background:none;overflow:visible;border-radius:0}
-.wwa .wwa-glow{position:absolute;inset:0;left:0;top:0;width:auto;transform:none;aspect-ratio:auto;border-radius:34px;overflow:hidden;background:radial-gradient(90% 70% at 50% 35%,#2a63b8 0,rgba(42,99,184,0) 70%),linear-gradient(165deg,#16346a,#0a1a33);box-shadow:0 34px 70px rgba(10,26,51,.28)}
-.wwa .wwa-glow::before{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.22) 1.2px,transparent 1.6px);background-size:18px 18px;-webkit-mask-image:linear-gradient(180deg,#000,transparent 75%);mask-image:linear-gradient(180deg,#000,transparent 75%)}
-.wwa .wwa-glow::after{content:"";position:absolute;left:0;right:0;top:0;height:4px;background:linear-gradient(90deg,#c8962a,#e3b650,transparent 80%)}
-.wwa .wwa-ring{left:50%;top:50%;width:82%;border:1.5px solid rgba(227,182,80,.4);z-index:1}
-.wwa .wwa-ring::after{content:"";position:absolute;width:12px;height:12px;border-radius:50%;background:#e3b650;box-shadow:0 0 0 7px rgba(227,182,80,.18);right:12%;top:8%}
-.wwa .wwa-dots,.wwa .wwa-strip{display:none}
-.wwa .wwa-vis img{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);height:90%;width:auto;max-width:none;z-index:2;filter:drop-shadow(0 22px 24px rgba(0,0,0,.4))}
-.wwa .wwa-card{z-index:3}
-.wwa .wc1{left:-2.2rem;top:15%}.wwa .wc2{right:-2.2rem;top:auto;bottom:17%}
+.wwa .wwa-vis{display:grid;place-items:center;position:relative;width:100%;max-width:540px;margin-inline:auto;aspect-ratio:1;min-height:0;border:0;background:none;overflow:visible;border-radius:0}
+.wwa .wwa-glow{position:absolute;left:50%;top:50%;width:100%;aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle,#e6edfa 0,#f4f7fd 55%,transparent 72%);box-shadow:none;overflow:visible}
+.wwa .wwa-glow::before,.wwa .wwa-glow::after{display:none}
+.wwa .wwa-ring{left:50%;top:50%;width:90%;border:1.5px dashed rgba(200,150,42,.55)}
+.wwa .wwa-ring::after{display:none}
+.wwa .wwa-dots{display:block;right:0;bottom:3%;width:110px;height:110px}
+.wwa .wwa-strip{display:none}
+.wwa-map{position:relative;z-index:2;width:72%;aspect-ratio:980/1048;filter:drop-shadow(0 24px 24px rgba(10,26,51,.25))}
+.map-fill{position:absolute;inset:0;background:radial-gradient(rgba(255,255,255,.22) 1.3px,transparent 1.7px) 0 0/15px 15px,linear-gradient(160deg,#2a63b8 0%,#16346a 45%,#0a1a33 100%);-webkit-mask:url(/assets/africa-map.png) center/100% 100% no-repeat;mask:url(/assets/africa-map.png) center/100% 100% no-repeat}
+.wwa-map svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.map-arcs path{stroke-dasharray:10 14;animation:mflow 2.4s linear infinite}
+@keyframes mflow{to{stroke-dashoffset:-48}}
+.map-pulse{transform-box:fill-box;transform-origin:center;animation:mpulse 2.4s ease-out infinite}
+@keyframes mpulse{0%{transform:scale(1);opacity:.55}100%{transform:scale(3.2);opacity:0}}
+.map-lbl{position:absolute;z-index:3;background:#fff;color:#0a1a33;border-radius:12px;padding:.45rem .8rem;box-shadow:0 12px 28px rgba(16,38,74,.22);border-left:3px solid #c8962a;line-height:1.2;white-space:nowrap}
+.map-lbl b{display:block;font-size:.88rem}.map-lbl small{display:block;font-size:.7rem;color:#5a6578;font-weight:600}
+.l-drc{left:58.5%;top:56%;transform:translate(calc(-100% + 4px),30px)}
+.l-sa{left:65.8%;top:87.5%;transform:translate(22px,-50%)}
 /* lighter pills */
 .wwa .wwa-pills{grid-template-columns:repeat(3,1fr);max-width:none;gap:.8rem}
 .wwa .wwa-pills li{flex-direction:column;align-items:flex-start;gap:.7rem;padding:1rem;font-size:.92rem;line-height:1.3;box-shadow:none;background:#f7f9fd}
 @media(max-width:860px){
- .wwa .wwa-vis{max-width:420px;aspect-ratio:1/1.1;margin-top:2.4rem}
- .wwa .wc1{left:.8rem;top:.8rem}.wwa .wc2{right:.8rem;bottom:.8rem}
+ .wwa .wwa-vis{max-width:400px;margin-top:2rem}
+ .wwa-map{width:76%}
+ .map-lbl{padding:.35rem .6rem}.map-lbl b{font-size:.78rem}.map-lbl small{font-size:.64rem}
+ .l-drc{transform:translate(calc(-100% + 2px),24px)}.l-sa{transform:translate(calc(-100% - 12px),-50%)}
  .wwa .wwa-pills{grid-template-columns:1fr}
  .wwa .wwa-pills li{flex-direction:row;align-items:center}
 }
