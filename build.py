@@ -113,6 +113,13 @@ MISSION = dict(
  fr=["Accompagner les entreprises dans leur développement et leur stratégie commerciale.","Faciliter les relations d’affaires entre producteurs, fournisseurs, acheteurs, investisseurs et partenaires.","Contribuer à la valorisation des matières premières africaines.","Favoriser les opportunités d’exportation et l’accès aux marchés internationaux.","Faciliter les partenariats commerciaux et institutionnels.","Accompagner les PME et les entrepreneurs dans la structuration et le développement de leurs projets.","Promouvoir des initiatives économiques durables et créatrices de valeur en Afrique."],
  en=["Support companies in their development and commercial strategy.","Facilitate business relationships between producers, suppliers, buyers, investors and partners.","Contribute to the value-addition of African raw materials.","Promote export opportunities and access to international markets.","Facilitate commercial and institutional partnerships.","Help SMEs and entrepreneurs structure and grow their projects.","Promote sustainable, value-creating economic initiatives in Africa."])
 
+VAL_ICONS = [
+ '<path d="M12 3l8 3v6c0 4.500-3.200 8-8 9-4.800-1-8-4.500-8-9V6z"/><path d="M8.500 12l2.500 2.500 4.500-5"/>',
+ '<circle cx="9" cy="12" r="5.500"/><circle cx="15" cy="12" r="5.500"/>',
+ '<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.600 2.600 3.800 5.600 3.800 9S14.600 18.400 12 21c-2.600-2.600-3.800-5.600-3.800-9S9.400 5.600 12 3z"/>',
+ '<path d="M12 3v18M6 21h12M5 6.500h14M5 6.500l-3 7a3.500 3.500 0 0 0 6 0zM19 6.500l-3 7a3.500 3.500 0 0 0 6 0z"/>',
+]
+
 VALUES = dict(
  fr=[("Confiance","Des relations d’affaires fondées sur la transparence et la fiabilité."),("Partenariat","Des collaborations durables, gagnantes pour toutes les parties."),("Ouverture","Un regard international, un ancrage africain."),("Responsabilité","Une création de valeur respectueuse des réglementations et des ressources.")],
  en=[("Trust","Business relationships built on transparency and reliability."),("Partnership","Lasting collaborations that work for every party."),("Openness","An international outlook, rooted in Africa."),("Responsibility","Value creation that respects regulations and resources.")])
@@ -177,7 +184,7 @@ def page(lang, path, title, desc, body, alt_path):
 <link rel="alternate" hreflang="{other}" href="{ou(alt_path)}">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/style.css?v=8">
+<link rel="stylesheet" href="/assets/style.css?v=9">
 </head>
 <body>
 <a class="skip" href="#main">{t("skip", lang)}</a>
@@ -490,7 +497,7 @@ def home(lang):
 <section class="sec">
  <div class="wrap">
   <div class="sec-head reveal"><p class="eyebrow dark">{L("Nos valeurs","Our values")}</p><h2>{L("Ce qui guide nos collaborations.","What guides our collaborations.")}</h2></div>
-  <div class="vals">{"".join(f'<div class="val reveal"><h3>{a}</h3><p>{b}</p></div>' for a,b in VALUES[lang])}</div>
+  <div class="vals vproc" data-wm="{L("VALEURS","VALUES")}">{"".join(f'<div class="vp reveal"><div class="vp-c"><span class="vp-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{VAL_ICONS[i]}</svg></span><span class="vp-n">0{i+1}</span></div><h3>{a}</h3><p>{b}</p></div>' for i,(a,b) in enumerate(VALUES[lang]))}</div>
  </div>
 </section>
 {contact_band(lang, pre)}'''
@@ -526,7 +533,7 @@ def about(lang):
 </div></section>
 <section class="sec sec-soft"><div class="wrap">
  <div class="sec-head reveal"><h2>{L("Nos valeurs","Our values")}</h2></div>
- <div class="vals">{"".join(f'<div class="val reveal"><h3>{a}</h3><p>{b}</p></div>' for a,b in VALUES[lang])}</div></div></section>
+ <div class="vals vproc" data-wm="{L("VALEURS","VALUES")}">{"".join(f'<div class="vp reveal"><div class="vp-c"><span class="vp-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{VAL_ICONS[i]}</svg></span><span class="vp-n">0{i+1}</span></div><h3>{a}</h3><p>{b}</p></div>' for i,(a,b) in enumerate(VALUES[lang]))}</div></div></section>
 <section class="sec"><div class="wrap split">
  <div class="reveal"><h2>{L("Notre ambition à long terme","Our long-term ambition")}</h2></div>
  <div class="reveal"><p>{L("Renforcer notre présence sur plusieurs marchés africains, développer des partenariats internationaux, accompagner des projets de valorisation des ressources et contribuer à la création d’opportunités économiques durables.","Strengthen our presence across several African markets, develop international partnerships, support resource value-addition projects and contribute to creating sustainable economic opportunities.")}</p>
