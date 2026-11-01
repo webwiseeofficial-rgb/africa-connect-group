@@ -280,3 +280,31 @@ section.sec#poles{padding-top:clamp(1.5rem,4vw,3rem)}
  .ftr-ct .em{grid-column:1/-1}
  .ftr-bot{margin-top:1.4rem;padding:1rem 0;flex-direction:column;gap:.2rem}
 }
+
+/* ===== values: process timeline ===== */
+.vals.vproc{position:relative;display:grid;grid-template-columns:repeat(4,1fr);gap:0;padding-top:1rem}
+.vproc::before{content:attr(data-wm);position:absolute;left:50%;top:-2.2rem;transform:translateX(-50%);font-weight:800;font-size:clamp(4rem,11vw,8.5rem);letter-spacing:.06em;color:transparent;-webkit-text-stroke:1px rgba(10,26,51,.07);white-space:nowrap;pointer-events:none;z-index:0}
+.vp{position:relative;z-index:1;text-align:center;padding:0 1.1rem}
+.vp-c{position:relative;width:84px;height:84px;margin:0 auto 1.3rem}
+.vp-ico{width:84px;height:84px;border-radius:50%;background:linear-gradient(135deg,#1b3f7a,var(--navy));color:var(--gold2);display:grid;place-items:center;box-shadow:0 14px 28px rgba(10,26,51,.22),0 0 0 6px rgba(200,150,42,.12)}
+.vp-ico svg{width:36px;height:36px}
+.vp-n{position:absolute;right:-6px;top:4px;width:30px;height:30px;border-radius:50%;background:var(--gold);color:var(--navy);font-size:.78rem;font-weight:800;display:grid;place-items:center;border:3px solid #fff}
+.sec-soft .vp-n{border-color:var(--soft)}
+.vp:not(:last-child)::after{content:"";position:absolute;top:42px;left:calc(50% + 62px);width:calc(100% - 124px);border-top:2px dashed rgba(200,150,42,.6)}
+.vp h3{font-size:1.3rem;color:var(--navy);margin:0 0 .5rem}
+.vp p{color:var(--mut);font-size:.95rem;line-height:1.55;max-width:240px;margin:0 auto}
+@media(max-width:1000px) and (min-width:601px){
+ .vals.vproc{grid-template-columns:1fr 1fr;gap:2.2rem 0}.vproc::before{display:none}
+ .vp:not(:last-child)::after{display:none}
+}
+@media(max-width:600px){
+ .vals.vproc{grid-template-columns:1fr;padding-top:0}.vproc::before{display:none}
+ .vp{display:grid;grid-template-columns:62px 1fr;grid-template-rows:auto 1fr;column-gap:1rem;text-align:left;padding:0 0 1.7rem}
+ .vp-c{grid-row:1/3;width:62px;height:62px;margin:0}
+ .vp-ico{width:62px;height:62px;box-shadow:0 10px 20px rgba(10,26,51,.2),0 0 0 4px rgba(200,150,42,.12)}
+ .vp-ico svg{width:28px;height:28px}
+ .vp-n{width:24px;height:24px;font-size:.66rem;right:-6px;top:0;border-width:2px}
+ .vp h3{font-size:1.2rem;margin:.15rem 0 .25rem;align-self:end}
+ .vp p{max-width:none;margin:0;font-size:.92rem}
+ .vp:not(:last-child)::after{display:block;top:72px;bottom:10px;left:30px;width:0;height:auto;border-top:0;border-left:2px dashed rgba(200,150,42,.6)}
+}
