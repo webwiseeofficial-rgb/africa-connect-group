@@ -106,13 +106,6 @@ VALUES = dict(
  fr=[("Confiance","Des relations d’affaires fondées sur la transparence et la fiabilité."),("Partenariat","Des collaborations durables, gagnantes pour toutes les parties."),("Ouverture","Un regard international, un ancrage africain."),("Responsabilité","Une création de valeur respectueuse des réglementations et des ressources.")],
  en=[("Trust","Business relationships built on transparency and reliability."),("Partnership","Lasting collaborations that work for every party."),("Openness","An international outlook, rooted in Africa."),("Responsibility","Value creation that respects regulations and resources.")])
 
-STEP_ICONS = [
- '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20.5l1.4-4.6A8 8 0 1 1 21 12z"/><path d="M8.5 11h7M8.5 14h4"/></svg>',
- '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="5" cy="12" r="2"/><circle cx="19" cy="5" r="2"/><circle cx="19" cy="19" r="2"/><path d="M7 12l10-6M7 12l10 6"/></svg>',
- '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l9 5-9 5-9-5z"/><path d="M3 12.5l9 5 9-5M3 17l9 5 9-5"/></svg>',
- '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h16M14 6l6 6-6 6"/></svg>',
-]
-
 STEPS = dict(
  fr=[("Écouter","Nous comprenons votre besoin, votre offre ou votre projet."),("Connecter","Nous identifions et vous mettons en relation avec les bons partenaires."),("Structurer","Nous vous aidons à cadrer l’opportunité et à préparer la discussion."),("Avancer","Nous facilitons la suite pour concrétiser la collaboration.")],
  en=[("Listen","We understand your need, your offer or your project."),("Connect","We identify the right partners and introduce you."),("Structure","We help frame the opportunity and prepare the discussion."),("Move forward","We facilitate next steps to make the collaboration real.")])
@@ -140,6 +133,26 @@ def net_svg():
         dots.append(f'<circle cx="{x}" cy="{y}" r="{r}" style="animation-delay:{(i*0.37)%4:.2f}s"/>')
     return f'<svg class="net" viewBox="0 0 600 500" aria-hidden="true"><g class="net-l">{"".join(lines)}</g><g class="net-d">{"".join(dots)}</g></svg>'
 
+FOOT_CSS = """<style>
+.ft{position:relative;background:linear-gradient(180deg,#0a1a33,#060f22);color:rgba(255,255,255,.72);padding-top:clamp(3rem,6vw,4.5rem)}
+.ft::before{content:"";position:absolute;left:0;right:0;top:0;height:3px;background:linear-gradient(90deg,#1e7a3c,#c8962a 45%,#e3b650 70%,#c8962a)}
+.ft-top{display:grid;grid-template-columns:1.5fr .8fr 1.1fr 1.4fr;gap:2.5rem 3rem}
+.ft-logo{display:inline-block;background:#fff;border-radius:14px;padding:.6rem .9rem;box-shadow:0 10px 30px rgba(0,0,0,.3)}
+.ft-logo img{height:62px;width:auto;display:block}
+.ft-brand p{margin:1.2rem 0 1.4rem;max-width:20rem;color:rgba(255,255,255,.65);line-height:1.6}
+.ft-wa{display:inline-flex;gap:.6rem;align-items:center;border:1px solid rgba(227,182,80,.6);color:#e3b650;border-radius:99px;padding:.6rem 1.1rem;font-weight:700;font-size:.9rem;transition:.2s}
+.ft-wa:hover{background:#e3b650;color:#0a1a33}
+.ft-col h4{font-family:Manrope,system-ui,sans-serif;text-transform:uppercase;letter-spacing:.14em;font-size:.74rem;font-weight:700;color:#e3b650;margin:.4rem 0 1.1rem}
+.ft-col>a{display:block;padding:.28rem 0;font-size:.95rem;color:rgba(255,255,255,.78);transition:.2s;width:fit-content}
+.ft-col>a:hover{color:#fff;transform:translateX(4px)}
+.ft-col .ft-ct{padding:.5rem 0;border-bottom:1px solid rgba(255,255,255,.1);width:100%;word-break:break-word;color:#fff}
+.ft-col .ft-ct:first-of-type{padding-top:0}
+.ft-ct small{display:block;font-size:.7rem;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.45);margin-bottom:.1rem}
+.ft-bot{display:flex;justify-content:space-between;flex-wrap:wrap;gap:.6rem 2rem;margin-top:clamp(2.5rem,5vw,3.5rem);padding:1.4rem 0 1.6rem;border-top:1px solid rgba(255,255,255,.1);font-size:.8rem;color:rgba(255,255,255,.45)}
+@media(max-width:980px){.ft-top{grid-template-columns:1fr 1fr}.ft-brand{grid-column:1/-1}.ft-col:last-child{grid-column:1/-1}}
+@media(max-width:520px){.ft-top{gap:2rem 1.2rem}.ft-bot{flex-direction:column;text-align:left}}
+</style>"""
+
 def page(lang, path, title, desc, body, alt_path):
     other = "en" if lang == "fr" else "fr"
     pre = "" if lang == "fr" else "/en"
@@ -166,7 +179,8 @@ def page(lang, path, title, desc, body, alt_path):
 <link rel="alternate" hreflang="{other}" href="{ou(alt_path)}">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/style.css?v=7">
+<link rel="stylesheet" href="/assets/style.css?v=4">
+{FOOT_CSS}
 </head>
 <body>
 <a class="skip" href="#main">{t("skip", lang)}</a>
@@ -182,27 +196,27 @@ def page(lang, path, title, desc, body, alt_path):
 <main id="main">
 {body.replace("{{U}}", pre)}
 </main>
-<footer class="ftr">
- <div class="wrap ftr-grid">
-  <div>
-   <a class="ftr-logo" href="{u("/")}"><img src="/assets/logo-wide.png" alt="Africa Connect Group" width="798" height="394"></a>
-   <p class="muted">{tagline}</p>
-   <p class="muted small">Africa Connect Group SARL · RDC</p>
+<footer class="ft">
+ <div class="wrap ft-top">
+  <div class="ft-brand">
+   <a class="ft-logo" href="{u("/")}"><img src="/assets/logo-wide.png" alt="Africa Connect Group" width="798" height="394"></a>
+   <p>{tagline}</p>
+   <a class="ft-wa" href="https://wa.me/{PHONE_WA}" target="_blank" rel="noopener">{"Discuter sur WhatsApp" if lang=="fr" else "Chat on WhatsApp"} <span>→</span></a>
   </div>
-  <div><h4>{t("nav_poles", lang)}</h4>{poles_foot}</div>
-  <div><h4>{t("nav_contact", lang)}</h4>
-   <a href="mailto:{EMAIL}">{EMAIL}</a>
-   <a href="tel:{PHONE1}">{PHONE1_D}</a>
-   <a href="tel:{PHONE2}">{PHONE2_D}</a>
-   <a href="https://wa.me/{PHONE_WA}" target="_blank" rel="noopener">WhatsApp</a>
-  </div>
+  <nav class="ft-col" aria-label="Footer"><h4>{"Navigation" if lang=="fr" else "Navigation"}</h4>
+   <a href="{u("/")}">{t("nav_home", lang)}</a><a href="{u("/about")}">{t("nav_about", lang)}</a><a href="{u("/#poles")}">{t("nav_poles", lang)}</a><a href="{u("/contact")}">{t("nav_contact", lang)}</a></nav>
+  <div class="ft-col"><h4>{t("nav_poles", lang)}</h4>{poles_foot}</div>
+  <div class="ft-col"><h4>Contact</h4>
+   <a class="ft-ct" href="mailto:{EMAIL}"><small>{"E-mail" if lang=="fr" else "Email"}</small>{EMAIL}</a>
+   <a class="ft-ct" href="tel:{PHONE1}"><small>{"Téléphone · RDC" if lang=="fr" else "Phone · DRC"}</small>{PHONE1_D}</a>
+   <a class="ft-ct" href="tel:{PHONE2}"><small>{"Téléphone · Algérie" if lang=="fr" else "Phone · Algeria"}</small>{PHONE2_D}</a></div>
  </div>
- <div class="wrap ftr-bot"><span>© 2026 Africa Connect Group SARL.</span><span>{"Tous droits réservés." if lang=="fr" else "All rights reserved."}</span></div>
+ <div class="wrap ft-bot"><span>© 2026 Africa Connect Group SARL. {"Tous droits réservés." if lang=="fr" else "All rights reserved."}</span><span>{"RDC · Afrique australe · International" if lang=="fr" else "DRC · Southern Africa · International"}</span></div>
 </footer>
 <a class="wa-float" href="https://wa.me/{PHONE_WA}?text={esc(wa_msg)}" target="_blank" rel="noopener" aria-label="WhatsApp">
  <svg viewBox="0 0 32 32" width="28" height="28" fill="#fff" aria-hidden="true"><path d="M16 3C9 3 3.3 8.6 3.3 15.5c0 2.3.6 4.4 1.7 6.3L3 29l7.4-1.9c1.8 1 3.800 1.500 5.900 1.500 7 0 12.700-5.600 12.700-12.500S23 3 16 3zm0 22.800c-1.900 0-3.700-.5-5.300-1.500l-.4-.2-4.400 1.100 1.200-4.200-.3-.4c-1.100-1.700-1.600-3.600-1.600-5.600C5.200 9.700 10 5 16 5s10.800 4.700 10.800 10.500S21.900 25.800 16 25.800zm5.900-7.800c-.3-.2-1.900-.9-2.200-1-.3-.1-.5-.2-.7.200-.2.300-.8 1-1 1.200-.2.200-.4.200-.7.100-.3-.2-1.400-.5-2.600-1.600-1-.9-1.600-1.900-1.800-2.200-.2-.3 0-.5.100-.7l.5-.6c.2-.2.200-.3.300-.5.100-.2.100-.4 0-.6l-1-2.300c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.6.100-.9.400-.3.300-1.200 1.100-1.200 2.700s1.200 3.200 1.400 3.400c.2.200 2.300 3.500 5.600 4.900.8.300 1.400.5 1.900.6.8.2 1.500.2 2.100.1.600-.1 1.900-.8 2.200-1.500.3-.8.3-1.400.2-1.500-.1-.2-.3-.3-.6-.4z"/></svg>
 </a>
-<script src="/assets/main.js?v=5" defer></script>
+<script src="/assets/main.js?v=4" defer></script>
 </body>
 </html>'''
 
@@ -216,10 +230,10 @@ def write(lang, path, html_):
 def li(items): return "<ul class='ticks'>" + "".join(f"<li>{esc(i)}</li>" for i in items) + "</ul>"
 
 def pole_card(p, lang, pre):
-    return f'''<a class="card pole has-photo reveal" href="{pre}/poles/{p["slug"]}">
- <span class="pole-photo"><img src="/assets/poles/{p["slug"]}.jpg" alt="{p["name"][lang]}" width="736" height="552" loading="lazy"><span class="ico-wrap">{icon(p["icon"])}</span></span>
- <span class="pole-body"><h3>{p["name"][lang]}</h3><p>{esc(p["short"][lang])}</p>
- <span class="more">{"Découvrir" if lang=="fr" else "Explore"} →</span></span></a>'''
+    return f'''<a class="card pole reveal" href="{pre}/poles/{p["slug"]}">
+ <span class="ico-wrap">{icon(p["icon"])}</span>
+ <h3>{p["name"][lang]}</h3><p>{esc(p["short"][lang])}</p>
+ <span class="more">{"Découvrir" if lang=="fr" else "Explore"} →</span></a>'''
 
 # ----------------------------------------------------------------- PAGES
 WWA_CSS = """<style>
@@ -353,6 +367,22 @@ WWA_CSS = """<style>
  .vm-row p{grid-column:2;margin-top:.35rem}
  .vm-row:hover{padding-left:0}
 }
+
+.aud{position:relative;background:radial-gradient(110% 130% at 0 0,#16346a 0,#0a1a33 62%);color:#fff;padding:clamp(3.5rem,8vw,6rem) 0;overflow:hidden}
+.aud-head{display:grid;grid-template-columns:1.3fr 1fr;gap:2rem 4rem;align-items:end;margin-bottom:clamp(2rem,5vw,3.2rem)}
+.aud-eyebrow{display:inline-flex;align-items:center;gap:.6rem;text-transform:uppercase;letter-spacing:.16em;font-size:.76rem;font-weight:700;color:#e3b650;margin:0 0 1rem}
+.aud-eyebrow::before{content:"";width:34px;height:2px;background:#e3b650}
+.aud h2{font-size:clamp(1.8rem,3.8vw,2.7rem);color:#fff;margin:0}
+.aud h2 em{color:#e3b650}
+.aud-head>p{color:rgba(255,255,255,.7);margin:0;max-width:26rem;justify-self:end}
+.aud-grid{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid rgba(255,255,255,.16);border-left:1px solid rgba(255,255,255,.16)}
+.aud-cell{position:relative;min-height:150px;padding:1.7rem 1.5rem 1.4rem;border-right:1px solid rgba(255,255,255,.16);border-bottom:1px solid rgba(255,255,255,.16);display:flex;align-items:flex-end;transition:background .3s}
+.aud-cell::before{content:"";position:absolute;left:1.5rem;top:1.5rem;width:26px;height:2px;background:#c8962a;transition:width .35s}
+.aud-cell:hover{background:rgba(255,255,255,.06)}
+.aud-cell:hover::before{width:56px}
+.aud-cell span{font-family:Fraunces,Georgia,serif;font-size:1.22rem;line-height:1.3;color:#fff;font-weight:500}
+@media(max-width:1000px){.aud-grid{grid-template-columns:repeat(2,1fr)}.aud-head{grid-template-columns:1fr}.aud-head>p{justify-self:start}}
+@media(max-width:520px){.aud-grid{grid-template-columns:1fr}.aud-cell{min-height:0;padding:1.5rem 1.2rem 1.2rem 1.2rem}.aud-cell::before{left:1.2rem;top:1.1rem}.aud-cell span{font-size:1.1rem;margin-top:.9rem}}
 </style>"""
 
 def vm_section(lang, pre):
@@ -444,11 +474,14 @@ def home(lang):
  </div>
 </section>
 
-<section class="sec sec-soft">
+<section class="aud" id="audience">
  <div class="wrap">
-  <div class="sec-head reveal"><p class="eyebrow dark">{L("À qui nous nous adressons","Who we work with")}</p>
-   <h2>{L("Tous ceux qui font vivre les marchés africains.","Everyone who drives African markets.")}</h2></div>
-  <ul class="chips reveal">{"".join(f"<li>{esc(a)}</li>" for a in AUDIENCE[lang])}</ul>
+  <div class="aud-head reveal">
+   <div><p class="aud-eyebrow">{L("À qui nous nous adressons","Who we work with")}</p>
+   <h2>{L("Tous ceux qui font vivre les <em>marchés africains</em>.","Everyone who drives <em>African markets</em>.")}</h2></div>
+   <p>{L("Producteurs, acheteurs, investisseurs, institutions : nous travaillons avec l’ensemble des acteurs de la chaîne de valeur.","Producers, buyers, investors, institutions: we work with every player in the value chain.")}</p>
+  </div>
+  <ul class="aud-grid">{"".join(f'<li class="aud-cell reveal"><span>{esc(x)}</span></li>' for x in AUDIENCE[lang])}</ul>
  </div>
 </section>
 
@@ -456,7 +489,7 @@ def home(lang):
  <div class="wrap">
   <div class="sec-head reveal"><p class="eyebrow dark">{L("Notre approche","Our approach")}</p>
    <h2>{L("Comment collaborer avec nous.","How to work with us.")}</h2></div>
-  <ol class="steps">{"".join(f'<li class="step s{i+1} reveal"><span class="step-ico">{STEP_ICONS[i]}</span><span class="step-bg" aria-hidden="true">0{i+1}</span><div class="step-txt"><span class="step-k">{L("Étape","Step")} {i+1}</span><h3>{a}</h3><p>{b}</p></div></li>' for i,(a,b) in enumerate(STEPS[lang]))}</ol>
+  <ol class="steps">{"".join(f'<li class="reveal"><span class="n">0{i+1}</span><h3>{a}</h3><p>{b}</p></li>' for i,(a,b) in enumerate(STEPS[lang]))}</ol>
  </div>
 </section>
 
