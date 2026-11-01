@@ -17,6 +17,7 @@
   st.addEventListener('scroll',upd,{passive:true});upd()}
  var f=d.getElementById('cform');if(!f)return;
  var q=new URLSearchParams(location.search).get('pole');if(q&&f.pole)f.pole.value=q;
+ var qp=new URLSearchParams(location.search).get('profile');if(qp&&f.profile)f.profile.value=qp;
  var fr=f.dataset.lang==='fr';
  f.addEventListener('click',function(e){
   var btn=e.target.closest('[data-send]');if(!btn)return;
