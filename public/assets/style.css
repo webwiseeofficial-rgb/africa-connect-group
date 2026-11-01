@@ -354,3 +354,19 @@ section.sec#poles{padding-top:clamp(1.5rem,4vw,3rem)}
  .cta-ch b{font-size:.92rem}
  .cta-ch li:first-child b{font-size:.84rem}
 }
+
+/* ===== opportunities: photo background ===== */
+section#opportunities{position:relative;overflow:hidden;background:#0a1a33 url("/assets/opp-bg.jpg") center 12%/cover no-repeat;padding:clamp(4.5rem,9vw,7.5rem) 0}
+section#opportunities::before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(8,20,42,.9) 0%,rgba(10,30,62,.7) 42%,rgba(20,70,140,.18) 100%),linear-gradient(180deg,rgba(8,20,42,.15),rgba(8,20,42,0) 35%,rgba(8,20,42,.35))}
+section#opportunities::after{content:"";position:absolute;left:0;right:0;bottom:0;height:4px;background:linear-gradient(90deg,var(--gold),var(--gold2),transparent 70%)}
+section#opportunities .opp{position:relative;z-index:1}
+section#opportunities .opp h2{font-size:clamp(1.9rem,3.8vw,3rem);line-height:1.12;text-shadow:0 2px 18px rgba(0,0,0,.35)}
+section#opportunities .opp-box{background:rgba(10,26,51,.5);border:1px solid rgba(255,255,255,.2);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);box-shadow:0 24px 50px rgba(0,0,0,.3)}
+@media(max-width:900px){
+ section#opportunities{background-position:center top}
+ section#opportunities::before{background:linear-gradient(180deg,rgba(8,20,42,.82),rgba(10,26,51,.72) 55%,rgba(10,26,51,.85))}
+}
+@media(max-width:600px){
+ section#opportunities{padding:3.5rem 0}
+ section#opportunities .opp-box{padding:1.4rem 1.2rem}
+}
