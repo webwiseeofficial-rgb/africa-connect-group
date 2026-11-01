@@ -491,3 +491,29 @@ section#opportunities .opp-box{background:rgba(10,26,51,.5);border:1px solid rgb
  .r-t b{font-size:1.15rem}.r-t small{font-size:.88rem}
  .r-a{width:44px;height:44px;font-size:1.2rem}
 }
+
+/* ===== mobile menu: clean dropdown ===== */
+@media(max-width:900px){
+ .burger{width:48px;height:48px;background:#fff;border:1.5px solid #d9dfeb;border-radius:15px;margin-left:.4rem}
+ .burger span{left:13px;right:13px}
+ .burger span:first-child{top:18px}.burger span:last-child{top:26px}
+ .burger[aria-expanded=true]{border-color:#d9dfeb}
+ .burger[aria-expanded=true] span:first-child,.burger[aria-expanded=true] span:last-child{top:22px}
+ .nav{inset:72px 0 auto 0;background:rgba(255,255,255,.995);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);padding:1.1rem 1.6rem 1.6rem;border:0;border-radius:0 0 26px 26px;box-shadow:0 28px 50px rgba(10,26,51,.18);font-size:1.1rem;font-weight:500}
+ .nav a:not(.btn){padding:1rem 0;border-bottom:0;color:#2a3d5e}
+ .nav a:not(.btn)::after{display:none}
+ .nav a[aria-current]{color:var(--navy);font-weight:700}
+ .nav .nav-cta{margin-top:1rem;padding:1.05rem 1.2rem;background:var(--navy);border-color:var(--navy);color:#fff;font-size:1.05rem;font-weight:600}
+}
+
+/* ===== who we are on mobile: map as background of the text ===== */
+@media(max-width:860px){
+ .wwa .wwa-in{position:relative}
+ .wwa .wwa-txt{position:relative;z-index:2}
+ .wwa .wwa-p{color:#44526b}
+ .wwa .wwa-vis{position:absolute;inset:0;max-width:none;width:auto;margin:0;aspect-ratio:auto;z-index:0;pointer-events:none;display:block;overflow:hidden}
+ .wwa .wwa-glow,.wwa .wwa-ring,.wwa .wwa-dots,.wwa .map-lbl,.wwa .map-pulse{display:none}
+ .wwa .wwa-map{position:absolute;right:-8%;top:52%;transform:translateY(-50%);width:116%;opacity:.2;filter:none}
+ .wwa .wwa-map svg{display:none}
+ .wwa .wwa-pills li{background:rgba(255,255,255,.6);-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px)}
+}
