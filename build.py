@@ -184,7 +184,7 @@ def page(lang, path, title, desc, body, alt_path):
 <link rel="alternate" hreflang="{other}" href="{ou(alt_path)}">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/style.css?v=13">
+<link rel="stylesheet" href="/assets/style.css?v=14">
 </head>
 <body>
 <a class="skip" href="#main">{t("skip", lang)}</a>
@@ -220,7 +220,12 @@ def page(lang, path, title, desc, body, alt_path):
 <a class="wa-float" href="https://wa.me/{PHONE_WA}?text={esc(wa_msg)}" target="_blank" rel="noopener" aria-label="WhatsApp">
  <svg viewBox="0 0 32 32" width="28" height="28" fill="#fff" aria-hidden="true"><path d="M16 3C9 3 3.3 8.6 3.3 15.5c0 2.3.6 4.4 1.7 6.3L3 29l7.4-1.9c1.8 1 3.800 1.500 5.900 1.500 7 0 12.700-5.600 12.700-12.500S23 3 16 3zm0 22.800c-1.900 0-3.700-.5-5.300-1.500l-.4-.2-4.400 1.100 1.200-4.200-.3-.4c-1.100-1.700-1.600-3.600-1.600-5.600C5.200 9.700 10 5 16 5s10.800 4.700 10.800 10.500S21.900 25.800 16 25.800zm5.900-7.800c-.3-.2-1.900-.9-2.200-1-.3-.1-.5-.2-.7.200-.2.300-.8 1-1 1.200-.2.200-.4.200-.7.100-.3-.2-1.400-.5-2.600-1.600-1-.9-1.600-1.900-1.800-2.200-.2-.3 0-.5.100-.7l.5-.6c.2-.2.200-.3.300-.5.100-.2.100-.4 0-.6l-1-2.300c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.6.100-.9.400-.3.300-1.200 1.100-1.200 2.700s1.200 3.200 1.400 3.400c.2.200 2.300 3.500 5.600 4.900.8.300 1.400.5 1.900.6.8.2 1.500.2 2.100.1.600-.1 1.900-.8 2.200-1.500.3-.8.3-1.400.2-1.500-.1-.2-.3-.3-.6-.4z"/></svg>
 </a>
-<script src="/assets/main.js?v=5" defer></script>
+<nav class="mbar" aria-label="{"Actions rapides" if lang=="fr" else "Quick actions"}">
+ <a class="mb" href="tel:{PHONE1}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.500 1.500a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg>{"Appeler" if lang=="fr" else "Call"}</a>
+ <a class="mb" href="https://wa.me/{PHONE_WA}?text={esc(wa_msg)}" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.600 7.100L4 20.500l1.400-4.600A8 8 0 1 1 21 12z"/></svg>WhatsApp</a>
+ <a class="mb mb-go" href="{u("/contact")}">{"Nous contacter" if lang=="fr" else "Contact us"}</a>
+</nav>
+<script src="/assets/main.js?v=6" defer></script>
 </body>
 </html>'''
 
@@ -407,17 +412,24 @@ def home(lang):
     L = lambda fr, en: fr if lang == "fr" else en
     return f'''
 <section class="hero">
+ <div class="hero-bg" aria-hidden="true"></div>
  {net_svg()}
  <div class="wrap hero-in">
   <p class="eyebrow">{L("Conseil · Commerce international · Partenariats","Advisory · International trade · Partnerships")}</p>
   <h1>{L("Connecter les opportunités <em>africaines</em> au reste du monde.","Connecting <em>African</em> opportunities to the rest of the world.")}</h1>
   <p class="lead">{L("Africa Connect Group accompagne les entreprises, facilite les échanges commerciaux et crée des partenariats durables entre l’Afrique et les marchés internationaux.","Africa Connect Group supports businesses, facilitates trade and builds lasting partnerships between Africa and international markets.")}</p>
   <div class="actions">
-   <a class="btn btn-gold" href="{pre}/contact">{L("Proposer une collaboration","Propose a collaboration")}</a>
+   <a class="btn btn-gold" href="{pre}/contact">{L("Soumettre une opportunité","Submit an opportunity")} <span aria-hidden="true">→</span></a>
    <a class="btn btn-ghost" href="#poles">{L("Découvrir nos pôles","Discover our divisions")}</a>
   </div>
   <ul class="hero-tags"><li>{L("Ancrage en RDC","Rooted in the DRC")}</li><li>{L("Expansion en Afrique australe","Expanding in Southern Africa")}</li><li>{L("Ouverture internationale","International reach")}</li></ul>
  </div>
+ <div class="wrap quick-wrap"><form class="quick reveal" action="{pre}/contact" method="get">
+  <div class="q-title"><b>{L("Une demande ? Faites-nous-en part","Got a request? Tell us")}</b><span>{L("Réponse par WhatsApp, e-mail ou téléphone","Reply by WhatsApp, email or phone")}</span></div>
+  <label><small>{L("Je suis","I am")}</small><select name="profile"><option>{L("Acheteur","Buyer")}</option><option>{L("Fournisseur / producteur","Supplier / producer")}</option><option>{L("Investisseur","Investor")}</option><option>{L("Institution / organisation","Institution / organisation")}</option><option>{L("Entrepreneur / PME","Entrepreneur / SME")}</option><option>{L("Autre","Other")}</option></select></label>
+  <label><small>{L("Pôle concerné","Division")}</small><select name="pole"><option value="">{L("Je ne sais pas encore","Not sure yet")}</option>{"".join(f'<option value="{p["slug"]}">{p["name"][lang]}</option>' for p in POLES)}</select></label>
+  <button class="btn btn-gold" type="submit">{L("Envoyer ma demande","Send my request")} <span aria-hidden="true">→</span></button>
+ </form></div>
 </section>
 
 {WWA_CSS}
@@ -462,6 +474,26 @@ def home(lang):
  </div>
 </section>
 
+<section class="sec net-sec" id="why">
+ <div class="wrap net-grid">
+  <div class="net-vis reveal"><img src="/assets/network.jpg" alt="{L("Carte de l’Afrique reliée au reste du monde par un réseau de connexions","Map of Africa linked to the rest of the world by a network of connections")}" width="736" height="1104" loading="lazy">
+   <div class="net-badge"><b>7</b><span>{L("pôles · 1 seul interlocuteur","divisions · 1 point of contact")}</span></div></div>
+  <div class="net-txt">
+   <p class="eyebrow dark reveal">{L("Pourquoi Africa Connect Group","Why Africa Connect Group")}</p>
+   <h2 class="reveal">{L("Un seul partenaire pour relier l’Afrique aux marchés du monde.","One partner to link Africa to world markets.")}</h2>
+   <p class="net-lead reveal">{L("Nous orientons chaque projet vers le bon pôle et les bons interlocuteurs, pour gagner du temps et sécuriser vos collaborations.","We route each project to the right division and the right counterparts, saving you time and securing your collaborations.")}</p>
+   <ul class="net-list">
+    <li class="reveal"><span class="net-i"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM4 21c0-4 3.6-7 8-7s8 3 8 7"/></svg></span><div><h3>{L("Interlocuteur unique","Single point of contact")}</h3><p>{L("Une demande, une équipe : nous orientons votre projet vers le bon pôle.","One request, one team: we direct your project to the right division.")}</p></div></li>
+    <li class="reveal"><span class="net-i"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></span><div><h3>{L("Sept pôles complémentaires","Seven complementary divisions")}</h3><p>{L("Matières premières, export, investissement, formation, mines et durabilité.","Commodities, export, investment, training, mining and sustainability.")}</p></div></li>
+    <li class="reveal"><span class="net-i"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 2.6 3.8 5.6 3.8 9S14.6 18.4 12 21c-2.6-2.6-3.8-5.6-3.8-9S9.4 5.6 12 3z"/></svg></span><div><h3>{L("Ancrage africain, vision mondiale","African roots, global outlook")}</h3><p>{L("Basés en RDC, tournés vers l’Afrique australe et les marchés internationaux.","Based in the DRC, looking to Southern Africa and international markets.")}</p></div></li>
+    <li class="reveal"><span class="net-i"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 3v6c0 4.500-3.200 8-8 9-4.800-1-8-4.500-8-9V6z"/><path d="M8.500 12l2.500 2.500 4.500-5"/></svg></span><div><h3>{L("Pratiques responsables","Responsible practices")}</h3><p>{L("Transparence, respect des réglementations et création de valeur durable.","Transparency, regulatory compliance and sustainable value creation.")}</p></div></li>
+   </ul>
+   <div class="actions reveal"><a class="btn btn-navy" href="{pre}/contact">{L("Parler à notre équipe","Talk to our team")} <span aria-hidden="true">→</span></a>
+   <a class="btn btn-line" href="#poles">{L("Voir nos pôles","See our divisions")}</a></div>
+  </div>
+ </div>
+</section>
+
 <section class="sec sec-soft">
  <div class="wrap">
   <div class="sec-head reveal"><p class="eyebrow dark">{L("À qui nous nous adressons","Who we work with")}</p>
@@ -498,6 +530,21 @@ def home(lang):
  <div class="wrap">
   <div class="sec-head reveal"><p class="eyebrow dark">{L("Nos valeurs","Our values")}</p><h2>{L("Ce qui guide nos collaborations.","What guides our collaborations.")}</h2></div>
   <div class="vals vproc" data-wm="{L("VALEURS","VALUES")}">{"".join(f'<div class="vp reveal"><div class="vp-c"><span class="vp-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{VAL_ICONS[i]}</svg></span><span class="vp-n">0{i+1}</span></div><h3>{a}</h3><p>{b}</p></div>' for i,(a,b) in enumerate(VALUES[lang]))}</div>
+ </div>
+</section>
+<section class="sec sec-soft faq-sec" id="faq">
+ <div class="wrap faq-grid">
+  <div class="faq-head reveal"><p class="eyebrow dark">{L("Questions fréquentes","Frequently asked questions")}</p>
+   <h2>{L("Tout ce qu’il faut savoir avant de nous contacter.","Everything to know before getting in touch.")}</h2>
+   <p>{L("Une autre question ? Écrivez-nous, nous vous répondons rapidement.","Another question? Write to us and we will reply quickly.")}</p>
+   <a class="link" href="{pre}/contact">{L("Poser une question","Ask a question")} →</a></div>
+  <div class="faq-list reveal">
+   <details open><summary>{L("Qui peut nous contacter ?","Who can contact us?")}</summary><p>{L("Entreprises locales et internationales, producteurs et coopératives, exportateurs et importateurs, acheteurs, investisseurs, PME, institutions et organisations de développement.","Local and international companies, producers and cooperatives, exporters and importers, buyers, investors, SMEs, institutions and development organisations.")}</p></details>
+   <details><summary>{L("Que se passe-t-il après ma demande ?","What happens after my request?")}</summary><p>{L("Nous écoutons votre besoin, identifions et vous mettons en relation avec les bons partenaires, structurons l’opportunité, puis facilitons la suite de la collaboration.","We listen to your need, identify and introduce the right partners, structure the opportunity, then facilitate the next steps of the collaboration.")}</p></details>
+   <details><summary>{L("Quels types de demandes traitez-vous ?","What kinds of requests do you handle?")}</summary><p>{L("Offres de matières premières, demandes d’achat, recherche d’investisseur ou de partenaire, demandes d’accompagnement ou de formation.","Commodity offers, purchase requests, investor or partner searches, advisory or training requests.")}</p></details>
+   <details><summary>{L("Dans quels secteurs intervenez-vous ?","Which sectors do you work in?")}</summary><p>{L("Cacao et café, matières premières agricoles, solutions d’export, investissement et partenariats, formation, mines et commodités, durabilité.","Cocoa and coffee, agricultural commodities, export solutions, investment and partnerships, training, mining and commodities, sustainability.")}</p></details>
+   <details><summary>{L("Comment vous joindre rapidement ?","How can I reach you quickly?")}</summary><p>{L("Par WhatsApp, e-mail ou téléphone : vous trouverez toutes nos coordonnées sur la page Contact et en bas de chaque page.","By WhatsApp, email or phone: all our details are on the Contact page and at the bottom of every page.")}</p></details>
+  </div>
  </div>
 </section>
 {contact_band(lang, pre)}'''
