@@ -184,7 +184,7 @@ def page(lang, path, title, desc, body, alt_path):
 <link rel="alternate" hreflang="{other}" href="{ou(alt_path)}">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/style.css?v=16">
+<link rel="stylesheet" href="/assets/style.css?v=17">
 </head>
 <body>
 <a class="skip" href="#main">{t("skip", lang)}</a>
@@ -422,12 +422,6 @@ def home(lang):
   </div>
   <ul class="hero-tags"><li>{L("Ancrage en RDC","Rooted in the DRC")}</li><li>{L("Expansion en Afrique australe","Expanding in Southern Africa")}</li><li>{L("Ouverture internationale","International reach")}</li></ul>
  </div>
- <div class="wrap quick-wrap"><form class="quick reveal" action="{pre}/contact" method="get">
-  <div class="q-title"><b>{L("Une demande ? Faites-nous-en part","Got a request? Tell us")}</b><span>{L("Réponse par WhatsApp, e-mail ou téléphone","Reply by WhatsApp, email or phone")}</span></div>
-  <label><small>{L("Je suis","I am")}</small><select name="profile"><option>{L("Acheteur","Buyer")}</option><option>{L("Fournisseur / producteur","Supplier / producer")}</option><option>{L("Investisseur","Investor")}</option><option>{L("Institution / organisation","Institution / organisation")}</option><option>{L("Entrepreneur / PME","Entrepreneur / SME")}</option><option>{L("Autre","Other")}</option></select></label>
-  <label><small>{L("Pôle concerné","Division")}</small><select name="pole"><option value="">{L("Je ne sais pas encore","Not sure yet")}</option>{"".join(f'<option value="{p["slug"]}">{p["name"][lang]}</option>' for p in POLES)}</select></label>
-  <button class="btn btn-gold" type="submit">{L("Envoyer ma demande","Send my request")} <span aria-hidden="true">→</span></button>
- </form></div>
 </section>
 
 {WWA_CSS}
