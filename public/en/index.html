@@ -12,7 +12,7 @@
 <link rel="alternate" hreflang="fr" href="/">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/style.css?v=15">
+<link rel="stylesheet" href="/assets/style.css?v=16">
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -152,8 +152,6 @@
 
 }
 @media(max-width:860px){
- .wwa-vis{display:none}
- .wwa::before{content:"";position:absolute;right:-56px;bottom:-30px;width:280px;height:476px;background:url(/assets/people.png) center/contain no-repeat;opacity:.12;pointer-events:none;z-index:0}
  .wwa-in{gap:0}
  .wwa{padding:2.8rem 0 3.4rem}
 }
@@ -201,10 +199,20 @@
    <a class="btn btn-gold wwa-btn" href="/en/about">Learn more <b>→</b></a>
   </div>
   <div class="wwa-vis reveal">
-   <div class="wwa-glow"></div><div class="wwa-ring"></div><div class="wwa-dots"></div><div class="wwa-strip"></div>
-   <img src="/assets/people.png" alt="Handshake between two business partners" width="554" height="942" loading="lazy">
-   <div class="wwa-card wc1"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h16M14 6l6 6-6 6"/></svg></i><span>Producers<small>↔ buyers</small></span></div>
-   <div class="wwa-card wc2"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8M15 7h6v6"/></svg></i><span>Investors<small>& partners</small></span></div>
+   <div class="wwa-glow"></div><div class="wwa-ring"></div><div class="wwa-dots"></div>
+   <div class="wwa-map" role="img" aria-label="Map of Africa: base in the DRC and expansion in Southern Africa">
+    <div class="map-fill"></div>
+    <svg viewBox="0 0 980 1048" aria-hidden="true">
+     <g class="map-arcs" fill="none" stroke="#e3b650" stroke-width="3.5" stroke-linecap="round">
+      <path d="M573 584 Q330 520 191 463"/><path d="M573 584 Q430 330 360 105"/><path d="M573 584 Q700 470 769 559"/><path d="M573 584 Q650 760 645 917"/>
+     </g>
+     <g fill="#e3b650" stroke="#fff" stroke-width="4"><circle cx="191" cy="463" r="11"/><circle cx="360" cy="105" r="11"/><circle cx="769" cy="559" r="11"/><circle cx="645" cy="917" r="13"/></g>
+     <circle class="map-pulse" cx="573" cy="584" r="22" fill="#e3b650"/>
+     <circle cx="573" cy="584" r="20" fill="#e3b650" stroke="#fff" stroke-width="6"/>
+    </svg>
+    <span class="map-lbl l-drc"><b>DRC</b><small>home base</small></span>
+    <span class="map-lbl l-sa"><b>Southern Africa</b><small>expansion market</small></span>
+   </div>
   </div>
  </div>
 </section>
