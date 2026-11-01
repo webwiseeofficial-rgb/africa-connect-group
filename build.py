@@ -184,7 +184,7 @@ def page(lang, path, title, desc, body, alt_path):
 <link rel="alternate" hreflang="{other}" href="{ou(alt_path)}">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/style.css?v=11">
+<link rel="stylesheet" href="/assets/style.css?v=13">
 </head>
 <body>
 <a class="skip" href="#main">{t("skip", lang)}</a>
@@ -481,7 +481,7 @@ def home(lang):
 <section class="sec sec-navy" id="opportunities">
  <div class="wrap opp">
   <div class="reveal"><p class="eyebrow">{L("Projets & opportunités","Projects & opportunities")}</p>
-   <h2>{L("Vous cherchez un acheteur, un fournisseur ou un investisseur ?","Looking for a buyer, a supplier or an investor?")}</h2>
+   <h2>{L("Vous cherchez un acheteur, un fournisseur ou un investisseur ?","Looking for a buyer, a supplier or an investor?")}</h2>
    <p class="lead">{L("Présentez-nous votre offre, votre besoin ou votre projet. Notre équipe l’étudie et vous met en relation avec les bons interlocuteurs.","Share your offer, your need or your project. Our team reviews it and connects you with the right counterparts.")}</p></div>
   <div class="opp-box reveal">
    <ul class="ticks gold">
