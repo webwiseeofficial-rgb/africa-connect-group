@@ -194,7 +194,7 @@ def page(lang, path, title, desc, body, alt_path):
 <link rel="alternate" hreflang="{other}" href="{ou(alt_path)}">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/style.css?v=21">
+<link rel="stylesheet" href="/assets/style.css?v=22">
 </head>
 <body>
 <a class="skip" href="#main">{t("skip", lang)}</a>
@@ -247,6 +247,14 @@ def write(lang, path, html_):
     f.write_text(html_, encoding="utf-8")
 
 def li(items): return "<ul class='ticks'>" + "".join(f"<li>{esc(i)}</li>" for i in items) + "</ul>"
+
+def values_panel(lang):
+    L = lambda fr, en: fr if lang == "fr" else en
+    cards = "".join(f'<div class="vcard"><span class="vc-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{VAL_ICONS[i]}</svg></span><h3>{a}</h3><p>{b}</p></div>' for i, (a, b) in enumerate(VALUES[lang]))
+    return f'''<div class="vpanel reveal">
+   <div class="vp-left"><p class="eyebrow dark">{L("Nos valeurs","Our values")}</p><h2>{L("Ce qui guide nos collaborations.","What guides our collaborations.")}</h2>
+   <p>{L("Quatre principes qui encadrent chacune de nos relations d’affaires.","Four principles that shape each of our business relationships.")}</p></div>
+   <div class="vp-cards">{cards}</div></div>'''
 
 def pole_card(p, lang, pre):
     return f'''<a class="card pole has-photo reveal" href="{pre}/poles/{p["slug"]}">
@@ -540,8 +548,7 @@ def home(lang):
 
 <section class="sec">
  <div class="wrap">
-  <div class="sec-head reveal"><p class="eyebrow dark">{L("Nos valeurs","Our values")}</p><h2>{L("Ce qui guide nos collaborations.","What guides our collaborations.")}</h2></div>
-  <div class="vals vproc" data-wm="{L("VALEURS","VALUES")}">{"".join(f'<div class="vp reveal"><div class="vp-c"><span class="vp-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{VAL_ICONS[i]}</svg></span><span class="vp-n">0{i+1}</span></div><h3>{a}</h3><p>{b}</p></div>' for i,(a,b) in enumerate(VALUES[lang]))}</div>
+  {values_panel(lang)}
  </div>
 </section>
 <section class="sec sec-soft faq-sec" id="faq">
@@ -598,8 +605,7 @@ def about(lang):
  <p>{L("Plus qu’une présence en ligne, nous construisons une véritable vitrine institutionnelle qui inspire confiance, facilite la prise de contact et ouvre la voie à de nouvelles collaborations.","More than an online presence, we are building a genuine institutional showcase that inspires trust, makes contact easy and opens the way to new collaborations.")}</p></div>
 </div></section>
 <section class="sec sec-soft"><div class="wrap">
- <div class="sec-head reveal"><h2>{L("Nos valeurs","Our values")}</h2></div>
- <div class="vals vproc" data-wm="{L("VALEURS","VALUES")}">{"".join(f'<div class="vp reveal"><div class="vp-c"><span class="vp-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{VAL_ICONS[i]}</svg></span><span class="vp-n">0{i+1}</span></div><h3>{a}</h3><p>{b}</p></div>' for i,(a,b) in enumerate(VALUES[lang]))}</div></div></section>
+  {values_panel(lang)}
 <section class="sec"><div class="wrap split">
  <div class="reveal"><h2>{L("Notre ambition à long terme","Our long-term ambition")}</h2></div>
  <div class="reveal"><p>{L("Renforcer notre présence sur plusieurs marchés africains, développer des partenariats internationaux, accompagner des projets de valorisation des ressources et contribuer à la création d’opportunités économiques durables.","Strengthen our presence across several African markets, develop international partnerships, support resource value-addition projects and contribute to creating sustainable economic opportunities.")}</p>
