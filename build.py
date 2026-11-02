@@ -194,7 +194,7 @@ def page(lang, path, title, desc, body, alt_path):
 <link rel="alternate" hreflang="{other}" href="{ou(alt_path)}">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/style.css?v=22">
+<link rel="stylesheet" href="/assets/style.css?v=23">
 </head>
 <body>
 <a class="skip" href="#main">{t("skip", lang)}</a>
@@ -551,7 +551,7 @@ def home(lang):
   {values_panel(lang)}
  </div>
 </section>
-<section class="sec sec-soft faq-sec" id="faq">
+<section class="sec faq-sec" id="faq">
  <div class="wrap faq-grid">
   <div class="faq-head reveal"><p class="eyebrow dark">{L("Questions fréquentes","Frequently asked questions")}</p>
    <h2>{L("Tout ce qu’il faut savoir avant de nous contacter.","Everything to know before getting in touch.")}</h2>
