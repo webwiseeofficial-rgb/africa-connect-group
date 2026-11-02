@@ -578,3 +578,221 @@ section#opportunities .opp-box{background:rgba(10,26,51,.5);border:1px solid rgb
 /* tighter hero top spacing */
 .hero .hero-in{padding-top:clamp(1.5rem,3.5vw,3rem)}
 .hero .eyebrow{margin-bottom:1.2rem}
+
+/* =====================================================================
+   CORPORATE REFINEMENT LAYER
+   Sober, institutional look: square-ish geometry, hairline borders,
+   restrained gold, no floating shadows / gradient chips / pills.
+   ===================================================================== */
+:root{
+  --r:4px;
+  --gold-text:#8a6414;           /* AA-contrast gold for text on white */
+  --hair:#dfe3ea;
+  --navy:#0b1b34;
+  --ink:#16233a;
+  --mut:#56627a;
+  --soft:#f4f5f7;
+  --line:#dfe3ea;
+}
+body{font-size:16px;line-height:1.7;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+h1,h2,h3,h4{font-weight:500;letter-spacing:-.015em}
+h2{font-size:clamp(1.75rem,3.4vw,2.35rem);line-height:1.2}
+em{font-style:italic}
+
+/* --- header --- */
+.hdr{background:#fff;backdrop-filter:none;border-bottom:1px solid var(--hair)}
+.hdr.scrolled{box-shadow:none}
+.nav{font-weight:500;font-size:.92rem;gap:2rem}
+.nav a:not(.btn)::after{height:1px;bottom:-4px}
+.lang{border:1px solid var(--hair);border-radius:3px;padding:.3rem .65rem;font-weight:600;font-size:.74rem;letter-spacing:.06em}
+.lang:hover{background:var(--navy);border-color:var(--navy)}
+
+/* --- buttons: rectangular, confident --- */
+.btn{border-radius:3px;padding:.95rem 1.7rem;font-weight:600;font-size:.88rem;letter-spacing:.04em;text-transform:none;border-width:1px}
+.btn:hover,.btn-gold:hover,.btn-navy:hover,.btn-wa:hover{transform:none}
+.btn-gold{background:var(--gold);color:#0b1b34}
+.btn-gold:hover{background:#d6a53a}
+.btn-ghost{border-color:rgba(255,255,255,.45)}
+.btn-ghost:hover{background:#fff;color:var(--navy);border-color:#fff}
+.btn-line{border-color:var(--navy)}
+.nav-cta{padding:.7rem 1.3rem}
+.btn-wa{background:var(--navy)}.btn-wa:hover{background:var(--navy2)}
+.link{border-bottom:1px solid var(--gold);font-weight:600}
+
+/* --- eyebrows: plain small caps with a rule, no pills --- */
+.eyebrow{font-size:.72rem;letter-spacing:.22em;font-weight:600}
+.eyebrow.dark{color:var(--gold-text);display:flex;align-items:center;gap:.9rem}
+.eyebrow.dark::before{content:"";width:28px;height:1px;background:var(--gold-text)}
+.hero .eyebrow{display:flex;align-items:center;gap:.9rem;padding:0;border:0;border-radius:0;background:none;color:var(--gold2);margin-bottom:1.5rem}
+.hero .eyebrow::before{width:28px;height:1px;border-radius:0;background:var(--gold2)}
+
+/* --- hero --- */
+.hero .hero-in{padding-top:clamp(3rem,6vw,5.5rem);padding-bottom:clamp(7rem,12vw,9.5rem)}
+.hero h1{font-weight:500;line-height:1.08;font-size:clamp(2.3rem,5.2vw,3.9rem)}
+.hero .lead{font-size:1.1rem;line-height:1.7;color:rgba(255,255,255,.8);max-width:560px}
+.hero-bg::before{opacity:.5}
+.hero-tags{gap:.5rem 2rem;margin-top:2.6rem;padding-top:1.6rem;border-top:1px solid rgba(255,255,255,.16);max-width:640px}
+.hero-tags li{font-size:.82rem;letter-spacing:.03em;color:rgba(255,255,255,.78);gap:0}
+.hero-tags li::before{display:none}
+.hero-tags li+li::before{display:none}
+
+/* --- key facts bar: flat, ruled --- */
+.statwrap{margin-top:-3.4rem}
+.statbar{border-radius:0;border:0;border-top:3px solid var(--gold);box-shadow:0 1px 0 var(--hair),0 18px 40px -18px rgba(11,27,52,.28)}
+.stat{padding:1.6rem 1.8rem 1.5rem;border-left:1px solid var(--hair)}
+.stat b{font-weight:500;font-size:1.45rem}
+.stat i{display:none}
+.stat span{display:block;margin-top:.35rem;font-size:.8rem;line-height:1.45;color:var(--mut);text-transform:none}
+
+/* --- section rhythm --- */
+.sec{padding:clamp(4rem,8vw,6.5rem) 0}
+.sec-head{margin-bottom:3rem;max-width:760px}
+.sec-head h2{margin-top:.2rem}
+.sec-soft{background:var(--soft)}
+
+/* --- pole cards: photo + text, no icon chip, no hover lift --- */
+.card{border-radius:var(--r);border-color:var(--hair);box-shadow:none}
+.card:hover{transform:none;box-shadow:none;border-color:var(--navy)}
+.grid{gap:1.4rem}
+.card.pole.has-photo{border-radius:var(--r)}
+.pole-photo .ico-wrap{display:none}
+.pole-photo::after{background:linear-gradient(180deg,rgba(11,27,52,0) 60%,rgba(11,27,52,.25))}
+.card.pole.has-photo:hover .pole-photo img{transform:scale(1.03)}
+.pole-body{padding:1.5rem 1.6rem 1.6rem;gap:.6rem}
+.pole-body h3{font-size:1.2rem;font-weight:500}
+.pole-body p{font-size:.92rem;line-height:1.6}
+.more{color:var(--navy);font-weight:600;font-size:.82rem;letter-spacing:.06em;text-transform:uppercase;padding-top:.9rem;margin-top:.3rem;border-top:1px solid var(--hair)}
+.card.pole:hover .more{color:var(--gold-text)}
+.cta-card{background:var(--navy);color:#fff;justify-content:flex-end;gap:1rem;padding:1.8rem}
+.cta-card h3{color:#fff;font-size:1.35rem;font-weight:500}
+.cta-card p{color:rgba(255,255,255,.75);flex:0 0 auto}
+.cta-card .more{color:var(--gold2);border-top-color:rgba(255,255,255,.2)}
+.card.pole.cta-card:hover{border-color:var(--gold)}
+.card.pole.cta-card:hover .more{color:#fff}
+.pole-body .more,.cta-card .more{display:block}
+
+/* --- why us --- */
+.net-vis img{border-radius:var(--r);box-shadow:none}
+.net-vis::before{display:none}
+.net-badge{right:-1.2rem;bottom:2.2rem;border-radius:0;border-left:3px solid var(--gold);box-shadow:0 18px 36px -12px rgba(11,27,52,.35);padding:1rem 1.3rem}
+.net-badge b{color:var(--navy);font-weight:500}
+.net-list{gap:1.8rem 2.2rem}
+.net-i{width:auto;height:auto;border-radius:0;background:none;color:var(--gold-text);box-shadow:none;border:0;display:block;margin-top:.15rem}
+.net-i svg{width:26px;height:26px;stroke-width:1.4}
+.net-list h3{font-size:1.05rem;font-weight:500}
+.net-list li{padding-top:1.1rem;border-top:1px solid var(--hair)}
+
+/* --- audiences: cleaner photo tiles --- */
+.aud{gap:1.2rem}
+.aud li{border-radius:var(--r);box-shadow:none;min-height:280px}
+.aud li:hover{transform:none;box-shadow:none}
+.aud li img{filter:saturate(.85)}
+.aud li:hover img{transform:scale(1.03)}
+.aud-ico{display:none}
+.aud-n{font-size:.78rem;letter-spacing:.14em;text-shadow:none;opacity:.85;right:auto;left:1.3rem;top:1.3rem}
+.aud-t{font-size:1.1rem;font-weight:500;text-shadow:none}
+.aud li::after{height:2px;background:var(--gold)}
+
+/* --- steps: sober numbered columns, no gradients / ghost digits --- */
+.steps{gap:0;border-top:1px solid var(--navy)}
+.step{background:none!important;min-height:0;padding:1.8rem 1.8rem 2rem;border-radius:0;color:var(--ink);justify-content:flex-start;border-right:1px solid var(--hair)}
+.step:last-child{border-right:0}
+.step:first-child{padding-left:0}
+.step::before{display:none}
+.step-ico,.step-bg{display:none}
+.step-txt{margin-top:0}
+.step-k{color:var(--gold-text);font-size:.72rem;letter-spacing:.2em;margin-bottom:.9rem}
+.step h3{color:var(--navy);font-size:1.4rem;font-weight:500;margin-bottom:.6rem}
+.step p{color:var(--mut);font-size:.93rem}
+
+/* --- opportunities band --- */
+section#opportunities::before{background:linear-gradient(90deg,rgba(8,20,42,.94) 0%,rgba(10,26,51,.82) 50%,rgba(10,26,51,.55) 100%)}
+section#opportunities::after{height:3px;background:var(--gold)}
+section#opportunities .opp h2{font-weight:500;text-shadow:none}
+section#opportunities .opp-box{border-radius:var(--r);background:rgba(8,20,42,.72);border:1px solid rgba(255,255,255,.18);backdrop-filter:blur(6px)}
+.ticks li::before{border-radius:0;width:.55rem;height:.55rem;top:.62em;box-shadow:none;background:var(--gold)}
+.ticks li{padding-left:1.5rem}
+
+/* --- values panel: flat 4-column ruled list --- */
+.vpanel{border-radius:0;border:0;border-top:1px solid var(--navy);background:none;padding:2.4rem 0 0;align-items:start}
+.sec-soft .vpanel{background:none}
+.vcard{border-radius:0;border:0;border-left:1px solid var(--hair);box-shadow:none;background:none;text-align:left;padding:.2rem 1.4rem 0}
+.vcard:hover{transform:none;box-shadow:none}
+.vc-ico{width:auto;height:auto;margin:0 0 1rem;border-radius:0;background:none;color:var(--gold-text);box-shadow:none;border:0;display:block}
+.vc-ico svg{width:28px;height:28px;stroke-width:1.4}
+.vcard h3{font-size:1.15rem;font-weight:500}
+
+/* --- FAQ --- */
+.faq-list{gap:0;border-top:1px solid var(--navy)}
+.faq-list details,.faq-sec .faq-list details,.faq-sec .faq-list details[open]{background:none;border:0;border-bottom:1px solid var(--hair);border-radius:0;padding:0;box-shadow:none}
+.faq-list details[open]{border-color:var(--hair);box-shadow:none}
+.faq-list summary{font-weight:500;padding:1.3rem 0}
+.faq-list summary::after{border-radius:0;background:none;color:var(--gold-text);width:24px;height:24px;font-size:1.3rem}
+.faq-list details[open] summary::after{background:none;color:var(--gold-text)}
+
+/* --- CTA band --- */
+.cta2{background:var(--soft)}
+.cta2-eyebrow{color:var(--gold-text)}
+.cta2 h2{font-weight:500;font-size:clamp(2.1rem,4.2vw,3.4rem)}
+.cta2 h2 em{color:var(--gold-text)}
+.cta2-rows{border-top:1px solid var(--navy)}
+.cta2-row{padding:1.5rem .2rem}
+.cta2-row:hover{background:transparent;padding-left:.2rem;padding-right:.2rem}
+.r-n{color:var(--gold-text)}
+.r-a{border-radius:0;width:46px;height:46px;border:1px solid var(--navy);font-size:1.1rem}
+.cta2-row:hover .r-a{transform:none}
+.cta2-row.go .r-a{background:var(--navy)}
+
+/* --- inner page heads, panels, forms, info --- */
+.phead{background:var(--navy);padding:clamp(3rem,6vw,4.5rem) 0 clamp(2.5rem,5vw,3.5rem);border-bottom:3px solid var(--gold)}
+.panel,.opp-box,.callout,.info{border-radius:var(--r)}
+.callout{border-left-width:3px}
+input,select,textarea{border-radius:3px;border:1px solid #c9cfda;padding:.85rem 1rem}
+input:focus,select:focus,textarea:focus{border-color:var(--navy);box-shadow:0 0 0 3px rgba(11,27,52,.12)}
+.val{border-radius:0}
+.chips li{border-radius:3px}
+.pillars li{border-top-width:1px;border-top-color:var(--navy)}
+.tag{border-radius:0;animation:none}
+
+/* --- footer --- */
+.ftr{background:#07142a;border-top:3px solid var(--gold)}
+.ftr h4{font-family:Manrope,system-ui,sans-serif;font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold2);font-weight:600;margin-bottom:1rem}
+.ftr-logo img{filter:none}
+
+/* --- floating WhatsApp: discreet --- */
+.wa-float{border-radius:3px;width:52px;height:52px;box-shadow:0 8px 20px rgba(0,0,0,.25);background:var(--navy)!important;border:1px solid rgba(255,255,255,.25)}
+
+/* --- dropdown --- */
+.dd-panel{border-radius:0!important;border-top-width:2px!important;box-shadow:0 24px 48px -12px rgba(11,27,52,.28)!important}
+.dd-panel a{border-radius:0!important}
+.dd-i{background:none!important;color:var(--gold-text)!important;border-radius:0!important}
+.dd-panel a:hover{transform:none!important;background:var(--soft)!important}
+
+@media(max-width:900px){
+  .steps{border-top:0}
+  .step,.step:first-child{padding:1.4rem 0;border-right:0;border-bottom:1px solid var(--hair)}
+  .step:last-child{border-bottom:0}
+  .vcard{border-left:0;border-top:1px solid var(--hair);padding:1.2rem 0}
+  .vpanel{border-top:0}
+  .net-badge{right:1rem}
+}
+@media(max-width:600px){
+  .steps{display:block;margin-inline:0;padding:0;overflow:visible}
+  .step{flex:none;min-height:0}
+  .steps-dots{display:none}
+  .stat{padding:1.2rem 1.2rem}
+  .hero .hero-in{padding-bottom:6.5rem}
+}
+
+/* audience tiles: title anchored to the bottom, index number top-left */
+.aud li{justify-content:flex-end}
+.aud-t{margin-top:auto}
+@media(max-width:600px){.aud li{justify-content:flex-end;min-height:190px}}
+.step{box-shadow:none!important;overflow:visible}
+
+/* inner page heads: no icon chip; vision/mission panels: natural height */
+.ph-row .ico-wrap{display:none}
+.cols2{align-items:start}
+.panel{background:#0f2447;border-color:rgba(255,255,255,.12)}
+.panel h3{font-weight:500}
+.crumb{letter-spacing:.02em}
