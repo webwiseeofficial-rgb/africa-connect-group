@@ -165,8 +165,17 @@ def page(lang, path, title, desc, body, alt_path):
     opre = "" if other == "fr" else "/en"
     def u(p): return (pre + p) if p != "/" else (pre or "/")
     def ou(p): return (opre + p) if p != "/" else (opre or "/")
-    nav = [("nav_home", "/"), ("nav_about", "/about"), ("nav_poles", "/#poles"), ("nav_contact", "/contact")]
-    links = "".join(f'<a href="{u(p)}"{" aria-current=page" if p == path else ""}>{t(k, lang)}</a>' for k, p in nav)
+    nav = [("nav_home", "/"), ("nav_about", "/about"), ("nav_poles", "/poles"), ("nav_contact", "/contact")]
+    def navlink(k, p):
+        cur = (p == path) or (p == "/poles" and path.startswith("/poles"))
+        ca = " aria-current=page" if cur else ""
+        if p != "/poles":
+            return f'<a href="{u(p)}"{ca}>{t(k, lang)}</a>'
+        items = "".join(f'<a href="{u("/poles/" + q["slug"])}"><span class="dd-i">{icon(q["icon"])}</span><span>{q["name"][lang]}</span></a>' for q in POLES)
+        allp = "Voir tous les pôles" if lang == "fr" else "See all divisions"
+        chev = '<svg class="dd-chev" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.500 4.500L6 8l3.500-3.500"/></svg>'
+        return f'<div class="nav-dd"><a class="dd-toggle" href="{u(p)}"{ca}>{t(k, lang)}{chev}</a><div class="dd-menu"><div class="dd-panel">{items}<a class="dd-all" href="{u("/poles")}">{allp} →</a></div></div></div>'
+    links = "".join(navlink(k, p) for k, p in nav)
     poles_foot = "".join(f'<a href="{u("/poles/"+p["slug"])}">{p["name"][lang]}</a>' for p in POLES)
     wa_msg = "Bonjour Africa Connect Group, " if lang == "fr" else "Hello Africa Connect Group, "
     tagline = ("Connecter les opportunités économiques africaines au monde." if lang == "fr"
@@ -185,7 +194,7 @@ def page(lang, path, title, desc, body, alt_path):
 <link rel="alternate" hreflang="{other}" href="{ou(alt_path)}">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/style.css?v=20">
+<link rel="stylesheet" href="/assets/style.css?v=21">
 </head>
 <body>
 <a class="skip" href="#main">{t("skip", lang)}</a>
@@ -563,7 +572,7 @@ def contact_band(lang, pre):
  <div class="cta2-rows reveal">
   <a class="cta2-row go" href="{pre}/contact"><span class="r-n">01</span><span class="r-t"><b>{L("Soumettre une opportunité","Submit an opportunity")}</b><small>{L("Offre, besoin ou projet : décrivez-le en quelques lignes.","Offer, need or project: describe it in a few lines.")}</small></span><span class="r-a" aria-hidden="true">→</span></a>
   <a class="cta2-row" href="https://wa.me/{PHONE_WA}" target="_blank" rel="noopener"><span class="r-n">02</span><span class="r-t"><b>{L("Discuter sur WhatsApp","Chat on WhatsApp")}</b><small>{L("Une réponse rapide, directement dans votre messagerie.","A quick reply, straight in your messaging app.")}</small></span><span class="r-a" aria-hidden="true">→</span></a>
-  <a class="cta2-row" href="{pre}/#poles"><span class="r-n">03</span><span class="r-t"><b>{L("Explorer nos pôles","Explore our divisions")}</b><small>{L("Sept domaines d’expertise pour accompagner vos projets.","Seven areas of expertise to support your projects.")}</small></span><span class="r-a" aria-hidden="true">→</span></a>
+  <a class="cta2-row" href="{pre}/poles"><span class="r-n">03</span><span class="r-t"><b>{L("Explorer nos pôles","Explore our divisions")}</b><small>{L("Sept domaines d’expertise pour accompagner vos projets.","Seven areas of expertise to support your projects.")}</small></span><span class="r-a" aria-hidden="true">→</span></a>
  </div>
 </div></section>'''
 
@@ -619,7 +628,21 @@ def pole_page(p, lang):
 <section class="sec sec-soft"><div class="wrap">
  <div class="sec-head reveal"><h2>{L("Nos autres pôles","Our other divisions")}</h2></div>
  <div class="grid">{"".join(pole_card(q, lang, pre) for q in others[:3])}</div>
- <p class="center"><a class="link" href="{pre}/#poles">{L("Voir tous les pôles","See all divisions")} →</a></p></div></section>
+ <p class="center"><a class="link" href="{pre}/poles">{L("Voir tous les pôles","See all divisions")} →</a></p></div></section>
+{contact_band(lang, pre)}'''
+
+def poles_index(lang):
+    pre = "" if lang == "fr" else "/en"
+    L = lambda fr, en: fr if lang == "fr" else en
+    return f'''
+{phead(lang, L("Nos pôles","Our divisions"), L("Sept pôles d’expertise, un seul point de contact.","Seven areas of expertise, one point of contact."), L("Accueil","Home"), pre, "", L("Matières premières, export, investissement, formation, mines et durabilité : choisissez le domaine qui correspond à votre projet.","Commodities, export, investment, training, mining and sustainability: choose the area that fits your project."))}
+<section class="sec" id="poles-list">
+ <div class="wrap">
+  <div class="grid">{"".join(pole_card(q, lang, pre) for q in POLES)}
+   <a class="card pole cta-card reveal" href="{pre}/contact"><h3>{L("Un projet en tête ?","Have a project in mind?")}</h3><p>{L("Parlons-en : nous vous orienterons vers le bon pôle.","Let’s talk: we’ll point you to the right division.")}</p><span class="more">{L("Nous écrire","Write to us")} →</span></a>
+  </div>
+ </div>
+</section>
 {contact_band(lang, pre)}'''
 
 def contact(lang):
@@ -666,6 +689,7 @@ def build():
               L("Conseil stratégique, commerce international et partenariats en Afrique : cacao & café, agro-commodités, export, investissement, formation, mines et durabilité.","Strategic advisory, international trade and partnerships in Africa: cocoa & coffee, agro commodities, export, investment, training, mining and sustainability."), home(lang), "/"))
         write(lang, "/about", page(lang, "/about", L(f"À propos — {base}", f"About — {base}"), L("Vision, mission, positionnement et valeurs d’Africa Connect Group SARL.","Vision, mission, positioning and values of Africa Connect Group SARL."), about(lang), "/about"))
         write(lang, "/contact", page(lang, "/contact", L(f"Contact — {base}", f"Contact — {base}"), L("Contactez Africa Connect Group par WhatsApp, e-mail ou téléphone.","Contact Africa Connect Group by WhatsApp, email or phone."), contact(lang), "/contact"))
+        write(lang, "/poles", page(lang, "/poles", L(f"Nos pôles — {base}", f"Our divisions — {base}"), L("Les sept pôles d’Africa Connect Group : cacao & café, agro-commodités, export, investissement, formation, mines et durabilité.","The seven divisions of Africa Connect Group: cocoa & coffee, agro-commodities, export, investment, training, mining and sustainability."), poles_index(lang), "/poles"))
         for p in POLES:
             path = f"/poles/{p['slug']}"
             write(lang, path, page(lang, path, f"{p['name'][lang]} — {base}", p["intro"][lang], pole_page(p, lang), path))
