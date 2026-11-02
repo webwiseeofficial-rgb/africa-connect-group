@@ -513,3 +513,25 @@ section#opportunities .opp-box{background:rgba(10,26,51,.5);border:1px solid rgb
  .aud-n{right:.8rem;top:.85rem;transform:none;font-size:.78rem}
  .aud li:last-child:nth-child(odd){grid-column:1/-1}
 }
+
+/* ===== nav dropdown: Nos pôles ===== */
+.dd-chev{width:12px;height:12px;margin-left:.35rem;transition:transform .25s}
+.dd-toggle{display:inline-flex;align-items:center}
+.dd-menu{display:none}
+@media(min-width:901px){
+ .nav{align-self:stretch}
+ .nav-dd{position:relative;align-self:stretch;display:flex;align-items:center}
+ .dd-menu{display:block;position:absolute;top:100%;left:50%;min-width:320px;transform:translate(-50%,10px);opacity:0;visibility:hidden;transition:opacity .22s,transform .22s,visibility .22s;z-index:70}
+ .nav-dd:hover .dd-menu,.nav-dd:focus-within .dd-menu{opacity:1;visibility:visible;transform:translate(-50%,0)}
+ .nav-dd:hover .dd-chev,.nav-dd:focus-within .dd-chev{transform:rotate(180deg)}
+ .nav-dd:hover .dd-toggle::after,.nav-dd:focus-within .dd-toggle::after{width:100%}
+ .dd-panel{background:#fff;border-top:3px solid var(--gold);border-radius:0 0 20px 20px;box-shadow:0 28px 56px rgba(10,26,51,.2);padding:.7rem;display:grid;gap:.15rem}
+ .dd-panel a{display:flex;align-items:center;gap:.85rem;padding:.7rem .85rem;border-radius:12px;font-weight:600;font-size:.95rem;color:var(--navy);transition:background .2s,transform .2s}
+ .dd-panel a::after{display:none}
+ .dd-panel a:hover{background:#f4f6fb;transform:translateX(3px)}
+ .dd-i{flex:0 0 auto;width:36px;height:36px;border-radius:11px;background:linear-gradient(135deg,#1b3f7a,var(--navy));color:var(--gold2);display:grid;place-items:center}
+ .dd-i svg{width:18px;height:18px}
+ .dd-panel .dd-all{margin-top:.35rem;border-top:1px solid var(--line);border-radius:0 0 12px 12px;padding-top:.95rem;color:var(--gold);font-size:.9rem;justify-content:flex-start}
+ .dd-panel .dd-all:hover{background:transparent;transform:none;color:#a97a14}
+}
+@media(max-width:900px){.dd-chev{display:none}.nav-dd{display:block}.dd-toggle{display:flex}}
