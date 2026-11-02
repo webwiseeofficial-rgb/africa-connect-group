@@ -449,40 +449,7 @@ def home(lang):
  <div class="stat"><b>{L("Afrique australe","Southern Africa")}</b><i></i><span>{L("notre marché d’expansion","our expansion market")}</span></div>
  <div class="stat"><b>{L("International","International")}</b><i></i><span>{L("partenaires et acheteurs du monde entier","partners and buyers worldwide")}</span></div>
 </div></div></div>
-<section class="wwa" id="about">
- {net_svg().replace('class="net"','class="wwa-net"')}
- <div class="wrap wwa-in">
-  <div class="wwa-txt reveal">
-   <p class="wwa-eyebrow">{L("Qui sommes-nous","Who we are")}</p>
-   <h2>{L("Votre partenaire de confiance pour faire des <em>affaires</em> en Afrique.","Your trusted partner for doing <em>business</em> in Africa.")}</h2>
-   <p class="wwa-p">{L("Conseil, commerce international et partenariats : nous connectons les opportunités africaines au reste du monde.","Advisory, international trade and partnerships: we connect African opportunities to the rest of the world.")}</p>
-   <ul class="wwa-pills">
-    <li><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 20h18M5 20V9l7-5 7 5v11M9 20v-6h6v6"/></svg></i>{L("Conseil stratégique","Strategic advisory")}</li>
-    <li><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/></svg></i>{L("Commerce international","International trade")}</li>
-    <li><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 12l3 3 5-6M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/></svg></i>{L("Partenariats durables","Lasting partnerships")}</li>
-   </ul>
-   <a class="btn btn-gold wwa-btn" href="{pre}/about">{L("En savoir plus","Learn more")} <b>→</b></a>
-  </div>
-  <div class="wwa-vis reveal">
-   <div class="wwa-glow"></div><div class="wwa-ring"></div><div class="wwa-dots"></div>
-   <div class="wwa-map" role="img" aria-label="{L("Carte de l’Afrique : ancrage en RDC et expansion en Afrique australe","Map of Africa: base in the DRC and expansion in Southern Africa")}">
-    <div class="map-fill"></div>
-    <svg viewBox="0 0 980 1048" aria-hidden="true">
-     <g class="map-arcs" fill="none" stroke="#e3b650" stroke-width="3.5" stroke-linecap="round">
-      <path d="M573 584 Q330 520 191 463"/><path d="M573 584 Q430 330 360 105"/><path d="M573 584 Q700 470 769 559"/><path d="M573 584 Q650 760 645 917"/>
-     </g>
-     <g fill="#e3b650" stroke="#fff" stroke-width="4"><circle cx="191" cy="463" r="11"/><circle cx="360" cy="105" r="11"/><circle cx="769" cy="559" r="11"/><circle cx="645" cy="917" r="13"/></g>
-     <circle class="map-pulse" cx="573" cy="584" r="22" fill="#e3b650"/>
-     <circle cx="573" cy="584" r="20" fill="#e3b650" stroke="#fff" stroke-width="6"/>
-    </svg>
-    <span class="map-lbl l-drc"><b>{L("RDC","DRC")}</b><small>{L("point d’ancrage","home base")}</small></span>
-    <span class="map-lbl l-sa"><b>{L("Afrique australe","Southern Africa")}</b><small>{L("marché d’expansion","expansion market")}</small></span>
-   </div>
-  </div>
- </div>
-</section>
 
-{vm_section(lang, pre)}
 
 <section class="sec" id="poles">
  <div class="wrap">
@@ -566,7 +533,7 @@ def home(lang):
   </div>
  </div>
 </section>
-{contact_band(lang, pre)}'''
+'''
 
 def contact_band(lang, pre):
     L = lambda fr, en: fr if lang == "fr" else en
