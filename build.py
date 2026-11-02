@@ -94,6 +94,7 @@ POLES = [
            en=["Committed companies","Development organisations","Technical partners","Impact investors"])),
 ]
 
+AUD_POS = ["50% 50%","50% 50%","35% 50%","45% 50%","58% 50%","55% 50%","30% 50%","50% 50%"]
 AUD_ICONS = [
  '<path d="M4 21V7l8-4 8 4v14M9 21v-6h6v6M8 10h.01M12 10h.01M16 10h.01M8 13h.01M16 13h.01"/>',
  '<path d="M12 21v-9M12 12c0-3 2-5 5-5 0 3-2 5-5 5zM12 15c0-2.5-1.8-4.5-4.5-4.5 0 2.5 1.8 4.5 4.5 4.5zM5 21h14"/>',
@@ -184,7 +185,7 @@ def page(lang, path, title, desc, body, alt_path):
 <link rel="alternate" hreflang="{other}" href="{ou(alt_path)}">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/style.css?v=17">
+<link rel="stylesheet" href="/assets/style.css?v=20">
 </head>
 <body>
 <a class="skip" href="#main">{t("skip", lang)}</a>
@@ -500,7 +501,7 @@ def home(lang):
  <div class="wrap">
   <div class="sec-head reveal"><p class="eyebrow dark">{L("À qui nous nous adressons","Who we work with")}</p>
    <h2>{L("Tous ceux qui font vivre les marchés africains.","Everyone who drives African markets.")}</h2></div>
-  <ul class="aud reveal">{"".join(f'<li><span class="aud-n">0{i+1}</span><span class="aud-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{AUD_ICONS[i]}</svg></span><span class="aud-t">{esc(a)}</span></li>' for i,a in enumerate(AUDIENCE[lang]))}</ul>
+  <ul class="aud reveal">{"".join(f'<li style="--pos:{AUD_POS[i]}"><img src="/assets/aud/0{i+1}.jpg" alt="" width="800" height="450" loading="lazy"><span class="aud-n">0{i+1}</span><span class="aud-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{AUD_ICONS[i]}</svg></span><span class="aud-t">{esc(a)}</span></li>' for i,a in enumerate(AUDIENCE[lang]))}</ul>
  </div>
 </section>
 
