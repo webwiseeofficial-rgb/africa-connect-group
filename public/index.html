@@ -12,7 +12,7 @@
 <link rel="alternate" hreflang="en" href="/en">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/style.css?v=25">
+<link rel="stylesheet" href="/assets/style.css?v=29">
 </head>
 <body>
 <a class="skip" href="#main">Aller au contenu</a>
@@ -87,15 +87,15 @@
 
 .hero .hero-in{padding-bottom:clamp(6rem,12vw,9.5rem)}
 .statwrap{position:relative;z-index:5;margin-top:-4.2rem}
-.statbar{display:grid;grid-template-columns:repeat(4,1fr);background:#fff;border-radius:24px;border:1px solid #e3eaf6;box-shadow:0 24px 60px rgba(10,26,51,.16);overflow:hidden}
+.statbar{display:grid;grid-template-columns:repeat(4,1fr);background:#fff;border-radius:0;border:0;border-top:3px solid #c8962a;box-shadow:0 1px 0 #dfe3ea,0 18px 40px -18px rgba(11,27,52,.28);overflow:hidden}
 .stat{padding:1.6rem 1.7rem 1.5rem;border-left:1px solid #e3eaf6}
 .stat:first-child{border-left:0}
 .stat b{display:block;font-family:Fraunces,Georgia,serif;font-size:clamp(1.3rem,2.1vw,1.7rem);line-height:1.15;white-space:nowrap;color:#0a1a33}
-.stat i{display:block;width:34px;height:3px;border-radius:3px;background:#c8962a;margin:.7rem 0 .6rem}
+.stat i{display:none}
 .stat span{color:#5a6578;font-size:.92rem;line-height:1.4}
 @media(max-width:860px){
  .statwrap{margin-top:-3rem}
- .statbar{grid-template-columns:1fr 1fr;border-radius:20px}
+ .statbar{grid-template-columns:1fr 1fr;border-radius:0}
  .stat{padding:1.1rem 1.1rem 1rem;border-left:0;border-top:1px solid #e3eaf6}
  .stat:nth-child(2n){border-left:1px solid #e3eaf6}
  .stat:nth-child(-n+2){border-top:0}
