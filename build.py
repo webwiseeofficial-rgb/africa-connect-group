@@ -17,6 +17,8 @@ ICONS = {
  "mining": '<path d="M6 3h12l4 6-10 12L2 9zM2 9h20M9 3l3 6 3-6M12 9v12"/>',
  "sustain": '<path d="M5 19c0-8 5-14 15-14 0 10-6 15-14 15M5 19l8-8"/>',
 }
+WA_SVG = '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20.5l1.4-4.6A8 8 0 1 1 21 12z"/></svg>'
+MAIL_SVG = '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>'
 def icon(k, cls="ico"):
     return f'<svg class="{cls}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{ICONS[k]}</svg>'
 
@@ -194,7 +196,7 @@ def page(lang, path, title, desc, body, alt_path):
 <link rel="alternate" hreflang="{other}" href="{ou(alt_path)}">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/style.css?v=30">
+<link rel="stylesheet" href="/assets/style.css?v=31">
 </head>
 <body>
 <a class="skip" href="#main">{t("skip", lang)}</a>
@@ -580,8 +582,8 @@ def about(lang):
 </div></section>
 {contact_band(lang, pre)}'''
 
-def phead(lang, eyebrow, title, crumb, pre, icon_html="", sub=""):
-    return f'''<section class="phead"><div class="wrap">
+def phead(lang, eyebrow, title, crumb, pre, icon_html="", sub="", bg="/assets/hero-map.jpg"):
+    return f'''<section class="phead" style="--ph-img:url('{bg}')"><div class="wrap">
  <p class="crumb"><a href="{pre or "/"}">{crumb}</a> / {eyebrow}</p>
  <div class="ph-row">{icon_html}<div><h1>{title}</h1>{f'<p class="lead">{sub}</p>' if sub else ''}</div></div></div></section>'''
 
@@ -590,7 +592,7 @@ def pole_page(p, lang):
     L = lambda fr, en: fr if lang == "fr" else en
     others = [q for q in POLES if q["slug"] != p["slug"]]
     return f'''
-{phead(lang, p["name"][lang], p["name"][lang], L("Accueil","Home"), pre, f'<span class="ico-wrap big">{icon(p["icon"])}</span>', esc(p["intro"][lang]))}
+{phead(lang, p["name"][lang], p["name"][lang], L("Accueil","Home"), pre, f'<span class="ico-wrap big">{icon(p["icon"])}</span>', esc(p["intro"][lang]), f'/assets/poles/{p["slug"]}.jpg')}
 <section class="sec"><div class="wrap cols2">
  <div class="reveal"><h2>{L("Ce que nous faisons","What we do")}</h2>{li(p["what"][lang])}</div>
  <div class="reveal"><h2>{L("Pour qui","Who it’s for")}</h2>{li(p["who"][lang])}
@@ -625,7 +627,25 @@ def contact(lang):
     return f'''
 {phead(lang, L("Contact","Contact"), L("Parlons de votre projet.","Let’s talk about your project."), L("Accueil","Home"), pre, "", L("Acheteur, fournisseur, investisseur, institution ou entrepreneur : écrivez-nous.","Buyer, supplier, investor, institution or entrepreneur: write to us."))}
 <section class="sec"><div class="wrap contact">
- <form class="form reveal" id="cform" novalidate data-lang="{lang}" data-email="{EMAIL}" data-wa="{PHONE_WA}">
+ <div class="c-info reveal">
+  <h2>{L("Nos coordonnées","Our details")}</h2>
+  <dl class="c-rows">
+   <div><dt>WhatsApp Business</dt><dd><a href="https://wa.me/{PHONE_WA}" target="_blank" rel="noopener">{PHONE1_D}</a></dd></div>
+   <div><dt>{L("Téléphone (RDC)","Phone (DRC)")}</dt><dd><a href="tel:{PHONE1}">{PHONE1_D}</a></dd></div>
+   <div><dt>{L("Téléphone (Algérie)","Phone (Algeria)")}</dt><dd><a href="tel:{PHONE2}">{PHONE2_D}</a></dd></div>
+   <div><dt>{L("E-mail","Email")}</dt><dd><a href="mailto:{EMAIL}">{EMAIL}</a></dd></div>
+  </dl>
+  <ul class="c-dash">
+   <li>{L("Offres d’achat et de fourniture","Purchase and supply offers")}</li>
+   <li>{L("Projets d’investissement","Investment projects")}</li>
+   <li>{L("Informations sur nos pôles","Information about our divisions")}</li>
+   <li>{L("Partenariats et collaborations","Partnerships and collaborations")}</li>
+  </ul>
+  <p class="small muted">Africa Connect Group SARL · {L("République démocratique du Congo","Democratic Republic of the Congo")}</p>
+ </div>
+ <div class="c-card reveal">
+  <div class="c-card-h"><h2>{L("Décrivez votre besoin","Describe your need")}</h2><span class="c-badge">{L("Réponse sous 24 h","Reply within 24 h")}</span></div>
+  <form class="form" id="cform" novalidate data-lang="{lang}" data-email="{EMAIL}" data-wa="{PHONE_WA}">
   <div class="row2">
    <label>{L("Nom complet","Full name")}*<input name="name" required autocomplete="name"></label>
    <label>{L("Entreprise / organisation","Company / organisation")}<input name="company" autocomplete="organization"></label></div>
@@ -640,18 +660,11 @@ def contact(lang):
   <label>{L("Votre message","Your message")}*<textarea name="message" rows="5" required placeholder="{L("Décrivez votre offre, votre besoin ou votre projet…","Describe your offer, need or project…")}"></textarea></label>
   <p class="err" id="ferr" role="alert" hidden>{L("Merci de renseigner nom, e-mail et message.","Please fill in name, email and message.")}</p>
   <div class="actions">
-   <button class="btn btn-wa" type="button" data-send="wa">{L("Envoyer via WhatsApp","Send via WhatsApp")}</button>
-   <button class="btn btn-gold" type="button" data-send="mail">{L("Envoyer par e-mail","Send by email")}</button></div>
+   <button class="btn btn-wa" type="button" data-send="wa">{WA_SVG}{L("Envoyer sur WhatsApp","Send on WhatsApp")}</button>
+   <button class="btn btn-outline" type="button" data-send="mail">{MAIL_SVG}{L("Envoyer par e-mail","Send by email")}</button></div>
   <p class="small muted">{L("Le message s’ouvre dans WhatsApp ou votre application e-mail, prêt à être envoyé.","Your message opens in WhatsApp or your email app, ready to send.")}</p>
  </form>
- <aside class="info reveal">
-  <h3>{L("Coordonnées","Details")}</h3>
-  <a class="ci" href="mailto:{EMAIL}"><span>{L("E-mail","Email")}</span>{EMAIL}</a>
-  <a class="ci" href="tel:{PHONE1}"><span>{L("Téléphone / WhatsApp (RDC)","Phone / WhatsApp (DRC)")}</span>{PHONE1_D}</a>
-  <a class="ci" href="tel:{PHONE2}"><span>{L("Téléphone (Algérie)","Phone (Algeria)")}</span>{PHONE2_D}</a>
-  <a class="ci" href="https://wa.me/{PHONE_WA}" target="_blank" rel="noopener"><span>WhatsApp</span>{L("Discuter maintenant","Chat now")}</a>
-  <p class="small muted">Africa Connect Group SARL<br>{L("République démocratique du Congo","Democratic Republic of the Congo")}</p>
- </aside></div></section>'''
+ </div></div></section>'''
 
 # ----------------------------------------------------------------- BUILD
 def build():
