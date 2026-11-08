@@ -18,16 +18,19 @@
  var f=d.getElementById('cform');if(!f)return;
  var q=new URLSearchParams(location.search).get('pole');if(q&&f.pole)f.pole.value=q;
  var qp=new URLSearchParams(location.search).get('profile');if(qp&&f.profile)f.profile.value=qp;
- var fr=f.dataset.lang==='fr';
+ var lg=f.dataset.lang;
+  var LB={fr:['Nom','Entreprise','E-mail','Téléphone','Profil','Pôle','Message'],en:['Name','Company','Email','Phone','Profile','Division','Message'],ar:['الاسم','الشركة','البريد الإلكتروني','الهاتف','الصفة','القطاع','الرسالة'],es:['Nombre','Empresa','Correo electrónico','Teléfono','Perfil','División','Mensaje']};
+  var HI={fr:'Bonjour Africa Connect Group,',en:'Hello Africa Connect Group,',ar:'مرحبًا Africa Connect Group،',es:'Hola Africa Connect Group,'};
+  var SJ={fr:'Demande de collaboration — ',en:'Collaboration request — ',ar:'طلب تعاون — ',es:'Solicitud de colaboración — '};
+  var L=LB[lg]||LB.en;
  f.addEventListener('click',function(e){
   var btn=e.target.closest('[data-send]');if(!btn)return;
   var v=function(n){return(f.elements[n].value||'').trim()};
   var ok=v('name')&&v('message')&&/^\S+@\S+\.\S+$/.test(v('email'));
   d.getElementById('ferr').hidden=!!ok;if(!ok)return;
   var pole=f.pole.options[f.pole.selectedIndex].text;
-  var L=fr?['Nom','Entreprise','E-mail','Téléphone','Profil','Pôle','Message']:['Name','Company','Email','Phone','Profile','Division','Message'];
   var txt=[L[0]+': '+v('name'),v('company')&&L[1]+': '+v('company'),L[2]+': '+v('email'),v('phone')&&L[3]+': '+v('phone'),L[4]+': '+f.profile.value,L[5]+': '+pole,'',L[6]+':',v('message')].filter(function(x){return x!==false&&x!==''||x===''}).join('\n');
-  if(btn.dataset.send==='wa')window.open('https://wa.me/'+f.dataset.wa+'?text='+encodeURIComponent((fr?'Bonjour Africa Connect Group,\n\n':'Hello Africa Connect Group,\n\n')+txt),'_blank','noopener');
-  else location.href='mailto:'+f.dataset.email+'?subject='+encodeURIComponent((fr?'Demande de collaboration — ':'Collaboration request — ')+v('name'))+'&body='+encodeURIComponent(txt);
+  if(btn.dataset.send==='wa')window.open('https://wa.me/'+f.dataset.wa+'?text='+encodeURIComponent(((HI[lg]||HI.en)+'\n\n')+txt),'_blank','noopener');
+  else location.href='mailto:'+f.dataset.email+'?subject='+encodeURIComponent((SJ[lg]||SJ.en)+v('name'))+'&body='+encodeURIComponent(txt);
  });
 })();

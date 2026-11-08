@@ -616,3 +616,52 @@ section#opportunities .opp-box{background:rgba(10,26,51,.5);border:1px solid rgb
 .c-card .small{text-align:center}
 @media(max-width:900px){.contact{grid-template-columns:1fr}.c-card{border-radius:24px}}
 @media(max-width:560px){.c-rows>div{grid-template-columns:1fr;gap:.3rem}}
+
+/* ===== language switcher (FR / EN / عربية / ES) ===== */
+.lang-sw{display:inline-flex;align-items:center;gap:2px;padding:3px;border:1.5px solid var(--navy);border-radius:99px;font-weight:700;font-size:.78rem;line-height:1}
+.lang-sw a{padding:.38rem .6rem;border-radius:99px;color:var(--navy)}
+.lang-sw a:hover{background:rgba(10,26,51,.08)}
+.lang-sw a[aria-current]{background:var(--navy);color:#fff}
+.lang-sw a[lang=ar]{font-family:Almarai,Manrope,sans-serif;font-size:.82rem}
+@media(max-width:900px){.lang-sw{margin-left:auto}}
+
+/* ===== Arabic: Almarai + right-to-left ===== */
+html[lang=ar] body,html[lang=ar] h1,html[lang=ar] h2,html[lang=ar] h3,html[lang=ar] h4,
+html[lang=ar] .pillars b,html[lang=ar] .aud-t,html[lang=ar] .r-t b,html[lang=ar] .r-n,html[lang=ar] .aud-n,html[lang=ar] .step-bg,
+html[lang=ar] .net-badge b,html[lang=ar] .faq-list summary,html[lang=ar] input,html[lang=ar] select,html[lang=ar] textarea,html[lang=ar] button{font-family:Almarai,Manrope,sans-serif}
+html[lang=ar] h1,html[lang=ar] h2,html[lang=ar] h3,html[lang=ar] h4{letter-spacing:0;line-height:1.35;font-weight:800}
+html[lang=ar] body{line-height:1.8}
+html[lang=ar] .eyebrow,html[lang=ar] .crumb{letter-spacing:0;text-transform:none}
+/* phone numbers and e-mails stay left-to-right inside RTL text */
+.ftr-ct a,.c-rows dd a{direction:ltr;unicode-bidi:isolate;display:block;width:fit-content}
+.lang-sw{direction:ltr}
+html[dir=rtl] .nav{margin-left:0;margin-right:auto}
+html[dir=rtl] .nav a:not(.btn)::after{left:auto;right:0}
+html[dir=rtl] .ticks li{padding-left:0;padding-right:1.8rem}
+html[dir=rtl] .ticks li::before{left:auto;right:0}
+html[dir=rtl] .val,html[dir=rtl] .callout,html[dir=rtl] .tag,html[dir=rtl] .map-lbl{border-left:0;border-right:3px solid var(--gold)}
+html[dir=rtl] .callout{border-right-width:4px}
+html[dir=rtl] .wa-float{right:auto;left:max(1rem,env(safe-area-inset-left))}
+html[dir=rtl] .pole-photo .ico-wrap{left:auto;right:1.2rem}
+html[dir=rtl] .step-ico{left:auto;right:1.6rem}
+html[dir=rtl] .step-bg,html[dir=rtl] .aud-n{right:auto;left:1rem}
+html[dir=rtl] .aud-t{padding-right:0;padding-left:1.8rem}
+html[dir=rtl] .vp{text-align:right}
+html[dir=rtl] .cta-ch a,html[dir=rtl] .cta2-rows{text-align:right}
+html[dir=rtl] .cta-ch li+li{border-left:0;border-right:1px solid var(--line)}
+html[dir=rtl] .dd-chev{margin-left:0;margin-right:.35rem}
+html[dir=rtl] .dd-panel a:hover{transform:translateX(-3px)}
+html[dir=rtl] .vm .vm-list .vm-row:hover{padding-left:0;padding-right:.95rem}
+html[dir=rtl] .hero-in{margin-left:0;margin-right:max(1rem,calc((100% - var(--wrap))/2))}
+html[dir=rtl] .phead::after{background:linear-gradient(270deg,rgba(10,26,51,.92) 0%,rgba(10,26,51,.7) 45%,rgba(10,26,51,.3) 100%),linear-gradient(180deg,rgba(10,26,51,.1),rgba(10,26,51,.55))}
+@media(max-width:900px){
+ html[dir=rtl] .lang-sw{margin-left:0;margin-right:auto}
+ html[dir=rtl] .vp:not(:last-child)::after{left:auto;right:30px;border-left:0;border-right:2px dashed rgba(200,150,42,.6)}
+}
+@media(max-width:600px){
+ /* mobile quick-action bar: icon sits before the label (right side in Arabic) */
+ html[dir=rtl] .mb{flex-direction:row}
+ html[dir=rtl] .mbar{direction:rtl}
+}
+html[dir=rtl] .skip{left:auto;right:-999px}
+html[dir=rtl] .skip:focus{left:auto;right:1rem}
