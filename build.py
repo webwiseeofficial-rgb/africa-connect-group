@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """Generates the static bilingual site into ./public  (run: python3 build.py)"""
-import random, html, pathlib
+import random, html, pathlib, sys
+sys.path.insert(0, str(pathlib.Path(__file__).parent))
+from i18n import TR
 
 OUT = pathlib.Path(__file__).parent / "public"
 EMAIL = "africaconnectgroup1@gmail.com"
@@ -19,6 +21,29 @@ ICONS = {
 }
 WA_SVG = '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20.5l1.4-4.6A8 8 0 1 1 21 12z"/></svg>'
 MAIL_SVG = '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>'
+LANGS = ["fr", "en", "ar", "es"]
+LABELS = {"fr": "FR", "en": "EN", "ar": "عربية", "es": "ES"}
+def LP(lang): return "" if lang == "fr" else "/" + lang
+MISSING = set()
+def _tr(x, lg):
+    if isinstance(x, str):
+        v = TR.get(x, {}).get(lg)
+        if v is None: MISSING.add(x); return x
+        return v
+    if isinstance(x, tuple): return tuple(_tr(i, lg) for i in x)
+    return [_tr(i, lg) for i in x]
+def tx(lang, fr, en):
+    if lang == "fr": return fr
+    if lang == "en": return en
+    return _tr(fr, lang)
+def _loc(o):
+    if isinstance(o, dict):
+        if "fr" in o and "en" in o:
+            for lg in ("ar", "es"): o[lg] = _tr(o["fr"], lg)
+        else:
+            for v in o.values(): _loc(v)
+    elif isinstance(o, list):
+        for v in o: _loc(v)
 def icon(k, cls="ico"):
     return f'<svg class="{cls}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{ICONS[k]}</svg>'
 
@@ -144,6 +169,7 @@ T = dict(  # UI strings
  cta=dict(fr="Nous contacter", en="Get in touch"),
  skip=dict(fr="Aller au contenu", en="Skip to content"),
 )
+for _o in (POLES, AUDIENCE, MISSION, VALUES, STEPS, T): _loc(_o)
 def t(k, l): return T[k][l]
 
 # ----------------------------------------------------------------- LAYOUT
@@ -161,12 +187,15 @@ def net_svg():
         dots.append(f'<circle cx="{x}" cy="{y}" r="{r}" style="animation-delay:{(i*0.37)%4:.2f}s"/>')
     return f'<svg class="net" viewBox="0 0 600 500" aria-hidden="true"><g class="net-l">{"".join(lines)}</g><g class="net-d">{"".join(dots)}</g></svg>'
 
-def page(lang, path, title, desc, body, alt_path):
-    other = "en" if lang == "fr" else "fr"
-    pre = "" if lang == "fr" else "/en"
-    opre = "" if other == "fr" else "/en"
+def _page(lang, path, title, desc, body, alt_path):
+    pre = LP(lang)
     def u(p): return (pre + p) if p != "/" else (pre or "/")
-    def ou(p): return (opre + p) if p != "/" else (opre or "/")
+    def ou(l, p): return (LP(l) + p) if p != "/" else (LP(l) or "/")
+    alts = "".join(f'<link rel="alternate" hreflang="{l}" href="{ou(l, alt_path)}">' for l in LANGS if l != lang)
+    switch = "".join(f'<a href="{ou(l, alt_path)}" hreflang="{l}" lang="{l}"' + (' aria-current="true"' if l == lang else '') + f'>{LABELS[l]}</a>' for l in LANGS)
+    dirn = "rtl" if lang == "ar" else "ltr"
+    fonts = ('<link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&display=swap" rel="stylesheet">' if lang == "ar" else
+             '<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">')
     nav = [("nav_home", "/"), ("nav_about", "/about"), ("nav_poles", "/poles"), ("nav_contact", "/contact")]
     def navlink(k, p):
         cur = (p == path) or (p == "/poles" and path.startswith("/poles"))
@@ -174,16 +203,15 @@ def page(lang, path, title, desc, body, alt_path):
         if p != "/poles":
             return f'<a href="{u(p)}"{ca}>{t(k, lang)}</a>'
         items = "".join(f'<a href="{u("/poles/" + q["slug"])}"><span class="dd-i">{icon(q["icon"])}</span><span>{q["name"][lang]}</span></a>' for q in POLES)
-        allp = "Voir tous les pôles" if lang == "fr" else "See all divisions"
+        allp = tx(lang, "Voir tous les pôles", "See all divisions")
         chev = '<svg class="dd-chev" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.500 4.500L6 8l3.500-3.500"/></svg>'
         return f'<div class="nav-dd"><a class="dd-toggle" href="{u(p)}"{ca}>{t(k, lang)}{chev}</a><div class="dd-menu"><div class="dd-panel">{items}<a class="dd-all" href="{u("/poles")}">{allp} →</a></div></div></div>'
     links = "".join(navlink(k, p) for k, p in nav)
     poles_foot = "".join(f'<a href="{u("/poles/"+p["slug"])}">{p["name"][lang]}</a>' for p in POLES)
-    wa_msg = "Bonjour Africa Connect Group, " if lang == "fr" else "Hello Africa Connect Group, "
-    tagline = ("Connecter les opportunités économiques africaines au monde." if lang == "fr"
-               else "Connecting African economic opportunities to the world.")
+    wa_msg = tx(lang, "Bonjour Africa Connect Group, ", "Hello Africa Connect Group, ")
+    tagline = tx(lang, "Connecter les opportunités économiques africaines au monde.", "Connecting African economic opportunities to the world.")
     return f'''<!doctype html>
-<html lang="{lang}">
+<html lang="{lang}" dir="{dirn}">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -193,10 +221,10 @@ def page(lang, path, title, desc, body, alt_path):
 <meta property="og:title" content="{esc(title)}"><meta property="og:description" content="{esc(desc)}">
 <meta property="og:image" content="/assets/logo.jpg"><meta property="og:type" content="website">
 <link rel="icon" href="/assets/favicon.png">
-<link rel="alternate" hreflang="{other}" href="{ou(alt_path)}">
+{alts}
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/style.css?v=31">
+{fonts}
+<link rel="stylesheet" href="/assets/style.css?v=32">
 </head>
 <body>
 <a class="skip" href="#main">{t("skip", lang)}</a>
@@ -205,7 +233,7 @@ def page(lang, path, title, desc, body, alt_path):
   <a class="brand" href="{u("/")}" aria-label="Africa Connect Group"><img src="/assets/logo-wide.png" alt="Africa Connect Group" width="798" height="394"></a>
   <nav class="nav" id="nav" aria-label="Main">{links}
    <a class="btn btn-gold nav-cta" href="{u("/contact")}">{t("cta", lang)}</a></nav>
-  <a class="lang" href="{ou(alt_path)}" hreflang="{other}" aria-label="Switch language">{other.upper()}</a>
+  <div class="lang-sw" role="group" aria-label="Language">{switch}</div>
   <button class="burger" id="burger" aria-label="Menu" aria-expanded="false" aria-controls="nav"><span></span><span></span></button>
  </div>
 </header>
@@ -217,7 +245,7 @@ def page(lang, path, title, desc, body, alt_path):
   <div>
    <a class="ftr-logo" href="{u("/")}" aria-label="Africa Connect Group"><img src="/assets/logo-map.png" alt="" width="260" height="264"><span class="ftr-word"><b>AFRICA</b><b class="g">CONNECT</b><b class="s">GROUP</b></span></a>
    <p class="muted">{tagline}</p>
-   <p class="muted small">Africa Connect Group SARL · RDC</p>
+   <p class="muted small">Africa Connect Group SARL · {"الكونغو الديمقراطية" if lang == "ar" else "RDC"}</p>
   </div>
   <div><h4>{t("nav_poles", lang)}</h4><div class="ftr-poles">{poles_foot}</div></div>
   <div><h4>{t("nav_contact", lang)}</h4>
@@ -227,22 +255,26 @@ def page(lang, path, title, desc, body, alt_path):
    <a href="https://wa.me/{PHONE_WA}" target="_blank" rel="noopener">WhatsApp</a></div>
   </div>
  </div>
- <div class="wrap ftr-bot"><span>© 2026 Africa Connect Group SARL.</span><span>{"Tous droits réservés." if lang=="fr" else "All rights reserved."}</span></div>
+ <div class="wrap ftr-bot"><span>© 2026 Africa Connect Group SARL.</span><span>{tx(lang, "Tous droits réservés.", "All rights reserved.")}</span></div>
 </footer>
 <a class="wa-float" href="https://wa.me/{PHONE_WA}?text={esc(wa_msg)}" target="_blank" rel="noopener" aria-label="WhatsApp">
  <svg viewBox="0 0 32 32" width="28" height="28" fill="#fff" aria-hidden="true"><path d="M16 3C9 3 3.3 8.6 3.3 15.5c0 2.3.6 4.4 1.7 6.3L3 29l7.4-1.9c1.8 1 3.800 1.500 5.900 1.500 7 0 12.700-5.600 12.700-12.500S23 3 16 3zm0 22.800c-1.900 0-3.700-.5-5.300-1.500l-.4-.2-4.400 1.100 1.200-4.200-.3-.4c-1.100-1.700-1.600-3.600-1.600-5.600C5.200 9.700 10 5 16 5s10.800 4.700 10.800 10.500S21.900 25.800 16 25.800zm5.900-7.800c-.3-.2-1.900-.9-2.200-1-.3-.1-.5-.2-.7.200-.2.300-.8 1-1 1.200-.2.200-.4.200-.7.100-.3-.2-1.400-.5-2.600-1.600-1-.9-1.600-1.900-1.800-2.200-.2-.3 0-.5.100-.7l.5-.6c.2-.2.200-.3.300-.5.100-.2.100-.4 0-.6l-1-2.300c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.6.100-.9.400-.3.300-1.200 1.100-1.200 2.700s1.200 3.200 1.400 3.400c.2.200 2.300 3.500 5.600 4.900.8.300 1.400.5 1.900.6.8.2 1.500.2 2.100.1.600-.1 1.900-.8 2.200-1.500.3-.8.3-1.400.2-1.500-.1-.2-.3-.3-.6-.4z"/></svg>
 </a>
-<nav class="mbar" aria-label="{"Actions rapides" if lang=="fr" else "Quick actions"}">
- <a class="mb" href="tel:{PHONE1}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.500 1.500a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg>{"Appeler" if lang=="fr" else "Call"}</a>
- <a class="mb" href="https://wa.me/{PHONE_WA}?text={esc(wa_msg)}" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.600 7.100L4 20.500l1.400-4.600A8 8 0 1 1 21 12z"/></svg>WhatsApp</a>
- <a class="mb mb-go" href="{u("/contact")}">{"Nous contacter" if lang=="fr" else "Contact us"}</a>
+<nav class="mbar" aria-label="{tx(lang, "Actions rapides", "Quick actions")}">
+ <a class="mb" href="tel:{PHONE1}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.500 1.500a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg>{tx(lang, "Appeler", "Call")}</a>
+ <a class="mb" href="https://wa.me/{PHONE_WA}?text={esc(wa_msg)}" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.600 7.100L4 20.500l1.400-4.600A8 8 0 1 1 21 12z"/></svg>{tx(lang, "WhatsApp", "WhatsApp")}</a>
+ <a class="mb mb-go" href="{u("/contact")}">{tx(lang, "Nous contacter", "Contact us")}</a>
 </nav>
-<script src="/assets/main.js?v=6" defer></script>
+<script src="/assets/main.js?v=7" defer></script>
 </body>
 </html>'''
 
+def page(lang, *a, **k):
+    h = _page(lang, *a, **k)
+    return h.replace("→", "←") if lang == "ar" else h
+
 def write(lang, path, html_):
-    base = OUT if lang == "fr" else OUT / "en"
+    base = OUT if lang == "fr" else OUT / lang
     p = base / (path.strip("/") or "index")
     f = p.with_suffix(".html") if path != "/" else base / "index.html"
     f.parent.mkdir(parents=True, exist_ok=True)
@@ -251,7 +283,7 @@ def write(lang, path, html_):
 def li(items): return "<ul class='ticks'>" + "".join(f"<li>{esc(i)}</li>" for i in items) + "</ul>"
 
 def values_panel(lang):
-    L = lambda fr, en: fr if lang == "fr" else en
+    L = lambda fr, en: tx(lang, fr, en)
     cards = "".join(f'<div class="vcard"><span class="vc-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{VAL_ICONS[i]}</svg></span><h3>{a}</h3><p>{b}</p></div>' for i, (a, b) in enumerate(VALUES[lang]))
     return f'''<div class="vpanel reveal">
    <div class="vp-left"><p class="eyebrow dark">{L("Nos valeurs","Our values")}</p><h2>{L("Ce qui guide nos collaborations.","What guides our collaborations.")}</h2>
@@ -262,7 +294,7 @@ def pole_card(p, lang, pre):
     return f'''<a class="card pole has-photo reveal" href="{pre}/poles/{p["slug"]}">
  <span class="pole-photo"><img src="/assets/poles/{p["slug"]}.jpg" alt="{p["name"][lang]}" width="736" height="552" loading="lazy"><span class="ico-wrap">{icon(p["icon"])}</span></span>
  <span class="pole-body"><h3>{p["name"][lang]}</h3><p>{esc(p["short"][lang])}</p>
- <span class="more">{"Découvrir" if lang=="fr" else "Explore"} →</span></span></a>'''
+ <span class="more">{tx(lang, "Découvrir", "Explore")} →</span></span></a>'''
 
 # ----------------------------------------------------------------- PAGES
 WWA_CSS = """<style>
@@ -397,7 +429,7 @@ WWA_CSS = """<style>
 </style>"""
 
 def vm_section(lang, pre):
-    L = lambda fr, en: fr if lang == "fr" else en
+    L = lambda fr, en: tx(lang, fr, en)
     def ic(paths): return f'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{paths}</svg>'
     items = [
      (ic('<circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/>'), L("Accompagner","Support"), L("Aider les entreprises dans leur développement et leur stratégie commerciale.","Helping companies grow and shape their commercial strategy.")),
@@ -426,8 +458,8 @@ def vm_section(lang, pre):
 
 
 def home(lang):
-    pre = "" if lang == "fr" else "/en"
-    L = lambda fr, en: fr if lang == "fr" else en
+    pre = LP(lang)
+    L = lambda fr, en: tx(lang, fr, en)
     return f'''
 <section class="hero">
  <div class="hero-bg" aria-hidden="true"></div>
@@ -447,7 +479,7 @@ def home(lang):
 {WWA_CSS}
 <div class="statwrap"><div class="wrap"><div class="statbar reveal">
  <div class="stat"><b>7</b><i></i><span>{L("pôles d’activité complémentaires","complementary areas of activity")}</span></div>
- <div class="stat"><b>RDC</b><i></i><span>{L("notre point d’ancrage","our home base")}</span></div>
+ <div class="stat"><b>{"الكونغو" if lang == "ar" else "RDC"}</b><i></i><span>{L("notre point d’ancrage","our home base")}</span></div>
  <div class="stat"><b>{L("Afrique australe","Southern Africa")}</b><i></i><span>{L("notre marché d’expansion","our expansion market")}</span></div>
  <div class="stat"><b>{L("International","International")}</b><i></i><span>{L("partenaires et acheteurs du monde entier","partners and buyers worldwide")}</span></div>
 </div></div></div>
@@ -538,7 +570,7 @@ def home(lang):
 '''
 
 def contact_band(lang, pre):
-    L = lambda fr, en: fr if lang == "fr" else en
+    L = lambda fr, en: tx(lang, fr, en)
     return f'''<section class="cta2"><div class="wrap cta2-in">
  <div class="cta2-head reveal">
   <p class="cta2-eyebrow">{L("Passons à l’action","Let’s get started")}</p>
@@ -553,8 +585,8 @@ def contact_band(lang, pre):
 </div></section>'''
 
 def about(lang):
-    pre = "" if lang == "fr" else "/en"
-    L = lambda fr, en: fr if lang == "fr" else en
+    pre = LP(lang)
+    L = lambda fr, en: tx(lang, fr, en)
     return f'''
 {phead(lang, L("À propos","About us"), L("Une entreprise tournée vers la connexion des opportunités.","A company built around connecting opportunities."), L("Accueil","Home"), pre)}
 <section class="sec"><div class="wrap split">
@@ -588,8 +620,8 @@ def phead(lang, eyebrow, title, crumb, pre, icon_html="", sub="", bg="/assets/he
  <div class="ph-row">{icon_html}<div><h1>{title}</h1>{f'<p class="lead">{sub}</p>' if sub else ''}</div></div></div></section>'''
 
 def pole_page(p, lang):
-    pre = "" if lang == "fr" else "/en"
-    L = lambda fr, en: fr if lang == "fr" else en
+    pre = LP(lang)
+    L = lambda fr, en: tx(lang, fr, en)
     others = [q for q in POLES if q["slug"] != p["slug"]]
     return f'''
 {phead(lang, p["name"][lang], p["name"][lang], L("Accueil","Home"), pre, f'<span class="ico-wrap big">{icon(p["icon"])}</span>', esc(p["intro"][lang]), f'/assets/poles/{p["slug"]}.jpg')}
@@ -607,8 +639,8 @@ def pole_page(p, lang):
 {contact_band(lang, pre)}'''
 
 def poles_index(lang):
-    pre = "" if lang == "fr" else "/en"
-    L = lambda fr, en: fr if lang == "fr" else en
+    pre = LP(lang)
+    L = lambda fr, en: tx(lang, fr, en)
     return f'''
 {phead(lang, L("Nos pôles","Our divisions"), L("Sept pôles d’expertise, un seul point de contact.","Seven areas of expertise, one point of contact."), L("Accueil","Home"), pre, "", L("Matières premières, export, investissement, formation, mines et durabilité : choisissez le domaine qui correspond à votre projet.","Commodities, export, investment, training, mining and sustainability: choose the area that fits your project."))}
 <section class="sec" id="poles-list">
@@ -621,8 +653,8 @@ def poles_index(lang):
 {contact_band(lang, pre)}'''
 
 def contact(lang):
-    pre = "" if lang == "fr" else "/en"
-    L = lambda fr, en: fr if lang == "fr" else en
+    pre = LP(lang)
+    L = lambda fr, en: tx(lang, fr, en)
     opts = "".join(f'<option value="{p["slug"]}">{p["name"][lang]}</option>' for p in POLES)
     return f'''
 {phead(lang, L("Contact","Contact"), L("Parlons de votre projet.","Let’s talk about your project."), L("Accueil","Home"), pre, "", L("Acheteur, fournisseur, investisseur, institution ou entrepreneur : écrivez-nous.","Buyer, supplier, investor, institution or entrepreneur: write to us."))}
@@ -668,8 +700,8 @@ def contact(lang):
 
 # ----------------------------------------------------------------- BUILD
 def build():
-    for lang in ("fr", "en"):
-        L = lambda fr, en: fr if lang == "fr" else en
+    for lang in LANGS:
+        L = lambda fr, en: tx(lang, fr, en)
         base = "Africa Connect Group"
         write(lang, "/", page(lang, "/", L(f"{base} — Connecter les opportunités africaines au monde", f"{base} — Connecting African opportunities to the world"),
               L("Conseil stratégique, commerce international et partenariats en Afrique : cacao & café, agro-commodités, export, investissement, formation, mines et durabilité.","Strategic advisory, international trade and partnerships in Africa: cocoa & coffee, agro commodities, export, investment, training, mining and sustainability."), home(lang), "/"))
@@ -682,6 +714,7 @@ def build():
     (OUT / "404.html").write_text((OUT / "index.html").read_text(encoding="utf-8"), encoding="utf-8")
     (OUT / "version.txt").write_text("Africa Connect Group site - build " + __import__("datetime").datetime.now().strftime("%Y-%m-%d %H:%M") + " - vision photo + stat card + transparent logo\n", encoding="utf-8")
     print("built:", len(list(OUT.rglob('*.html'))), "pages")
+    if MISSING: print("MISSING TRANSLATIONS:", *sorted(MISSING), sep="\n  ")
 
 if __name__ == "__main__":
     build()
