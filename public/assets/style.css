@@ -714,3 +714,19 @@ html[dir=rtl] .skip:focus{left:auto;right:1rem}
 .lang-sw a{color:#5b6b80}
 .lang-sw a:hover{background:rgba(10,26,51,.05);color:var(--navy)}
 .lang-sw a[aria-current]{background:var(--navy);color:#fff;font-weight:600}
+
+/* ===== values: manifesto sentence ===== */
+.vmani{max-width:62rem;margin-inline:auto;padding:clamp(.5rem,2vw,1.5rem) 0}
+.vm-say{font-size:clamp(1.8rem,4.4vw,3.3rem);line-height:1.22;letter-spacing:-.015em;color:var(--navy);margin:.6rem 0 clamp(2rem,4vw,3.2rem);max-width:21em}
+.vm-say em{font-style:normal;color:inherit;padding-bottom:.04em;background:linear-gradient(var(--gold),var(--gold)) 0 94%/100% .09em no-repeat;-webkit-box-decoration-break:clone;box-decoration-break:clone;transition:background-size .3s}
+.vm-say em:hover{background-size:100% .2em}
+.vm-notes{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,1fr);gap:1.6rem 2rem}
+.vm-notes li{position:relative;border-top:1px solid #d9dfe9;padding-top:1.1rem}
+.vm-notes li::before{content:"";position:absolute;left:0;top:-1px;width:34px;height:3px;background:var(--gold)}
+.vm-notes b{display:block;font-family:Fraunces,Georgia,serif;font-weight:600;font-size:1.1rem;color:var(--navy);margin-bottom:.35rem}
+.vm-notes p{margin:0;color:var(--mut);font-size:.9rem;line-height:1.55}
+@media(max-width:900px){.vm-notes{grid-template-columns:1fr 1fr}}
+@media(max-width:520px){.vm-notes{grid-template-columns:1fr;gap:1.3rem}.vm-say{max-width:none}}
+html[dir=rtl] .vm-notes li::before{left:auto;right:0}
+html[lang=ar] .vm-say,html[lang=ar] .vm-notes b{font-family:Almarai,Manrope,sans-serif;font-weight:800;line-height:1.5}
+html[lang=ar] .vm-say em{background-position:0 98%}
