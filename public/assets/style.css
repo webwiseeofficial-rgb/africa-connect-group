@@ -706,3 +706,9 @@ html[dir=rtl] .skip:focus{left:auto;right:1rem}
  .nav{background:rgba(255,255,255,.97)}
 }
 @media(max-width:900px){html[dir=rtl] .lang-sw-m{margin:1.1rem auto 0}}
+
+/* ===== FR / EN / ES: softer sans-serif everywhere (Arabic keeps Almarai) ===== */
+html:not([lang=ar]) body{font-family:"Hanken Grotesk",system-ui,-apple-system,"Segoe UI",sans-serif}
+html:not([lang=ar]) :is(h1,h2,h3,h4,.pillars b,.step-bg,.aud-n,.aud-t,.net-badge b,.faq-list summary,.r-n,.r-t b,.stat b,.vm-num,.vm-card h4,.vm-n,.vm-row h4){font-family:"Hanken Grotesk",system-ui,-apple-system,"Segoe UI",sans-serif;font-weight:700;letter-spacing:-.015em}
+html:not([lang=ar]) :is(.step-bg,.vm-num,.aud-n,.r-n,.vm-n){letter-spacing:0}
+html:not([lang=ar]) :is(input,select,textarea,button,.btn){font-family:inherit}
