@@ -224,7 +224,7 @@ def _page(lang, path, title, desc, body, alt_path):
 {alts}
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 {fonts}
-<link rel="stylesheet" href="/assets/style.css?v=35">
+<link rel="stylesheet" href="/assets/style.css?v=36">
 </head>
 <body>
 <a class="skip" href="#main">{t("skip", lang)}</a>
@@ -285,11 +285,18 @@ def li(items): return "<ul class='ticks'>" + "".join(f"<li>{esc(i)}</li>" for i 
 
 def values_panel(lang):
     L = lambda fr, en: tx(lang, fr, en)
-    cards = "".join(f'<div class="vcard"><span class="vc-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{VAL_ICONS[i]}</svg></span><h3>{a}</h3><p>{b}</p></div>' for i, (a, b) in enumerate(VALUES[lang]))
-    return f'''<div class="vpanel reveal">
-   <div class="vp-left"><p class="eyebrow dark">{L("Nos valeurs","Our values")}</p><h2>{L("Ce qui guide nos collaborations.","What guides our collaborations.")}</h2>
-   <p>{L("Quatre principes qui encadrent chacune de nos relations d’affaires.","Four principles that shape each of our business relationships.")}</p></div>
-   <div class="vp-cards">{cards}</div></div>'''
+    w = [f'<em>{v[0].lower() if lang != "ar" else v[0]}</em>' for v in VALUES[lang]]
+    sentence = {
+        "fr": f"Nous travaillons dans la {w[0]}, le {w[1]}, l’{w[2]} et la {w[3]}.",
+        "en": f"We work with {w[0]}, {w[1]}, {w[2]} and {w[3]}.",
+        "es": f"Trabajamos con {w[0]}, {w[1]}, {w[2]} y {w[3]}.",
+        "ar": f"نعمل بروح من {w[0]} و{w[1]} و{w[2]} و{w[3]}.",
+    }[lang]
+    notes = "".join(f'<li><b>{a}</b><p>{b}</p></li>' for a, b in VALUES[lang])
+    return f'''<div class="vmani reveal">
+   <p class="eyebrow dark">{L("Nos valeurs","Our values")}</p>
+   <h2 class="vm-say">{sentence}</h2>
+   <ul class="vm-notes">{notes}</ul></div>'''
 
 def pole_card(p, lang, pre):
     return f'''<a class="card pole has-photo reveal" href="{pre}/poles/{p["slug"]}">
