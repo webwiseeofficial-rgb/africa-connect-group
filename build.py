@@ -195,7 +195,7 @@ def _page(lang, path, title, desc, body, alt_path):
     switch = "".join(f'<a href="{ou(l, alt_path)}" hreflang="{l}" lang="{l}"' + (' aria-current="true"' if l == lang else '') + f'>{LABELS[l]}</a>' for l in LANGS)
     dirn = "rtl" if lang == "ar" else "ltr"
     fonts = ('<link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&display=swap" rel="stylesheet">' if lang == "ar" else
-             '<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">')
+             '<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">')
     nav = [("nav_home", "/"), ("nav_about", "/about"), ("nav_poles", "/poles"), ("nav_contact", "/contact")]
     def navlink(k, p):
         cur = (p == path) or (p == "/poles" and path.startswith("/poles"))
@@ -224,7 +224,7 @@ def _page(lang, path, title, desc, body, alt_path):
 {alts}
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 {fonts}
-<link rel="stylesheet" href="/assets/style.css?v=34">
+<link rel="stylesheet" href="/assets/style.css?v=35">
 </head>
 <body>
 <a class="skip" href="#main">{t("skip", lang)}</a>
