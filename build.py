@@ -224,7 +224,7 @@ def _page(lang, path, title, desc, body, alt_path):
 {alts}
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 {fonts}
-<link rel="stylesheet" href="/assets/style.css?v=32">
+<link rel="stylesheet" href="/assets/style.css?v=33">
 </head>
 <body>
 <a class="skip" href="#main">{t("skip", lang)}</a>
@@ -232,7 +232,8 @@ def _page(lang, path, title, desc, body, alt_path):
  <div class="wrap hdr-in">
   <a class="brand" href="{u("/")}" aria-label="Africa Connect Group"><img src="/assets/logo-wide.png" alt="Africa Connect Group" width="798" height="394"></a>
   <nav class="nav" id="nav" aria-label="Main">{links}
-   <a class="btn btn-gold nav-cta" href="{u("/contact")}">{t("cta", lang)}</a></nav>
+   <a class="btn btn-gold nav-cta" href="{u("/contact")}">{t("cta", lang)}</a>
+   <div class="lang-sw lang-sw-m" role="group" aria-label="Language">{switch}</div></nav>
   <div class="lang-sw" role="group" aria-label="Language">{switch}</div>
   <button class="burger" id="burger" aria-label="Menu" aria-expanded="false" aria-controls="nav"><span></span><span></span></button>
  </div>
