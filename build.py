@@ -212,8 +212,8 @@ def _page(lang, path, title, desc, body, alt_path):
     alts = "".join(f'<link rel="alternate" hreflang="{l}" href="{ou(l, alt_path)}">' for l in LANGS if l != lang)
     switch = "".join(f'<a href="{ou(l, alt_path)}" hreflang="{l}" lang="{l}"' + (' aria-current="true"' if l == lang else '') + f'>{LABELS[l]}</a>' for l in LANGS)
     dirn = "rtl" if lang == "ar" else "ltr"
-    fonts = ('<link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&family=Caveat:wght@600&display=swap" rel="stylesheet">' if lang == "ar" else
-             '<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Caveat:wght@600&display=swap" rel="stylesheet">')
+    fonts = ('<link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&display=swap" rel="stylesheet">' if lang == "ar" else
+             '<link rel="preload" as="font" type="font/woff2" href="/assets/fonts/plus-jakarta-sans-latin-800-normal.woff2" crossorigin>')
     nav = [("nav_home", "/"), ("nav_about", "/about"), ("nav_poles", "/poles"), ("nav_contact", "/contact")]
     def navlink(k, p):
         cur = (p == path) or (p == "/poles" and path.startswith("/poles"))
@@ -244,7 +244,7 @@ def _page(lang, path, title, desc, body, alt_path):
 {alts}
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 {fonts}
-<link rel="stylesheet" href="/assets/style.css?v=40">
+<link rel="stylesheet" href="/assets/style.css?v=41">
 </head>
 <body>
 <a class="skip" href="#main">{t("skip", lang)}</a>
@@ -365,7 +365,7 @@ def home(lang):
  </div>
  <div class="wrap hero-in"><div class="hero-txt">
   <p class="eyebrow">{L("Conseil · Commerce international · Partenariats","Advisory · International trade · Partnerships")}</p>
-  <h1>{L("Connecter les opportunités <em>africaines</em> au reste du monde.","Connecting <em>African</em> opportunities to the rest of the world.")}</h1>
+  <h1>{L("Connecter les opportunités <em>africaines</em>","Connecting <em>African</em> opportunities")} <span class="h-script">{L("au reste du monde.","to the rest of the world.")}</span></h1>
   <p class="lead">{L("Africa Connect Group accompagne les entreprises, facilite les échanges commerciaux et crée des partenariats durables entre l’Afrique et les marchés internationaux.","Africa Connect Group supports businesses, facilitates trade and builds lasting partnerships between Africa and international markets.")}</p>
   <div class="actions">
    <a class="btn btn-gold" href="{pre}/contact">{L("Soumettre une opportunité","Submit an opportunity")} {SV(I_ARROW, "2.2")}</a>
