@@ -3,6 +3,7 @@
 import random, html, pathlib, sys
 sys.path.insert(0, str(pathlib.Path(__file__).parent))
 from i18n import TR
+from founder_i18n import FOUNDER, NAME as FOUNDER_NAME
 
 OUT = pathlib.Path(__file__).parent / "public"
 EMAIL = "africaconnectgroup1@gmail.com"
@@ -224,7 +225,7 @@ def _page(lang, path, title, desc, body, alt_path):
 {alts}
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 {fonts}
-<link rel="stylesheet" href="/assets/style.css?v=36">
+<link rel="stylesheet" href="/assets/style.css?v=33">
 </head>
 <body>
 <a class="skip" href="#main">{t("skip", lang)}</a>
@@ -232,8 +233,7 @@ def _page(lang, path, title, desc, body, alt_path):
  <div class="wrap hdr-in">
   <a class="brand" href="{u("/")}" aria-label="Africa Connect Group"><img src="/assets/logo-wide.png" alt="Africa Connect Group" width="798" height="394"></a>
   <nav class="nav" id="nav" aria-label="Main">{links}
-   <a class="btn btn-gold nav-cta" href="{u("/contact")}">{t("cta", lang)}</a>
-   <div class="lang-sw lang-sw-m" role="group" aria-label="Language">{switch}</div></nav>
+   <a class="btn btn-gold nav-cta" href="{u("/contact")}">{t("cta", lang)}</a></nav>
   <div class="lang-sw" role="group" aria-label="Language">{switch}</div>
   <button class="burger" id="burger" aria-label="Menu" aria-expanded="false" aria-controls="nav"><span></span><span></span></button>
  </div>
@@ -285,18 +285,11 @@ def li(items): return "<ul class='ticks'>" + "".join(f"<li>{esc(i)}</li>" for i 
 
 def values_panel(lang):
     L = lambda fr, en: tx(lang, fr, en)
-    w = [f'<em>{v[0].lower() if lang != "ar" else v[0]}</em>' for v in VALUES[lang]]
-    sentence = {
-        "fr": f"Nous travaillons dans la {w[0]}, le {w[1]}, l’{w[2]} et la {w[3]}.",
-        "en": f"We work with {w[0]}, {w[1]}, {w[2]} and {w[3]}.",
-        "es": f"Trabajamos con {w[0]}, {w[1]}, {w[2]} y {w[3]}.",
-        "ar": f"نعمل بروح من {w[0]} و{w[1]} و{w[2]} و{w[3]}.",
-    }[lang]
-    notes = "".join(f'<li><b>{a}</b><p>{b}</p></li>' for a, b in VALUES[lang])
-    return f'''<div class="vmani reveal">
-   <p class="eyebrow dark">{L("Nos valeurs","Our values")}</p>
-   <h2 class="vm-say">{sentence}</h2>
-   <ul class="vm-notes">{notes}</ul></div>'''
+    cards = "".join(f'<div class="vcard"><span class="vc-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{VAL_ICONS[i]}</svg></span><h3>{a}</h3><p>{b}</p></div>' for i, (a, b) in enumerate(VALUES[lang]))
+    return f'''<div class="vpanel reveal">
+   <div class="vp-left"><p class="eyebrow dark">{L("Nos valeurs","Our values")}</p><h2>{L("Ce qui guide nos collaborations.","What guides our collaborations.")}</h2>
+   <p>{L("Quatre principes qui encadrent chacune de nos relations d’affaires.","Four principles that shape each of our business relationships.")}</p></div>
+   <div class="vp-cards">{cards}</div></div>'''
 
 def pole_card(p, lang, pre):
     return f'''<a class="card pole has-photo reveal" href="{pre}/poles/{p["slug"]}">
@@ -555,6 +548,8 @@ def home(lang):
  </div>
 </section>
 
+{founder_teaser(lang, pre)}
+
 <section class="sec">
  <div class="wrap">
   {values_panel(lang)}
@@ -576,6 +571,30 @@ def home(lang):
  </div>
 </section>
 '''
+
+def fx(k, lang): return FOUNDER[k][lang]
+
+def founder_section(lang):
+    m, bio = fx("msg", lang), fx("bio", lang)
+    paras = f'<p class="fdr-hi">{esc(m[0])}</p><p class="fdr-lead">{esc(m[1])}</p>' + "".join(f"<p>{esc(x)}</p>" for x in m[2:-1])
+    return f'''<section class="sec sec-soft fdr" id="fondateur"><div class="wrap fdr-grid">
+ <figure class="fdr-photo reveal"><img src="/assets/founder.jpg" alt="{FOUNDER_NAME}" width="720" height="960" loading="lazy">
+  <figcaption><b>{FOUNDER_NAME}</b><span>{esc(fx("role", lang))}</span></figcaption></figure>
+ <div class="fdr-body">
+  <div class="reveal"><h2>{fx("h", lang)}</h2><div class="fdr-msg">{paras}<p class="fdr-close">{esc(m[-1])}</p></div>
+   <p class="fdr-sign"><b>{FOUNDER_NAME}</b><span>{fx("short", lang)}</span></p></div>
+  <div class="fdr-bio reveal"><h2>{fx("bio_h", lang)}</h2><p class="fdr-title">{esc(fx("bio_t", lang))}</p>
+   {"".join(f"<p>{esc(x)}</p>" for x in bio)}
+   <p class="fdr-vision">{esc(fx("vision", lang))}</p></div>
+ </div></section>'''
+
+def founder_teaser(lang, pre):
+    m = fx("msg", lang)
+    return f'''<section class="sec sec-soft fdr-tz"><div class="wrap fdr-tz-in reveal">
+ <img src="/assets/founder.jpg" alt="{FOUNDER_NAME}" width="720" height="960" loading="lazy">
+ <div><p class="eyebrow dark">{fx("h", lang)}</p><h2>{esc(m[-1])}</h2><p>{esc(m[2])}</p>
+  <p class="fdr-sign"><b>{FOUNDER_NAME}</b><span>{esc(fx("role", lang))}</span></p>
+  <a class="link" href="{pre}/about#fondateur">{fx("more", lang)} →</a></div></div></section>'''
 
 def contact_band(lang, pre):
     L = lambda fr, en: tx(lang, fr, en)
@@ -604,6 +623,7 @@ def about(lang):
   <p>{L("Notre ambition est de contribuer à la valorisation des richesses africaines, à l’accompagnement des entreprises et des entrepreneurs, ainsi qu’au développement de relations commerciales durables entre les acteurs économiques africains et les partenaires internationaux.","Our ambition is to help add value to Africa’s wealth, to support businesses and entrepreneurs, and to develop lasting commercial relationships between African economic players and international partners.")}</p>
   <p>{L("Notre point d’ancrage est la République démocratique du Congo (RDC), avec une vision d’expansion vers d’autres marchés africains, notamment en Afrique australe, et vers les marchés internationaux.","We are anchored in the Democratic Republic of the Congo (DRC), with a vision to expand to other African markets, notably Southern Africa, and to international markets.")}</p>
  </div></div></section>
+{founder_section(lang)}
 <section class="sec sec-navy"><div class="wrap cols2">
  <div class="panel reveal"><h3>{L("Notre vision","Our vision")}</h3><p>{L("Faire d’Africa Connect Group une entreprise de référence dans la connexion des opportunités économiques, la valorisation des ressources africaines et le développement de partenariats stratégiques entre l’Afrique et le reste du monde.","To make Africa Connect Group a reference company in connecting economic opportunities, adding value to African resources and developing strategic partnerships between Africa and the rest of the world.")}</p></div>
  <div class="panel reveal" id="mission"><h3>{L("Notre mission","Our mission")}</h3><ul class="ticks gold">{"".join(f"<li>{esc(m)}</li>" for m in MISSION[lang])}</ul></div>
