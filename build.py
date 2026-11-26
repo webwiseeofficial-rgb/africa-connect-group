@@ -3,6 +3,8 @@
 import random, html, pathlib, sys
 sys.path.insert(0, str(pathlib.Path(__file__).parent))
 from i18n import TR
+from i18n_extra import EXTRA
+TR.update(EXTRA)
 from founder_i18n import FOUNDER, NAME as FOUNDER_NAME
 
 OUT = pathlib.Path(__file__).parent / "public"
@@ -188,6 +190,21 @@ def net_svg():
         dots.append(f'<circle cx="{x}" cy="{y}" r="{r}" style="animation-delay:{(i*0.37)%4:.2f}s"/>')
     return f'<svg class="net" viewBox="0 0 600 500" aria-hidden="true"><g class="net-l">{"".join(lines)}</g><g class="net-d">{"".join(dots)}</g></svg>'
 
+def SV(paths, sw="1.7", cls=""):
+    c = f' class="{cls}"' if cls else ""
+    return f'<svg{c} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="{sw}" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{paths}</svg>'
+I_PHONE = '<path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/>'
+I_MAIL = '<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/>'
+I_WA = '<path d="M21 12a8 8 0 0 1-11.6 7.1L4 20.5l1.4-4.6A8 8 0 1 1 21 12z"/><path d="M9 9.5c0 3 2.5 5.5 5.5 5.5l1-1.5-2-1-1 .7a3 3 0 0 1-1.7-1.7l.7-1-1-2z"/>'
+I_PIN = '<path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/>'
+I_GLOBE = '<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 2.6 3.8 5.6 3.8 9S14.6 18.4 12 21c-2.6-2.6-3.8-5.6-3.8-9S9.4 5.6 12 3z"/>'
+I_SHIELD = '<path d="M12 3l8 3v6c0 4.5-3.2 8-8 9-4.8-1-8-4.5-8-9V6z"/><path d="M8.5 12l2.5 2.5 4.5-5"/>'
+I_TREND = '<path d="M3 17l6-6 4 4 8-8M15 7h6v6"/>'
+I_USER = '<path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM4 21c0-4 3.6-7 8-7s8 3 8 7"/>'
+I_GRID = '<rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/>'
+I_CHECK = '<path d="M5 12.5l4.5 4.5L19 7.5"/>'
+I_ARROW = '<path d="M5 12h14M13 6l6 6-6 6"/>'
+
 def _page(lang, path, title, desc, body, alt_path):
     pre = LP(lang)
     def u(p): return (pre + p) if p != "/" else (pre or "/")
@@ -195,8 +212,8 @@ def _page(lang, path, title, desc, body, alt_path):
     alts = "".join(f'<link rel="alternate" hreflang="{l}" href="{ou(l, alt_path)}">' for l in LANGS if l != lang)
     switch = "".join(f'<a href="{ou(l, alt_path)}" hreflang="{l}" lang="{l}"' + (' aria-current="true"' if l == lang else '') + f'>{LABELS[l]}</a>' for l in LANGS)
     dirn = "rtl" if lang == "ar" else "ltr"
-    fonts = ('<link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&display=swap" rel="stylesheet">' if lang == "ar" else
-             '<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">')
+    fonts = ('<link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&family=Caveat:wght@600&display=swap" rel="stylesheet">' if lang == "ar" else
+             '<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Caveat:wght@600&display=swap" rel="stylesheet">')
     nav = [("nav_home", "/"), ("nav_about", "/about"), ("nav_poles", "/poles"), ("nav_contact", "/contact")]
     def navlink(k, p):
         cur = (p == path) or (p == "/poles" and path.startswith("/poles"))
@@ -211,6 +228,8 @@ def _page(lang, path, title, desc, body, alt_path):
     poles_foot = "".join(f'<a href="{u("/poles/"+p["slug"])}">{p["name"][lang]}</a>' for p in POLES)
     wa_msg = tx(lang, "Bonjour Africa Connect Group, ", "Hello Africa Connect Group, ")
     tagline = tx(lang, "Connecter les opportunités économiques africaines au monde.", "Connecting African economic opportunities to the world.")
+    vals = ". ".join(v[0] for v in VALUES[lang]) + "."
+    drc = "الكونغو الديمقراطية" if lang == "ar" else "RDC"
     return f'''<!doctype html>
 <html lang="{lang}" dir="{dirn}">
 <head>
@@ -218,23 +237,33 @@ def _page(lang, path, title, desc, body, alt_path):
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>{esc(title)}</title>
 <meta name="description" content="{esc(desc)}">
-<meta name="theme-color" content="#0a1a33">
+<meta name="theme-color" content="#0b1d3a">
 <meta property="og:title" content="{esc(title)}"><meta property="og:description" content="{esc(desc)}">
 <meta property="og:image" content="/assets/logo.jpg"><meta property="og:type" content="website">
 <link rel="icon" href="/assets/favicon.png">
 {alts}
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 {fonts}
-<link rel="stylesheet" href="/assets/style.css?v=33">
+<link rel="stylesheet" href="/assets/style.css?v=40">
 </head>
 <body>
 <a class="skip" href="#main">{t("skip", lang)}</a>
+<div class="topbar">
+ <div class="wrap tb-in">
+  <p class="tb-tag">{tagline}</p>
+  <div class="tb-r">
+   <a class="tb-l" href="mailto:{EMAIL}">{SV(I_MAIL)}<span>{EMAIL}</span></a>
+   <a class="tb-l" href="https://wa.me/{PHONE_WA}" target="_blank" rel="noopener">{SV(I_WA)}<span>WhatsApp</span></a>
+   <div class="lang-sw" role="group" aria-label="Language">{switch}</div>
+  </div>
+ </div>
+</div>
 <header class="hdr" id="hdr">
  <div class="wrap hdr-in">
   <a class="brand" href="{u("/")}" aria-label="Africa Connect Group"><img src="/assets/logo-wide.png" alt="Africa Connect Group" width="798" height="394"></a>
   <nav class="nav" id="nav" aria-label="Main">{links}
+   <a class="nav-phone" href="tel:{PHONE1}">{SV(I_PHONE, "1.8")}<span><b>{PHONE1_D}</b><small>{drc} · WhatsApp</small></span></a>
    <a class="btn btn-gold nav-cta" href="{u("/contact")}">{t("cta", lang)}</a></nav>
-  <div class="lang-sw" role="group" aria-label="Language">{switch}</div>
   <button class="burger" id="burger" aria-label="Menu" aria-expanded="false" aria-controls="nav"><span></span><span></span></button>
  </div>
 </header>
@@ -243,30 +272,39 @@ def _page(lang, path, title, desc, body, alt_path):
 </main>
 <footer class="ftr">
  <div class="wrap ftr-grid">
-  <div>
-   <a class="ftr-logo" href="{u("/")}" aria-label="Africa Connect Group"><img src="/assets/logo-map.png" alt="" width="260" height="264"><span class="ftr-word"><b>AFRICA</b><b class="g">CONNECT</b><b class="s">GROUP</b></span></a>
-   <p class="muted">{tagline}</p>
-   <p class="muted small">Africa Connect Group SARL · {"الكونغو الديمقراطية" if lang == "ar" else "RDC"}</p>
+  <div class="ftr-brand">
+   <a class="ftr-logo" href="{u("/")}" aria-label="Africa Connect Group"><img src="/assets/logo-wide.png" alt="Africa Connect Group" width="798" height="394" loading="lazy"></a>
+   <p class="script ftr-script">{vals}</p>
+   <p class="ftr-tag">{tagline}</p>
+   <div class="ftr-soc">
+    <a href="https://wa.me/{PHONE_WA}" target="_blank" rel="noopener" aria-label="WhatsApp">{SV(I_WA, "1.8")}</a>
+    <a href="mailto:{EMAIL}" aria-label="Email">{SV(I_MAIL, "1.8")}</a>
+    <a href="tel:{PHONE1}" aria-label="{tx(lang, "Appeler", "Call")}">{SV(I_PHONE, "1.8")}</a>
+   </div>
   </div>
-  <div><h4>{t("nav_poles", lang)}</h4><div class="ftr-poles">{poles_foot}</div></div>
+  <div><h4>{tx(lang, "Liens rapides", "Quick links")}</h4><div class="ftr-links">
+   <a href="{u("/")}">{t("nav_home", lang)}</a><a href="{u("/about")}">{t("nav_about", lang)}</a><a href="{u("/poles")}">{t("nav_poles", lang)}</a><a href="{u("/about")}#fondateur">{fx("h", lang)}</a><a href="{u("/")}#faq">{tx(lang, "Questions fréquentes", "Frequently asked questions")}</a><a href="{u("/contact")}">{t("nav_contact", lang)}</a></div></div>
+  <div><h4>{t("nav_poles", lang)}</h4><div class="ftr-links">{poles_foot}</div></div>
   <div><h4>{t("nav_contact", lang)}</h4>
-   <div class="ftr-ct"><a class="em" href="mailto:{EMAIL}">{EMAIL}</a>
-   <a href="tel:{PHONE1}">{PHONE1_D}</a>
-   <a href="tel:{PHONE2}">{PHONE2_D}</a>
-   <a href="https://wa.me/{PHONE_WA}" target="_blank" rel="noopener">WhatsApp</a></div>
+   <ul class="ftr-ct">
+    <li>{SV(I_PIN)}<span>{tx(lang, "République démocratique du Congo", "Democratic Republic of the Congo")}</span></li>
+    <li>{SV(I_PHONE)}<span><a href="tel:{PHONE1}">{PHONE1_D}</a><a href="tel:{PHONE2}">{PHONE2_D}</a></span></li>
+    <li>{SV(I_MAIL)}<a class="em" href="mailto:{EMAIL}">{EMAIL}</a></li>
+    <li>{SV(I_WA)}<a href="https://wa.me/{PHONE_WA}" target="_blank" rel="noopener">WhatsApp Business</a></li>
+   </ul>
   </div>
  </div>
- <div class="wrap ftr-bot"><span>© 2026 Africa Connect Group SARL.</span><span>{tx(lang, "Tous droits réservés.", "All rights reserved.")}</span></div>
+ <div class="wrap ftr-bot"><span>© 2026 Africa Connect Group SARL. {tx(lang, "Tous droits réservés.", "All rights reserved.")}</span><span>{tx(lang, "République démocratique du Congo", "Democratic Republic of the Congo")}</span></div>
 </footer>
 <a class="wa-float" href="https://wa.me/{PHONE_WA}?text={esc(wa_msg)}" target="_blank" rel="noopener" aria-label="WhatsApp">
  <svg viewBox="0 0 32 32" width="28" height="28" fill="#fff" aria-hidden="true"><path d="M16 3C9 3 3.3 8.6 3.3 15.5c0 2.3.6 4.4 1.7 6.3L3 29l7.4-1.9c1.8 1 3.800 1.500 5.900 1.500 7 0 12.700-5.600 12.700-12.500S23 3 16 3zm0 22.800c-1.900 0-3.700-.5-5.300-1.500l-.4-.2-4.400 1.100 1.200-4.200-.3-.4c-1.100-1.700-1.600-3.600-1.600-5.600C5.200 9.700 10 5 16 5s10.800 4.700 10.800 10.500S21.900 25.800 16 25.800zm5.900-7.800c-.3-.2-1.900-.9-2.200-1-.3-.1-.5-.2-.7.200-.2.300-.8 1-1 1.200-.2.200-.4.200-.7.100-.3-.2-1.400-.5-2.600-1.600-1-.9-1.600-1.900-1.800-2.200-.2-.3 0-.5.100-.7l.5-.6c.2-.2.200-.3.300-.5.100-.2.100-.4 0-.6l-1-2.300c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.6.100-.9.400-.3.300-1.200 1.100-1.200 2.700s1.200 3.200 1.400 3.400c.2.200 2.300 3.500 5.600 4.900.8.300 1.400.5 1.900.6.8.2 1.500.2 2.100.1.600-.1 1.900-.8 2.200-1.500.3-.8.3-1.400.2-1.500-.1-.2-.3-.3-.6-.4z"/></svg>
 </a>
 <nav class="mbar" aria-label="{tx(lang, "Actions rapides", "Quick actions")}">
- <a class="mb" href="tel:{PHONE1}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.500 1.500a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg>{tx(lang, "Appeler", "Call")}</a>
- <a class="mb" href="https://wa.me/{PHONE_WA}?text={esc(wa_msg)}" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.600 7.100L4 20.500l1.400-4.600A8 8 0 1 1 21 12z"/></svg>{tx(lang, "WhatsApp", "WhatsApp")}</a>
+ <a class="mb" href="tel:{PHONE1}">{SV(I_PHONE, "1.8")}{tx(lang, "Appeler", "Call")}</a>
+ <a class="mb" href="https://wa.me/{PHONE_WA}?text={esc(wa_msg)}" target="_blank" rel="noopener">{SV(I_WA, "1.8")}{tx(lang, "WhatsApp", "WhatsApp")}</a>
  <a class="mb mb-go" href="{u("/contact")}">{tx(lang, "Nous contacter", "Contact us")}</a>
 </nav>
-<script src="/assets/main.js?v=7" defer></script>
+<script src="/assets/main.js?v=8" defer></script>
 </body>
 </html>'''
 
@@ -292,275 +330,111 @@ def values_panel(lang):
    <div class="vp-cards">{cards}</div></div>'''
 
 def pole_card(p, lang, pre):
-    return f'''<a class="card pole has-photo reveal" href="{pre}/poles/{p["slug"]}">
- <span class="pole-photo"><img src="/assets/poles/{p["slug"]}.jpg" alt="{p["name"][lang]}" width="736" height="552" loading="lazy"><span class="ico-wrap">{icon(p["icon"])}</span></span>
- <span class="pole-body"><h3>{p["name"][lang]}</h3><p>{esc(p["short"][lang])}</p>
+    return f'''<a class="pcard reveal" href="{pre}/poles/{p["slug"]}">
+ <span class="pc-photo"><img src="/assets/poles/{p["slug"]}.jpg" alt="{p["name"][lang]}" width="736" height="552" loading="lazy"></span>
+ <span class="pc-ico">{icon(p["icon"])}</span>
+ <span class="pc-body"><h3>{p["name"][lang]}</h3><p>{esc(p["short"][lang])}</p>
  <span class="more">{tx(lang, "Découvrir", "Explore")} →</span></span></a>'''
 
-# ----------------------------------------------------------------- PAGES
-WWA_CSS = """<style>
-.wwa{position:relative;background:#fff;padding:clamp(3rem,7vw,5.5rem) 0;overflow:hidden}
-.wwa .wwa-net{position:absolute;left:-6%;bottom:-25%;width:min(700px,110vw);opacity:.55;pointer-events:none;z-index:0}
-.wwa .wwa-net .net-l line{stroke:#cfdaef;stroke-width:1;opacity:1}
-.wwa .wwa-net .net-d circle{fill:#9db4de;animation:none;opacity:.8}
-.wwa-in{position:relative;z-index:1;display:grid;grid-template-columns:1fr 1fr;gap:clamp(1.5rem,5vw,4rem);align-items:center}
-.wwa-eyebrow{display:inline-flex;align-items:center;gap:.6rem;text-transform:uppercase;letter-spacing:.16em;font-size:.76rem;font-weight:700;color:#c8962a;margin:0 0 1rem}
-.wwa-eyebrow::before{content:"";width:34px;height:2px;background:#c8962a}
-.wwa h2{color:#0a1a33;font-size:clamp(1.9rem,4.2vw,2.9rem);margin:0 0 1rem}
-.wwa h2 em{color:#c8962a}
-.wwa-p{color:#5a6578;font-size:1.05rem;max-width:30rem;margin:0 0 1.5rem}
-.wwa-pills{list-style:none;padding:0;margin:0 0 1.8rem;display:grid;gap:.7rem;max-width:26rem}
-.wwa-pills li{display:flex;align-items:center;gap:.9rem;background:#fff;color:#0a1a33;font-weight:700;font-size:.95rem;padding:.7rem 1rem;border-radius:14px;border:1px solid #e3eaf6;box-shadow:0 6px 18px rgba(16,38,74,.06)}
-.wwa-pills i{flex:none;width:34px;height:34px;border-radius:10px;display:grid;place-items:center;background:linear-gradient(135deg,#2457b5,#10264a);color:#e3b650}
-.wwa-pills svg{width:18px;height:18px}
-.wwa-btn{display:inline-flex;align-items:center;gap:.6rem}
-.wwa-btn b{transition:transform .2s}.wwa-btn:hover b{transform:translateX(4px)}
-.wwa-vis{position:relative;display:grid;place-items:center;min-height:520px}
-.wwa-glow{position:absolute;left:50%;top:50%;width:92%;aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle,#e6edfa 0,#f4f7fd 55%,transparent 72%)}
-.wwa-ring{position:absolute;left:50%;top:50%;width:84%;aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;border:1.5px dashed rgba(200,150,42,.55)}
-.wwa-dots{position:absolute;right:2%;bottom:4%;width:120px;height:120px;background-image:radial-gradient(#c8962a 1.6px,transparent 1.9px);background-size:16px 16px;opacity:.55}
-.wwa-strip{position:absolute;left:24%;top:0;bottom:0;width:22%;border-radius:16px;background:linear-gradient(180deg,#2457b5,#10264a 70%,#0a1a33);box-shadow:0 20px 40px rgba(16,38,74,.25)}
-.wwa-strip::after{content:"";position:absolute;inset:0;border-radius:inherit;background-image:radial-gradient(rgba(255,255,255,.3) 1.2px,transparent 1.5px);background-size:14px 14px;opacity:.55}
-.wwa-vis img{position:relative;z-index:2;height:480px;width:auto;max-width:100%;filter:drop-shadow(0 18px 22px rgba(10,26,51,.28))}
-.wwa-card{position:absolute;z-index:3;display:flex;align-items:center;gap:.6rem;background:#fff;color:#0a1a33;font-weight:700;font-size:.82rem;padding:.55rem .9rem .55rem .55rem;border-radius:14px;box-shadow:0 12px 30px rgba(16,38,74,.18);animation:wwaf 6s ease-in-out infinite}
-.wwa-card i{width:32px;height:32px;border-radius:9px;display:grid;place-items:center;background:#c8962a;color:#fff}
-.wwa-card svg{width:17px;height:17px}
-.wwa-card small{display:block;font-weight:600;font-size:.7rem;color:#5a6578}
-.wc1{left:0;top:16%}.wc2{right:-2%;top:56%;animation-delay:-3s}
-@keyframes wwaf{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
-@media(max-width:860px){
- .wwa{padding:2.5rem 0 3rem}
- .wwa-in{grid-template-columns:1fr;gap:2rem}
- .wwa-pills{max-width:none}
- .wwa .btn{width:100%;justify-content:center}
- .wwa-vis{min-height:400px;border-radius:26px;background:linear-gradient(180deg,#eef3fc,#fff);border:1px solid #e3eaf6;overflow:hidden}
- .wwa-vis img{height:340px}
- .wwa-strip{left:50%;transform:translateX(-98%);width:25%;top:6%;bottom:6%}
- .wwa-glow{width:110%}.wwa-ring{width:92%}
- .wc1{left:3%;top:9%}.wc2{right:3%;top:auto;bottom:9%}
- .wwa-card{font-size:.76rem}
-}
-
-.hero .hero-in{padding-bottom:clamp(6rem,12vw,9.5rem)}
-.statwrap{position:relative;z-index:5;margin-top:-4.2rem}
-.statbar{display:grid;grid-template-columns:repeat(4,1fr);background:#fff;border-radius:24px;border:1px solid #e3eaf6;box-shadow:0 24px 60px rgba(10,26,51,.16);overflow:hidden}
-.stat{padding:1.6rem 1.7rem 1.5rem;border-left:1px solid #e3eaf6}
-.stat:first-child{border-left:0}
-.stat b{display:block;font-family:Fraunces,Georgia,serif;font-size:clamp(1.3rem,2.1vw,1.7rem);line-height:1.15;white-space:nowrap;color:#0a1a33}
-.stat i{display:block;width:34px;height:3px;border-radius:3px;background:#c8962a;margin:.7rem 0 .6rem}
-.stat span{color:#5a6578;font-size:.92rem;line-height:1.4}
-@media(max-width:860px){
- .statwrap{margin-top:-3rem}
- .statbar{grid-template-columns:1fr 1fr;border-radius:20px}
- .stat{padding:1.1rem 1.1rem 1rem;border-left:0;border-top:1px solid #e3eaf6}
- .stat:nth-child(2n){border-left:1px solid #e3eaf6}
- .stat:nth-child(-n+2){border-top:0}
- .stat span{font-size:.82rem}.stat b{font-size:1.25rem}
-}
-.wwa{padding-top:clamp(3.5rem,8vw,6rem)}
-
-.vm{position:relative;background:linear-gradient(180deg,#fff 0,#f4f7fd 26%,#f4f7fd 74%,#fff 100%);padding:clamp(3.5rem,8vw,6rem) 0;overflow:hidden}
-.vm-vision{position:relative;overflow:hidden;border-radius:28px;color:#fff;background:radial-gradient(120% 140% at 100% 0,#1d4a9a 0,#10264a 45%,#0a1a33 100%);padding:clamp(2rem,5vw,3.8rem);display:grid;grid-template-columns:1.5fr 1fr;gap:2rem;align-items:center;box-shadow:0 30px 70px rgba(10,26,51,.25)}
-.vm-vision .vm-net{position:absolute;right:-8%;top:-20%;width:min(620px,100%);opacity:.5;pointer-events:none}
-.vm-vision .vm-net .net-l line{stroke:#e3b650;stroke-width:1;opacity:.35}
-.vm-vision .vm-net .net-d circle{fill:#e3b650;animation:none;opacity:.6}
-.vm-eyebrow{display:inline-flex;align-items:center;gap:.6rem;text-transform:uppercase;letter-spacing:.16em;font-size:.76rem;font-weight:700;color:#e3b650;margin:0 0 1rem}
-.vm-eyebrow::before{content:"";width:34px;height:2px;background:#e3b650}
-.vm-vision h2{font-size:clamp(1.5rem,3.2vw,2.35rem);line-height:1.25;color:#fff;margin:0;max-width:34rem;position:relative}
-.vm-vision h2 em{color:#e3b650}
-.vm-vision>div{position:relative;z-index:1}
-.vm-head{text-align:center;max-width:36rem;margin:clamp(3rem,6vw,4.5rem) auto 2rem}
-.vm-head .vm-eyebrow{color:#c8962a}.vm-head .vm-eyebrow::before{background:#c8962a}
-.vm-head h3{font-size:clamp(1.6rem,3.4vw,2.3rem);color:#0a1a33}
-.vm-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.1rem}
-.vm-card{position:relative;background:#fff;border:1px solid #e3eaf6;border-radius:20px;padding:1.5rem 1.4rem 1.4rem;overflow:hidden;transition:.25s;box-shadow:0 8px 24px rgba(16,38,74,.05)}
-.vm-card:hover{transform:translateY(-6px);border-color:#c8962a;box-shadow:0 20px 44px rgba(16,38,74,.14)}
-.vm-card::after{content:"";position:absolute;left:0;top:0;height:3px;width:0;background:#c8962a;transition:width .35s}
-.vm-card:hover::after{width:100%}
-.vm-num{position:absolute;right:1rem;top:.6rem;font-family:Fraunces,Georgia,serif;font-size:2.6rem;line-height:1;color:#eef2fa;font-weight:600}
-.vm-ico{width:50px;height:50px;border-radius:14px;display:grid;place-items:center;background:linear-gradient(135deg,#2457b5,#10264a);color:#e3b650;margin-bottom:1.1rem;position:relative}
-.vm-ico svg{width:25px;height:25px}
-.vm-card h4{font-family:Fraunces,Georgia,serif;font-size:1.2rem;color:#0a1a33;margin:0 0 .4rem;position:relative}
-.vm-card p{color:#5a6578;font-size:.9rem;line-height:1.55;margin:0;position:relative}
-.vm-cta{display:flex;flex-direction:column;justify-content:center;gap:.8rem;background:linear-gradient(135deg,#c8962a,#e3b650);border:0;color:#1a1200}
-.vm-cta h4,.vm-cta p{color:#1a1200}
-.vm-cta b{font-weight:700;font-size:.95rem}
-@media(max-width:1000px){.vm-grid{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:860px){
- .vm-vision{grid-template-columns:1fr;border-radius:22px}
-  .vm-vision .vm-net{opacity:.3}
-}
-@media(max-width:520px){.vm-grid{grid-template-columns:1fr}.vm-card{display:grid;grid-template-columns:50px 1fr;column-gap:1rem;padding:1.2rem}.vm-ico{grid-row:span 2;margin:0}.vm-card h4{margin-bottom:.2rem}.vm-num{font-size:2rem}.vm-card.vm-cta{display:flex;grid-template-columns:none}}
-.vm-vision{grid-template-columns:1fr;padding-right:42%}
-.vm-vision>.vm-photo{position:absolute;right:0;top:0;bottom:0;width:48%;z-index:0}
-.vm-photo img{width:100%;height:100%;object-fit:cover;object-position:50% 55%;display:block;-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 38%);mask-image:linear-gradient(90deg,transparent 0,#000 38%)}
-.vm-vision{min-height:340px;align-content:center}
-@media(max-width:860px){
- .vm-vision{padding-right:clamp(1.5rem,5vw,2rem);min-height:0}
- .vm-vision>.vm-photo{position:relative;width:auto;height:220px;margin:calc(-1*clamp(1.5rem,5vw,2rem)) calc(-1*clamp(1.5rem,5vw,2rem)) 0}
- .vm-photo img{-webkit-mask-image:linear-gradient(180deg,#000 55%,transparent);mask-image:linear-gradient(180deg,#000 55%,transparent)}
-
-}
-@media(max-width:860px){
- .wwa-in{gap:0}
- .wwa{padding:2.8rem 0 3.4rem}
-}
-
-.vm-mission{display:grid;grid-template-columns:5fr 7fr;gap:clamp(2rem,6vw,5rem);margin-top:clamp(3.5rem,7vw,5.5rem);align-items:start}
-.vm-side{position:sticky;top:110px}
-.vm-side .vm-eyebrow{color:#c8962a}.vm-side .vm-eyebrow::before{background:#c8962a}
-.vm-side h3{font-size:clamp(1.8rem,3.4vw,2.6rem);line-height:1.15;color:#0a1a33;margin:0 0 1.6rem}
-.vm-link{display:inline-flex;gap:.6rem;font-weight:700;color:#0a1a33;border-bottom:2px solid #c8962a;padding-bottom:3px}
-.vm-link span{transition:transform .2s}.vm-link:hover span{transform:translateX(4px)}
-.vm-list{list-style:none;margin:0;padding:0;border-bottom:1px solid #d5dcea}
-.vm-row{display:grid;grid-template-columns:3.2rem 1fr 1.5fr;gap:0 1.4rem;align-items:baseline;padding:1.5rem 0;border-top:1px solid #d5dcea;position:relative;transition:padding .25s}
-.vm-row::before{content:"";position:absolute;left:0;top:-1px;height:1px;width:0;background:#c8962a;transition:width .4s}
-.vm-row:hover::before{width:100%}
-.vm-row:hover{padding-left:.6rem}
-.vm-n{font-family:Fraunces,Georgia,serif;font-size:1rem;color:#c8962a;font-weight:600}
-.vm-row h4{font-family:Fraunces,Georgia,serif;font-size:1.4rem;color:#0a1a33;margin:0;font-weight:600}
-.vm-row p{color:#5a6578;font-size:.98rem;line-height:1.6;margin:0}
-@media(max-width:900px){
- .vm-mission{grid-template-columns:1fr;gap:1.8rem}
- .vm-side{position:static}
- .vm-row{grid-template-columns:2.6rem 1fr;padding:1.2rem 0}
- .vm-row p{grid-column:2;margin-top:.35rem}
- .vm-row:hover{padding-left:0}
-}
-</style>"""
-
-def vm_section(lang, pre):
+def pole_cta_card(lang, pre):
     L = lambda fr, en: tx(lang, fr, en)
-    def ic(paths): return f'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{paths}</svg>'
-    items = [
-     (ic('<circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/>'), L("Accompagner","Support"), L("Aider les entreprises dans leur développement et leur stratégie commerciale.","Helping companies grow and shape their commercial strategy.")),
-     (ic('<circle cx="5" cy="12" r="2"/><circle cx="19" cy="5" r="2"/><circle cx="19" cy="19" r="2"/><path d="M7 12l10-6M7 12l10 6"/>'), L("Connecter","Connect"), L("Relier producteurs, fournisseurs, acheteurs, investisseurs et partenaires.","Linking producers, suppliers, buyers, investors and partners.")),
-     (ICONS["mining"] and ic(ICONS["mining"]), L("Valoriser","Add value"), L("Mettre en valeur les matières premières africaines.","Adding value to African raw materials.")),
-     (ic(ICONS["export"]), L("Exporter","Export"), L("Ouvrir l’accès aux marchés internationaux.","Opening access to international markets.")),
-     (ic('<path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M8.5 12l2.5 2.5 4.5-5"/>'), L("Partenariats","Partnerships"), L("Faciliter les partenariats commerciaux et institutionnels.","Facilitating commercial and institutional partnerships.")),
-     (ic(ICONS["invest"]), L("Entrepreneurs","Entrepreneurs"), L("Structurer et développer les projets des PME et entrepreneurs.","Structuring and growing SME and entrepreneur projects.")),
-     (ic(ICONS["sustain"]), L("Durabilité","Sustainability"), L("Promouvoir des initiatives durables, créatrices de valeur en Afrique.","Promoting sustainable, value-creating initiatives in Africa.")),
-    ]
-    cards = "".join(f'<li class="vm-row reveal"><span class="vm-n">0{i+1}</span><h4>{t_}</h4><p>{d_}</p></li>' for i, (i_, t_, d_) in enumerate(items))
-    net = net_svg().replace('class="net"', 'class="vm-net"')
-    return f"""<section class="vm" id="vision"><div class="wrap">
- <div class="vm-vision reveal">{net}
-  <div><p class="vm-eyebrow">{L("Notre vision","Our vision")}</p>
-  <h2>{L("Devenir la référence dans la connexion des <em>opportunités économiques</em> entre l’Afrique et le reste du monde.","To become the reference in connecting <em>economic opportunities</em> between Africa and the rest of the world.")}</h2></div>
-  <div class="vm-photo"><img src="/assets/handshake.jpg" alt="{L("Poignée de main devant une carte du monde","Handshake in front of a world map")}" width="1024" height="1024" loading="lazy"></div>
- </div>
- <div class="vm-mission">
-  <div class="vm-side reveal"><p class="vm-eyebrow">{L("Notre mission","Our mission")}</p>
-   <h3>{L("Sept engagements pour faire avancer vos projets.","Seven commitments to move your projects forward.")}</h3>
-   <a class="vm-link" href="{pre}/about#mission">{L("Lire toute la mission","Read the full mission")} <span>→</span></a></div>
-  <ol class="vm-list">{cards}</ol>
- </div>
-</div></section>"""
+    return f'''<a class="pcard pc-cta reveal" href="{pre}/contact"><span class="pc-body"><span class="pc-cta-ico">{SV(I_GLOBE, "1.6")}</span><h3>{L("Un projet en tête ?","Have a project in mind?")}</h3><p>{L("Parlons-en : nous vous orienterons vers le bon pôle.","Let’s talk: we’ll point you to the right division.")}</p><span class="btn btn-gold">{L("Nous écrire","Write to us")} →</span></span></a>'''
+
+# ----------------------------------------------------------------- PAGES
 
 
 def home(lang):
     pre = LP(lang)
     L = lambda fr, en: tx(lang, fr, en)
-    return f'''
+    s = STEPS[lang]
+    script = "<br>".join(s[i][0] for i in (1, 2, 3))
+    why_note = L("Ancrage africain, vision mondiale", "African roots, global outlook")
+    feats = [(I_PIN, L("Ancrage en RDC","Rooted in the DRC")), (I_TREND, L("Expansion en Afrique australe","Expanding in Southern Africa")),
+             (I_GLOBE, L("Ouverture internationale","International reach")), (I_SHIELD, L("Pratiques responsables","Responsible practices"))]
+    hf = "".join(f'<li>{SV(i, "1.6")}<span>{x}</span></li>' for i, x in feats)
+    hero = f'''
 <section class="hero">
- <div class="hero-bg" aria-hidden="true"></div>
- {net_svg()}
- <div class="wrap hero-in">
+ <div class="hero-vis">
+  <img src="/assets/hero-map-1700.jpg" alt="" width="1700" height="890" fetchpriority="high">
+  <p class="script hv-note">{script}</p>
+  <ul class="hv-stats">
+   <li><b>7</b><span>{L("pôles d’activité","areas of activity")}</span></li>
+   <li><b>4</b><span>{L("langues","languages")}</span></li>
+   <li><b>1</b><span>{L("Interlocuteur unique","Single point of contact")}</span></li>
+  </ul>
+ </div>
+ <div class="wrap hero-in"><div class="hero-txt">
   <p class="eyebrow">{L("Conseil · Commerce international · Partenariats","Advisory · International trade · Partnerships")}</p>
   <h1>{L("Connecter les opportunités <em>africaines</em> au reste du monde.","Connecting <em>African</em> opportunities to the rest of the world.")}</h1>
   <p class="lead">{L("Africa Connect Group accompagne les entreprises, facilite les échanges commerciaux et crée des partenariats durables entre l’Afrique et les marchés internationaux.","Africa Connect Group supports businesses, facilitates trade and builds lasting partnerships between Africa and international markets.")}</p>
   <div class="actions">
-   <a class="btn btn-gold" href="{pre}/contact">{L("Soumettre une opportunité","Submit an opportunity")} <span aria-hidden="true">→</span></a>
-   <a class="btn btn-ghost" href="#poles">{L("Découvrir nos pôles","Discover our divisions")}</a>
+   <a class="btn btn-gold" href="{pre}/contact">{L("Soumettre une opportunité","Submit an opportunity")} {SV(I_ARROW, "2.2")}</a>
+   <a class="btn btn-outline" href="#poles">{SV(I_GRID, "1.7")}{L("Découvrir nos pôles","Discover our divisions")}</a>
   </div>
-  <ul class="hero-tags"><li>{L("Ancrage en RDC","Rooted in the DRC")}</li><li>{L("Expansion en Afrique australe","Expanding in Southern Africa")}</li><li>{L("Ouverture internationale","International reach")}</li></ul>
- </div>
-</section>
+  <ul class="hf">{hf}</ul>
+ </div></div>
+</section>'''
 
-{WWA_CSS}
-<div class="statwrap"><div class="wrap"><div class="statbar reveal">
- <div class="stat"><b>7</b><i></i><span>{L("pôles d’activité complémentaires","complementary areas of activity")}</span></div>
- <div class="stat"><b>{"الكونغو" if lang == "ar" else "RDC"}</b><i></i><span>{L("notre point d’ancrage","our home base")}</span></div>
- <div class="stat"><b>{L("Afrique australe","Southern Africa")}</b><i></i><span>{L("notre marché d’expansion","our expansion market")}</span></div>
- <div class="stat"><b>{L("International","International")}</b><i></i><span>{L("partenaires et acheteurs du monde entier","partners and buyers worldwide")}</span></div>
-</div></div></div>
-
-
+    poles = f'''
 <section class="sec" id="poles">
  <div class="wrap">
-  <div class="sec-head reveal"><p class="eyebrow dark">{L("Nos pôles d’activité","Our areas of activity")}</p>
+  <div class="sec-row reveal"><div><p class="eyebrow">{L("Nos pôles d’activité","Our areas of activity")}</p>
    <h2>{L("Sept pôles complémentaires, un seul point de contact.","Seven complementary divisions, one point of contact.")}</h2></div>
-  <div class="grid">{"".join(pole_card(p, lang, pre) for p in POLES)}
-   <a class="card pole cta-card reveal" href="{pre}/contact"><h3>{L("Un projet en tête ?","Have a project in mind?")}</h3><p>{L("Parlons-en : nous vous orienterons vers le bon pôle.","Let’s talk: we’ll point you to the right division.")}</p><span class="more">{L("Nous écrire","Write to us")} →</span></a>
-  </div>
+   <a class="link-arrow" href="{pre}/poles">{L("Voir tous les pôles","See all divisions")} →</a></div>
+  <div class="pgrid">{"".join(pole_card(p, lang, pre) for p in POLES)}{pole_cta_card(lang, pre)}</div>
  </div>
-</section>
+</section>'''
 
-<section class="sec net-sec" id="why">
- <div class="wrap net-grid">
-  <div class="net-vis reveal"><img src="/assets/network.jpg" alt="{L("Carte de l’Afrique reliée au reste du monde par un réseau de connexions","Map of Africa linked to the rest of the world by a network of connections")}" width="736" height="1104" loading="lazy">
-   <div class="net-badge"><b>7</b><span>{L("pôles · 1 seul interlocuteur","divisions · 1 point of contact")}</span></div></div>
-  <div class="net-txt">
-   <p class="eyebrow dark reveal">{L("Pourquoi Africa Connect Group","Why Africa Connect Group")}</p>
-   <h2 class="reveal">{L("Un seul partenaire pour relier l’Afrique aux marchés du monde.","One partner to link Africa to world markets.")}</h2>
-   <p class="net-lead reveal">{L("Nous orientons chaque projet vers le bon pôle et les bons interlocuteurs, pour gagner du temps et sécuriser vos collaborations.","We route each project to the right division and the right counterparts, saving you time and securing your collaborations.")}</p>
-   <ul class="net-list">
-    <li class="reveal"><span class="net-i"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM4 21c0-4 3.6-7 8-7s8 3 8 7"/></svg></span><div><h3>{L("Interlocuteur unique","Single point of contact")}</h3><p>{L("Une demande, une équipe : nous orientons votre projet vers le bon pôle.","One request, one team: we direct your project to the right division.")}</p></div></li>
-    <li class="reveal"><span class="net-i"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></span><div><h3>{L("Sept pôles complémentaires","Seven complementary divisions")}</h3><p>{L("Matières premières, export, investissement, formation, mines et durabilité.","Commodities, export, investment, training, mining and sustainability.")}</p></div></li>
-    <li class="reveal"><span class="net-i"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 2.6 3.8 5.6 3.8 9S14.6 18.4 12 21c-2.6-2.6-3.8-5.6-3.8-9S9.4 5.6 12 3z"/></svg></span><div><h3>{L("Ancrage africain, vision mondiale","African roots, global outlook")}</h3><p>{L("Basés en RDC, tournés vers l’Afrique australe et les marchés internationaux.","Based in the DRC, looking to Southern Africa and international markets.")}</p></div></li>
-    <li class="reveal"><span class="net-i"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 3v6c0 4.500-3.200 8-8 9-4.800-1-8-4.500-8-9V6z"/><path d="M8.500 12l2.500 2.500 4.500-5"/></svg></span><div><h3>{L("Pratiques responsables","Responsible practices")}</h3><p>{L("Transparence, respect des réglementations et création de valeur durable.","Transparency, regulatory compliance and sustainable value creation.")}</p></div></li>
-   </ul>
-   <div class="actions reveal"><a class="btn btn-navy" href="{pre}/contact">{L("Parler à notre équipe","Talk to our team")} <span aria-hidden="true">→</span></a>
-   <a class="btn btn-line" href="#poles">{L("Voir nos pôles","See our divisions")}</a></div>
-  </div>
+    why_feats = [
+     (I_USER, L("Interlocuteur unique","Single point of contact"), L("Une demande, une équipe : nous orientons votre projet vers le bon pôle.","One request, one team: we direct your project to the right division.")),
+     (I_GRID, L("Sept pôles complémentaires","Seven complementary divisions"), L("Matières premières, export, investissement, formation, mines et durabilité.","Commodities, export, investment, training, mining and sustainability.")),
+     (I_GLOBE, L("Ancrage africain, vision mondiale","African roots, global outlook"), L("Basés en RDC, tournés vers l’Afrique australe et les marchés internationaux.","Based in the DRC, looking to Southern Africa and international markets.")),
+     (I_SHIELD, L("Pratiques responsables","Responsible practices"), L("Transparence, respect des réglementations et création de valeur durable.","Transparency, regulatory compliance and sustainable value creation.")),
+    ]
+    wf = "".join(f'<li class="reveal"><span class="why-i">{SV(i, "1.6")}</span><div><h3>{a}</h3><p>{b}</p></div></li>' for i, a, b in why_feats)
+    why = f'''
+<section class="why" id="why">
+ <div class="why-l">
+  <p class="eyebrow">{L("Pourquoi Africa Connect Group","Why Africa Connect Group")}</p>
+  <h2>{L("Un seul partenaire pour relier l’Afrique aux marchés du monde.","One partner to link Africa to world markets.")}</h2>
+  <p class="why-lead">{L("Nous orientons chaque projet vers le bon pôle et les bons interlocuteurs, pour gagner du temps et sécuriser vos collaborations.","We route each project to the right division and the right counterparts, saving you time and securing your collaborations.")}</p>
+  <a class="btn btn-gold" href="{pre}/contact">{L("Parler à notre équipe","Talk to our team")} {SV(I_ARROW, "2.2")}</a>
+  <ul class="why-stats">
+   <li><b>{"الكونغو" if lang == "ar" else "RDC"}</b><span>{L("notre point d’ancrage","our home base")}</span></li>
+   <li><b>{L("Afrique australe","Southern Africa")}</b><span>{L("notre marché d’expansion","our expansion market")}</span></li>
+   <li><b>{L("International","International")}</b><span>{L("partenaires et acheteurs du monde entier","partners and buyers worldwide")}</span></li>
+  </ul>
  </div>
-</section>
+ <div class="why-m"><img src="/assets/network.jpg" alt="{L("Carte de l’Afrique reliée au reste du monde par un réseau de connexions","Map of Africa linked to the rest of the world by a network of connections")}" width="736" height="1104" loading="lazy"><p class="script why-note">{why_note}</p></div>
+ <ul class="why-r">{wf}</ul>
+</section>'''
 
+    aud = f'''
+<section class="sec" id="audience">
+ <div class="wrap">
+  <div class="sec-row reveal"><div><p class="eyebrow">{L("À qui nous nous adressons","Who we work with")}</p>
+   <h2>{L("Tous ceux qui font vivre les marchés africains.","Everyone who drives African markets.")}</h2></div></div>
+  <ul class="aud reveal">{"".join(f'<li><span class="aud-ico">{SV(AUD_ICONS[i], "1.6")}</span><span class="aud-t">{esc(a)}</span></li>' for i, a in enumerate(AUDIENCE[lang]))}</ul>
+ </div>
+</section>'''
+
+    steps = f'''
 <section class="sec sec-soft">
  <div class="wrap">
-  <div class="sec-head reveal"><p class="eyebrow dark">{L("À qui nous nous adressons","Who we work with")}</p>
-   <h2>{L("Tous ceux qui font vivre les marchés africains.","Everyone who drives African markets.")}</h2></div>
-  <ul class="aud reveal">{"".join(f'<li style="--pos:{AUD_POS[i]}"><img src="/assets/aud/0{i+1}.jpg" alt="" width="800" height="450" loading="lazy"><span class="aud-n">0{i+1}</span><span class="aud-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{AUD_ICONS[i]}</svg></span><span class="aud-t">{esc(a)}</span></li>' for i,a in enumerate(AUDIENCE[lang]))}</ul>
- </div>
-</section>
-
-<section class="sec">
- <div class="wrap">
-  <div class="sec-head reveal"><p class="eyebrow dark">{L("Notre approche","Our approach")}</p>
+  <div class="sec-row reveal"><div><p class="eyebrow">{L("Notre approche","Our approach")}</p>
    <h2>{L("Comment collaborer avec nous.","How to work with us.")}</h2></div>
-  <ol class="steps">{"".join(f'<li class="step s{i+1} reveal"><span class="step-ico">{STEP_ICONS[i]}</span><span class="step-bg" aria-hidden="true">0{i+1}</span><div class="step-txt"><span class="step-k">{L("Étape","Step")} {i+1}</span><h3>{a}</h3><p>{b}</p></div></li>' for i,(a,b) in enumerate(STEPS[lang]))}</ol>
+   <a class="link-arrow" href="{pre}/contact">{L("Soumettre une opportunité","Submit an opportunity")} →</a></div>
+  <ol class="steps">{"".join(f'<li class="step s{i+1} reveal"><span class="step-ico">{STEP_ICONS[i]}</span><span class="step-bg" aria-hidden="true">0{i+1}</span><div class="step-txt"><span class="step-k">{L("Étape","Step")} {i+1}</span><h3>{a}</h3><p>{b}</p></div></li>' for i,(a,b) in enumerate(s))}</ol>
  </div>
-</section>
+</section>'''
 
-<section class="sec sec-navy" id="opportunities">
- <div class="wrap opp">
-  <div class="reveal"><p class="eyebrow">{L("Projets & opportunités","Projects & opportunities")}</p>
-   <h2>{L("Vous cherchez un acheteur, un fournisseur ou un investisseur ?","Looking for a buyer, a supplier or an investor?")}</h2>
-   <p class="lead">{L("Présentez-nous votre offre, votre besoin ou votre projet. Notre équipe l’étudie et vous met en relation avec les bons interlocuteurs.","Share your offer, your need or your project. Our team reviews it and connects you with the right counterparts.")}</p></div>
-  <div class="opp-box reveal">
-   <ul class="ticks gold">
-    <li>{L("Offre de matières premières","Commodity offers")}</li>
-    <li>{L("Demande d’achat","Purchase requests")}</li>
-    <li>{L("Recherche d’investisseur ou de partenaire","Investor or partner search")}</li>
-    <li>{L("Demande d’accompagnement ou de formation","Advisory or training request")}</li></ul>
-   <a class="btn btn-gold" href="{pre}/contact">{L("Soumettre une opportunité","Submit an opportunity")}</a>
-  </div>
- </div>
-</section>
-
-{founder_teaser(lang, pre)}
-
-<section class="sec">
- <div class="wrap">
-  {values_panel(lang)}
- </div>
-</section>
+    faq = f'''
 <section class="sec faq-sec" id="faq">
  <div class="wrap faq-grid">
-  <div class="faq-head reveal"><p class="eyebrow dark">{L("Questions fréquentes","Frequently asked questions")}</p>
+  <div class="faq-head reveal"><p class="eyebrow">{L("Questions fréquentes","Frequently asked questions")}</p>
    <h2>{L("Tout ce qu’il faut savoir avant de nous contacter.","Everything to know before getting in touch.")}</h2>
    <p>{L("Une autre question ? Écrivez-nous, nous vous répondons rapidement.","Another question? Write to us and we will reply quickly.")}</p>
-   <a class="link" href="{pre}/contact">{L("Poser une question","Ask a question")} →</a></div>
+   <a class="link-arrow" href="{pre}/contact">{L("Poser une question","Ask a question")} →</a></div>
   <div class="faq-list reveal">
    <details open><summary>{L("Qui peut nous contacter ?","Who can contact us?")}</summary><p>{L("Entreprises locales et internationales, producteurs et coopératives, exportateurs et importateurs, acheteurs, investisseurs, PME, institutions et organisations de développement.","Local and international companies, producers and cooperatives, exporters and importers, buyers, investors, SMEs, institutions and development organisations.")}</p></details>
    <details><summary>{L("Que se passe-t-il après ma demande ?","What happens after my request?")}</summary><p>{L("Nous écoutons votre besoin, identifions et vous mettons en relation avec les bons partenaires, structurons l’opportunité, puis facilitons la suite de la collaboration.","We listen to your need, identify and introduce the right partners, structure the opportunity, then facilitate the next steps of the collaboration.")}</p></details>
@@ -569,8 +443,22 @@ def home(lang):
    <details><summary>{L("Comment vous joindre rapidement ?","How can I reach you quickly?")}</summary><p>{L("Par WhatsApp, e-mail ou téléphone : vous trouverez toutes nos coordonnées sur la page Contact et en bas de chaque page.","By WhatsApp, email or phone: all our details are on the Contact page and at the bottom of every page.")}</p></details>
   </div>
  </div>
-</section>
-'''
+</section>'''
+
+    opp_items = [L("Offre de matières premières","Commodity offers"), L("Demande d’achat","Purchase requests"),
+                 L("Recherche d’investisseur ou de partenaire","Investor or partner search"), L("Demande d’accompagnement ou de formation","Advisory or training request")]
+    band = f'''
+<section class="band" id="opportunities">
+ <div class="wrap band-in">
+  <div class="band-txt reveal"><p class="eyebrow">{L("Projets & opportunités","Projects & opportunities")}</p>
+   <h2>{L("Vous cherchez un acheteur, un fournisseur ou un investisseur ?","Looking for a buyer, a supplier or an investor?")}</h2>
+   <p class="lead">{L("Présentez-nous votre offre, votre besoin ou votre projet. Notre équipe l’étudie et vous met en relation avec les bons interlocuteurs.","Share your offer, your need or your project. Our team reviews it and connects you with the right counterparts.")}</p>
+   <div class="actions"><a class="btn btn-gold" href="{pre}/contact">{L("Soumettre une opportunité","Submit an opportunity")} {SV(I_ARROW, "2.2")}</a></div></div>
+  <ul class="band-list reveal">{"".join(f'<li><i>{SV(I_CHECK, "2.2")}</i><span>{x}</span></li>' for x in opp_items)}</ul>
+ </div>
+</section>'''
+
+    return hero + poles + why + aud + steps + founder_teaser(lang, pre) + f'<section class="sec sec-soft"><div class="wrap">{values_panel(lang)}</div></section>' + faq + band
 
 def fx(k, lang): return FOUNDER[k][lang]
 
@@ -590,7 +478,7 @@ def founder_section(lang):
 
 def founder_teaser(lang, pre):
     m = fx("msg", lang)
-    return f'''<section class="sec sec-soft fdr-tz"><div class="wrap fdr-tz-in reveal">
+    return f'''<section class="sec fdr-tz"><div class="wrap fdr-tz-in reveal">
  <img src="/assets/founder.jpg" alt="{FOUNDER_NAME}" width="720" height="960" loading="lazy">
  <div><p class="eyebrow dark">{fx("h", lang)}</p><h2>{esc(m[-1])}</h2><p>{esc(m[2])}</p>
   <p class="fdr-sign"><b>{FOUNDER_NAME}</b><span>{esc(fx("role", lang))}</span></p>
@@ -598,11 +486,11 @@ def founder_teaser(lang, pre):
 
 def contact_band(lang, pre):
     L = lambda fr, en: tx(lang, fr, en)
-    return f'''<section class="cta2"><div class="wrap cta2-in">
- <div class="cta2-head reveal">
-  <p class="cta2-eyebrow">{L("Passons à l’action","Let’s get started")}</p>
+    return f'''<section class="band band-rows"><div class="wrap band-in">
+ <div class="band-txt reveal">
+  <p class="eyebrow">{L("Passons à l’action","Let’s get started")}</p>
   <h2>{L("Un projet en tête&nbsp;? <em>Parlons-en.</em>","Got a project? <em>Let’s talk.</em>")}</h2>
-  <p class="cta2-sub">{L("Un interlocuteur unique pour orienter votre projet vers le bon pôle.","A single point of contact to guide your project to the right division.")}</p>
+  <p class="lead">{L("Un interlocuteur unique pour orienter votre projet vers le bon pôle.","A single point of contact to guide your project to the right division.")}</p>
  </div>
  <div class="cta2-rows reveal">
   <a class="cta2-row go" href="{pre}/contact"><span class="r-n">01</span><span class="r-t"><b>{L("Soumettre une opportunité","Submit an opportunity")}</b><small>{L("Offre, besoin ou projet : décrivez-le en quelques lignes.","Offer, need or project: describe it in a few lines.")}</small></span><span class="r-a" aria-hidden="true">→</span></a>
@@ -635,6 +523,7 @@ def about(lang):
 </div></section>
 <section class="sec sec-soft"><div class="wrap">
   {values_panel(lang)}
+</div></section>
 <section class="sec"><div class="wrap split">
  <div class="reveal"><h2>{L("Notre ambition à long terme","Our long-term ambition")}</h2></div>
  <div class="reveal"><p>{L("Renforcer notre présence sur plusieurs marchés africains, développer des partenariats internationaux, accompagner des projets de valorisation des ressources et contribuer à la création d’opportunités économiques durables.","Strengthen our presence across several African markets, develop international partnerships, support resource value-addition projects and contribute to creating sustainable economic opportunities.")}</p>
@@ -642,7 +531,7 @@ def about(lang):
 </div></section>
 {contact_band(lang, pre)}'''
 
-def phead(lang, eyebrow, title, crumb, pre, icon_html="", sub="", bg="/assets/hero-map.jpg"):
+def phead(lang, eyebrow, title, crumb, pre, icon_html="", sub="", bg="/assets/hero-map-1700.jpg"):
     return f'''<section class="phead" style="--ph-img:url('{bg}')"><div class="wrap">
  <p class="crumb"><a href="{pre or "/"}">{crumb}</a> / {eyebrow}</p>
  <div class="ph-row">{icon_html}<div><h1>{title}</h1>{f'<p class="lead">{sub}</p>' if sub else ''}</div></div></div></section>'''
@@ -662,7 +551,7 @@ def pole_page(p, lang):
 </div></section>
 <section class="sec sec-soft"><div class="wrap">
  <div class="sec-head reveal"><h2>{L("Nos autres pôles","Our other divisions")}</h2></div>
- <div class="grid">{"".join(pole_card(q, lang, pre) for q in others[:3])}</div>
+ <div class="pgrid p3">{"".join(pole_card(q, lang, pre) for q in others[:3])}</div>
  <p class="center"><a class="link" href="{pre}/poles">{L("Voir tous les pôles","See all divisions")} →</a></p></div></section>
 {contact_band(lang, pre)}'''
 
@@ -673,9 +562,7 @@ def poles_index(lang):
 {phead(lang, L("Nos pôles","Our divisions"), L("Sept pôles d’expertise, un seul point de contact.","Seven areas of expertise, one point of contact."), L("Accueil","Home"), pre, "", L("Matières premières, export, investissement, formation, mines et durabilité : choisissez le domaine qui correspond à votre projet.","Commodities, export, investment, training, mining and sustainability: choose the area that fits your project."))}
 <section class="sec" id="poles-list">
  <div class="wrap">
-  <div class="grid">{"".join(pole_card(q, lang, pre) for q in POLES)}
-   <a class="card pole cta-card reveal" href="{pre}/contact"><h3>{L("Un projet en tête ?","Have a project in mind?")}</h3><p>{L("Parlons-en : nous vous orienterons vers le bon pôle.","Let’s talk: we’ll point you to the right division.")}</p><span class="more">{L("Nous écrire","Write to us")} →</span></a>
-  </div>
+  <div class="pgrid">{"".join(pole_card(q, lang, pre) for q in POLES)}{pole_cta_card(lang, pre)}</div>
  </div>
 </section>
 {contact_band(lang, pre)}'''
@@ -740,7 +627,7 @@ def build():
             path = f"/poles/{p['slug']}"
             write(lang, path, page(lang, path, f"{p['name'][lang]} — {base}", p["intro"][lang], pole_page(p, lang), path))
     (OUT / "404.html").write_text((OUT / "index.html").read_text(encoding="utf-8"), encoding="utf-8")
-    (OUT / "version.txt").write_text("Africa Connect Group site - build " + __import__("datetime").datetime.now().strftime("%Y-%m-%d %H:%M") + " - vision photo + stat card + transparent logo\n", encoding="utf-8")
+    (OUT / "version.txt").write_text("Africa Connect Group site - build " + __import__("datetime").datetime.now().strftime("%Y-%m-%d %H:%M") + " - light redesign (reference layout)\n", encoding="utf-8")
     print("built:", len(list(OUT.rglob('*.html'))), "pages")
     if MISSING: print("MISSING TRANSLATIONS:", *sorted(MISSING), sep="\n  ")
 
