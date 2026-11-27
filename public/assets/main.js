@@ -29,8 +29,8 @@
   var ok=v('name')&&v('message')&&/^\S+@\S+\.\S+$/.test(v('email'));
   d.getElementById('ferr').hidden=!!ok;if(!ok)return;
   var pole=f.pole.options[f.pole.selectedIndex].text;
-  var txt=[L[0]+': '+v('name'),v('company')&&L[1]+': '+v('company'),L[2]+': '+v('email'),v('phone')&&L[3]+': '+v('phone'),L[4]+': '+f.profile.value,L[5]+': '+pole,'',L[6]+':',v('message')].filter(function(x){return x!==false&&x!==''||x===''}).join('\n');
+  var txt=[L[0]+': '+v('name'),v('company')&&L[1]+': '+v('company'),L[2]+': '+v('email'),v('phone')&&L[3]+': '+v('phone'),(f.dataset.pl||L[4])+': '+f.profile.value,L[5]+': '+pole,'',L[6]+':',v('message')].filter(function(x){return x!==false&&x!==''||x===''}).join('\n');
   if(btn.dataset.send==='wa')window.open('https://wa.me/'+f.dataset.wa+'?text='+encodeURIComponent(((HI[lg]||HI.en)+'\n\n')+txt),'_blank','noopener');
-  else location.href='mailto:'+f.dataset.email+'?subject='+encodeURIComponent((SJ[lg]||SJ.en)+v('name'))+'&body='+encodeURIComponent(txt);
+  else location.href='mailto:'+f.dataset.email+'?subject='+encodeURIComponent((f.dataset.subject||SJ[lg]||SJ.en)+v('name'))+'&body='+encodeURIComponent(txt);
  });
 })();
