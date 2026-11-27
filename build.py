@@ -216,7 +216,7 @@ def _page(lang, path, title, desc, body, alt_path):
     dirn = "rtl" if lang == "ar" else "ltr"
     fonts = ('<link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&display=swap" rel="stylesheet">' if lang == "ar" else
              '<link rel="preload" as="font" type="font/woff2" href="/assets/fonts/plus-jakarta-sans-latin-800-normal.woff2" crossorigin>')
-    nav = [("nav_home", "/"), ("nav_about", "/about"), ("nav_poles", "/poles"), ("nav_projects", "/projects"), ("nav_partners", "/partners"), ("nav_news", "/news"), ("nav_contact", "/contact")]
+    nav = [("nav_home", "/"), ("nav_about", "/about"), ("nav_poles", "/poles"), ("nav_projects", "/projects"), ("nav_partners", "/partners"), ("nav_news", "/news")]
     def navlink(k, p):
         cur = (p == path) or (p == "/poles" and path.startswith("/poles"))
         ca = " aria-current=page" if cur else ""
@@ -246,7 +246,7 @@ def _page(lang, path, title, desc, body, alt_path):
 {alts}
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 {fonts}
-<link rel="stylesheet" href="/assets/style.css?v=43">
+<link rel="stylesheet" href="/assets/style.css?v=44">
 </head>
 <body>
 <a class="skip" href="#main">{t("skip", lang)}</a>
