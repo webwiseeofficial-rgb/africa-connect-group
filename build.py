@@ -246,7 +246,7 @@ def _page(lang, path, title, desc, body, alt_path):
 {alts}
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 {fonts}
-<link rel="stylesheet" href="/assets/style.css?v=44">
+<link rel="stylesheet" href="/assets/style.css?v=45">
 </head>
 <body>
 <a class="skip" href="#main">{t("skip", lang)}</a>
@@ -307,6 +307,7 @@ def _page(lang, path, title, desc, body, alt_path):
  <a class="mb mb-go" href="{u("/contact")}">{tx(lang, "Nous contacter", "Contact us")}</a>
 </nav>
 <script src="/assets/main.js?v=9" defer></script>
+<script src="/assets/config.js?v=1"></script><script src="/assets/live.js?v=1" defer></script>
 </body>
 </html>'''
 
@@ -636,8 +637,12 @@ def steps_block(lang):
         f'<li class="step s{i+1} reveal"><span class="step-ico">{STEP_ICONS[i]}</span><span class="step-bg" aria-hidden="true">0{i+1}</span><div class="step-txt"><span class="step-k">{L("Étape","Step")} {i+1}</span><h3>{a}</h3><p>{b}</p></div></li>'
         for i, (a, b) in enumerate(s)) + '</ol>'
 
+def feed_box(lang, kind):
+    L = lambda fr, en: tx(lang, fr, en)
+    return f'<div class="feed" data-feed="{kind}" data-more="{esc(L("Lire la suite", "Read more"))}" data-less="{esc(L("Réduire", "Close"))}" hidden></div>'
+
 def empty_state(icon_paths, h, p, buttons):
-    return f'<div class="empty reveal"><span class="em-ico">{SV(icon_paths, "1.5")}</span><h3>{h}</h3><p>{p}</p><div class="actions">{buttons}</div></div>'
+    return f'<div class="empty reveal" data-feed-empty><span class="em-ico">{SV(icon_paths, "1.5")}</span><h3>{h}</h3><p>{p}</p><div class="actions">{buttons}</div></div>'
 
 def lead_form(lang, h2, left_p, bullets, card_h, profile_label, profile_opts, subject, placeholder):
     L = lambda fr, en: tx(lang, fr, en)
@@ -691,6 +696,7 @@ def projects(lang):
 </div></section>
 <section class="sec sec-soft"><div class="wrap">
  <div class="sec-row reveal"><div><p class="eyebrow">{t("nav_projects", lang)}</p><h2>{L("Opportunités à l’affiche","Featured opportunities")}</h2></div></div>
+ {feed_box(lang, "project")}
  {empty_state(I_GLOBE, L("Les premières opportunités seront publiées ici.","The first opportunities will be published here."), L("Pour garantir des échanges sérieux, chaque opportunité est étudiée avant publication. Soumettez la vôtre dès maintenant.","To ensure serious exchanges, every opportunity is reviewed before publication. Submit yours now."), f'<a class="btn btn-gold" href="#submit">{L("Soumettre une opportunité","Submit an opportunity")} {SV(I_ARROW, "2.2")}</a>')}
 </div></section>
 <section class="sec"><div class="wrap">
@@ -740,6 +746,7 @@ def news(lang):
     return f'''
 {phead(lang, t("nav_news", lang), L("Actualités et mises à jour.","News and updates."), L("Accueil","Home"), pre, "", L("Suivez l’activité d’Africa Connect Group, les opportunités de marché et nos partenariats.","Follow Africa Connect Group’s activity, market opportunities and our partnerships."))}
 <section class="sec"><div class="wrap">
+ {feed_box(lang, "news")}
  {empty_state(IC_NEWS, L("Nos premières actualités arrivent bientôt.","Our first news is coming soon."), L("Nous préparons nos premières publications. En attendant, suivez-nous sur WhatsApp ou écrivez-nous pour recevoir nos informations.","We are preparing our first posts. In the meantime, follow us on WhatsApp or write to us to receive our updates."), btns)}
 </div></section>
 <section class="sec sec-soft"><div class="wrap">

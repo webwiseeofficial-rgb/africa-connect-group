@@ -56,4 +56,6 @@ EXTRA = {
  'Déposez une offre, une demande d’achat ou un projet d’investissement auprès d’Africa Connect Group.': {"ar": 'قدّموا عرضًا أو طلب شراء أو مشروعًا استثماريًا إلى Africa Connect Group.', "es": 'Presente una oferta, una solicitud de compra o un proyecto de inversión a Africa Connect Group.'},
  'Proposez un partenariat commercial, d’investissement, institutionnel ou de formation avec Africa Connect Group.': {"ar": 'اقترحوا شراكة تجارية أو استثمارية أو مؤسسية أو تدريبية مع Africa Connect Group.', "es": 'Proponga una alianza comercial, de inversión, institucional o de formación con Africa Connect Group.'},
  'Actualités, opportunités de marché et partenariats d’Africa Connect Group.': {"ar": 'أخبار وفرص السوق وشراكات Africa Connect Group.', "es": 'Noticias, oportunidades de mercado y alianzas de Africa Connect Group.'},
+ 'Lire la suite': {"ar": 'اقرأ المزيد', "es": 'Leer más'},
+ 'Réduire': {"ar": 'إغلاق', "es": 'Cerrar'},
 }
