@@ -438,12 +438,19 @@ html[dir=rtl] .ftr-script{transform-origin:right}
  .fdr-tz-in{grid-template-columns:1fr}.fdr-tz img{max-width:180px}
 }
 @media(max-width:700px){
- .tb-tag,.tb-l span{display:none}
+ .tb-tag,.tb-wa{display:none}
+ .tb-r{gap:.5rem}
+ .tb-l{font-size:.72rem;gap:.35rem;min-width:0}
+ .tb-l svg{width:14px;height:14px;flex:none}
+ .tb-l span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+ .lang-sw{font-size:.7rem;flex:none}
+ .lang-sw a{padding:.32rem .42rem}
  .tb-in{min-height:42px}
  .tb-r{width:100%;justify-content:space-between}
  .hdr-in{height:68px}.brand img{height:50px}
  .sec-row{flex-direction:column;align-items:flex-start;gap:.8rem}
 }
+@media(max-width:380px){.tb-l{font-size:.66rem}.lang-sw a{padding:.3rem .34rem}}
 @media(max-width:600px){
  .hf{grid-template-columns:1fr 1fr;gap:1.2rem 1rem}
  .hero-vis{margin-inline:1rem;border-radius:22px;height:300px}
