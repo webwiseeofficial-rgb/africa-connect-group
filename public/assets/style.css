@@ -450,8 +450,14 @@ html[dir=rtl] .ftr-script{transform-origin:right}
  .hdr-in{height:68px}.brand img{height:50px}
  .sec-row{flex-direction:column;align-items:flex-start;gap:.8rem}
 }
-@media(max-width:380px){.tb-l{font-size:.66rem}.lang-sw a{padding:.3rem .34rem}}
+@media(max-width:380px){.hero h1{font-size:1.78rem}.hero .lead{font-size:.9rem}.tb-l{font-size:.66rem}.lang-sw a{padding:.3rem .34rem}}
 @media(max-width:600px){
+ .hero-in{padding-block:1.3rem 1.2rem}
+ .hero .eyebrow{font-size:.66rem;letter-spacing:.1em;margin-bottom:.6rem}
+ .hero h1{font-size:clamp(1.85rem,8.2vw,2.3rem);margin-bottom:.8rem}
+ .hero .lead{font-size:.94rem;line-height:1.5;margin-bottom:1.1rem}
+ .hero .actions{gap:.55rem}.hero .actions .btn{padding:.78rem 1.2rem}
+ .hero .hf{margin-top:1.1rem;padding-top:1rem}
  .hf{grid-template-columns:1fr 1fr;gap:1.2rem 1rem}
  .hero-vis{margin-inline:1rem;border-radius:22px;height:300px}
  .h-script::after{height:3px}
@@ -510,3 +516,4 @@ html[dir=rtl] .hero-vis img{object-position:38% 50%}
 html[dir=rtl] .skip{left:auto;right:-999px}html[dir=rtl] .skip:focus{left:auto;right:1rem}
 
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.js .reveal{opacity:1;transform:none}}
+@media(max-width:380px){.hero h1{font-size:1.78rem}.hero .lead{font-size:.9rem}}
