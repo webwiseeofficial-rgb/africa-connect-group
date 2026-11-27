@@ -244,7 +244,7 @@ def _page(lang, path, title, desc, body, alt_path):
 {alts}
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 {fonts}
-<link rel="stylesheet" href="/assets/style.css?v=41">
+<link rel="stylesheet" href="/assets/style.css?v=42">
 </head>
 <body>
 <a class="skip" href="#main">{t("skip", lang)}</a>
