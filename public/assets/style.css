@@ -387,8 +387,8 @@ html[dir=rtl] .ftr-script{transform-origin:right}
 }
 
 /* ---------- responsive ---------- */
-@media(min-width:1101px) and (max-width:1499px){.nav-phone{display:none}.nav{gap:1.35rem}}
-@media(min-width:1500px){.nav{gap:1.4rem}.nav-phone small{display:none}}
+@media(min-width:1101px) and (max-width:1499px){.nav{gap:1.1rem}.nav-phone{padding-inline-start:1rem}.nav-phone small{font-size:.66rem}}
+@media(min-width:1500px){.nav{gap:1.4rem}}
 .nav>a,.dd-toggle{white-space:nowrap}
 @media(max-width:1080px){
  .pgrid{grid-template-columns:repeat(3,1fr)}
