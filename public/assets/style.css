@@ -554,3 +554,13 @@ html[dir=rtl] .skip{left:auto;right:-999px}html[dir=rtl] .skip:focus{left:auto;r
 .fp-more:hover{text-decoration:underline}
 @media(max-width:1000px){.feed{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:620px){.feed{grid-template-columns:1fr}}
+
+/* ---- download card ---- */
+.dl{display:flex;align-items:center;gap:1.4rem;background:linear-gradient(135deg,var(--sky),#fff);border:1px solid #cfdcf3;border-radius:22px;padding:1.6rem clamp(1.2rem,3vw,2.2rem);box-shadow:0 12px 32px rgba(11,29,58,.07)}
+.dl-ico{flex:none;width:62px;height:62px;border-radius:18px;background:var(--navy);color:var(--gold2);display:grid;place-items:center}
+.dl-ico svg{width:30px;height:30px}
+.dl-t{flex:1;min-width:0}
+.dl-t h3{font-size:1.25rem;margin-bottom:.25rem}
+.dl-t p{color:var(--mut);font-size:.95rem}
+.dl-t small{display:block;margin-top:.35rem;font-size:.76rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--blue)}
+@media(max-width:760px){.dl{flex-direction:column;align-items:flex-start}.dl .btn{width:100%;justify-content:center}}
