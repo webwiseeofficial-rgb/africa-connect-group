@@ -169,6 +169,7 @@ STEPS = dict(
 T = dict(  # UI strings
  nav_home=dict(fr="Accueil", en="Home"), nav_about=dict(fr="À propos", en="About"),
  nav_poles=dict(fr="Nos pôles", en="Our divisions"), nav_contact=dict(fr="Contact", en="Contact"),
+ nav_projects=dict(fr="Projets & opportunités", en="Projects & opportunities"), nav_partners=dict(fr="Partenariats", en="Partnerships"), nav_news=dict(fr="Actualités", en="News"),
  cta=dict(fr="Nous contacter", en="Get in touch"),
  skip=dict(fr="Aller au contenu", en="Skip to content"),
 )
@@ -203,6 +204,7 @@ I_TREND = '<path d="M3 17l6-6 4 4 8-8M15 7h6v6"/>'
 I_USER = '<path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM4 21c0-4 3.6-7 8-7s8 3 8 7"/>'
 I_GRID = '<rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/>'
 I_CHECK = '<path d="M5 12.5l4.5 4.5L19 7.5"/>'
+WA_SVG = '<svg viewBox="0 0 32 32" fill="currentColor" aria-hidden="true"><path d="M16 3C9 3 3.3 8.6 3.3 15.5c0 2.3.6 4.4 1.7 6.3L3 29l7.4-1.9c1.8 1 3.800 1.500 5.900 1.500 7 0 12.700-5.600 12.700-12.500S23 3 16 3zm0 22.800c-1.900 0-3.700-.5-5.300-1.500l-.4-.2-4.400 1.100 1.200-4.200-.3-.4c-1.100-1.700-1.600-3.600-1.600-5.600C5.200 9.700 10 5 16 5s10.800 4.700 10.800 10.500S21.900 25.800 16 25.800zm5.900-7.800c-.3-.2-1.900-.9-2.200-1-.3-.1-.5-.2-.7.200-.2.300-.8 1-1 1.200-.2.200-.4.200-.7.100-.3-.2-1.400-.5-2.600-1.600-1-.9-1.600-1.900-1.800-2.200-.2-.3 0-.5.100-.7l.5-.6c.2-.2.200-.3.300-.5.100-.2.100-.4 0-.6l-1-2.300c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.6.100-.9.400-.3.300-1.200 1.100-1.200 2.700s1.200 3.200 1.400 3.400c.2.200 2.300 3.500 5.600 4.900.8.300 1.400.5 1.900.6.8.2 1.500.2 2.100.1.600-.1 1.900-.8 2.200-1.500.3-.8.3-1.400.2-1.500-.1-.2-.3-.3-.6-.4z"/></svg>'
 I_ARROW = '<path d="M5 12h14M13 6l6 6-6 6"/>'
 
 def _page(lang, path, title, desc, body, alt_path):
@@ -214,7 +216,7 @@ def _page(lang, path, title, desc, body, alt_path):
     dirn = "rtl" if lang == "ar" else "ltr"
     fonts = ('<link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&display=swap" rel="stylesheet">' if lang == "ar" else
              '<link rel="preload" as="font" type="font/woff2" href="/assets/fonts/plus-jakarta-sans-latin-800-normal.woff2" crossorigin>')
-    nav = [("nav_home", "/"), ("nav_about", "/about"), ("nav_poles", "/poles"), ("nav_contact", "/contact")]
+    nav = [("nav_home", "/"), ("nav_about", "/about"), ("nav_poles", "/poles"), ("nav_projects", "/projects"), ("nav_partners", "/partners"), ("nav_news", "/news"), ("nav_contact", "/contact")]
     def navlink(k, p):
         cur = (p == path) or (p == "/poles" and path.startswith("/poles"))
         ca = " aria-current=page" if cur else ""
@@ -244,7 +246,7 @@ def _page(lang, path, title, desc, body, alt_path):
 {alts}
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 {fonts}
-<link rel="stylesheet" href="/assets/style.css?v=42">
+<link rel="stylesheet" href="/assets/style.css?v=43">
 </head>
 <body>
 <a class="skip" href="#main">{t("skip", lang)}</a>
@@ -253,7 +255,7 @@ def _page(lang, path, title, desc, body, alt_path):
   <p class="tb-tag">{tagline}</p>
   <div class="tb-r">
    <a class="tb-l" href="mailto:{EMAIL}">{SV(I_MAIL)}<span>{EMAIL}</span></a>
-   <a class="tb-l" href="https://wa.me/{PHONE_WA}" target="_blank" rel="noopener">{SV(I_WA)}<span>WhatsApp</span></a>
+   <a class="tb-l tb-wa" href="https://wa.me/{PHONE_WA}" target="_blank" rel="noopener">{WA_SVG}<span>WhatsApp</span></a>
    <div class="lang-sw" role="group" aria-label="Language">{switch}</div>
   </div>
  </div>
@@ -277,20 +279,20 @@ def _page(lang, path, title, desc, body, alt_path):
    <p class="script ftr-script">{vals}</p>
    <p class="ftr-tag">{tagline}</p>
    <div class="ftr-soc">
-    <a href="https://wa.me/{PHONE_WA}" target="_blank" rel="noopener" aria-label="WhatsApp">{SV(I_WA, "1.8")}</a>
+    <a href="https://wa.me/{PHONE_WA}" target="_blank" rel="noopener" aria-label="WhatsApp">{WA_SVG}</a>
     <a href="mailto:{EMAIL}" aria-label="Email">{SV(I_MAIL, "1.8")}</a>
     <a href="tel:{PHONE1}" aria-label="{tx(lang, "Appeler", "Call")}">{SV(I_PHONE, "1.8")}</a>
    </div>
   </div>
   <div><h4>{tx(lang, "Liens rapides", "Quick links")}</h4><div class="ftr-links">
-   <a href="{u("/")}">{t("nav_home", lang)}</a><a href="{u("/about")}">{t("nav_about", lang)}</a><a href="{u("/poles")}">{t("nav_poles", lang)}</a><a href="{u("/about")}#fondateur">{fx("h", lang)}</a><a href="{u("/")}#faq">{tx(lang, "Questions fréquentes", "Frequently asked questions")}</a><a href="{u("/contact")}">{t("nav_contact", lang)}</a></div></div>
+   <a href="{u("/")}">{t("nav_home", lang)}</a><a href="{u("/about")}">{t("nav_about", lang)}</a><a href="{u("/poles")}">{t("nav_poles", lang)}</a><a href="{u("/projects")}">{t("nav_projects", lang)}</a><a href="{u("/partners")}">{t("nav_partners", lang)}</a><a href="{u("/news")}">{t("nav_news", lang)}</a><a href="{u("/about")}#fondateur">{fx("h", lang)}</a><a href="{u("/")}#faq">{tx(lang, "Questions fréquentes", "Frequently asked questions")}</a><a href="{u("/contact")}">{t("nav_contact", lang)}</a></div></div>
   <div><h4>{t("nav_poles", lang)}</h4><div class="ftr-links">{poles_foot}</div></div>
   <div><h4>{t("nav_contact", lang)}</h4>
    <ul class="ftr-ct">
     <li>{SV(I_PIN)}<span>{tx(lang, "République démocratique du Congo", "Democratic Republic of the Congo")}</span></li>
     <li>{SV(I_PHONE)}<span><a href="tel:{PHONE1}">{PHONE1_D}</a><a href="tel:{PHONE2}">{PHONE2_D}</a></span></li>
     <li>{SV(I_MAIL)}<a class="em" href="mailto:{EMAIL}">{EMAIL}</a></li>
-    <li>{SV(I_WA)}<a href="https://wa.me/{PHONE_WA}" target="_blank" rel="noopener">WhatsApp Business</a></li>
+    <li>{WA_SVG}<a href="https://wa.me/{PHONE_WA}" target="_blank" rel="noopener">WhatsApp Business</a></li>
    </ul>
   </div>
  </div>
@@ -301,10 +303,10 @@ def _page(lang, path, title, desc, body, alt_path):
 </a>
 <nav class="mbar" aria-label="{tx(lang, "Actions rapides", "Quick actions")}">
  <a class="mb" href="tel:{PHONE1}">{SV(I_PHONE, "1.8")}{tx(lang, "Appeler", "Call")}</a>
- <a class="mb" href="https://wa.me/{PHONE_WA}?text={esc(wa_msg)}" target="_blank" rel="noopener">{SV(I_WA, "1.8")}{tx(lang, "WhatsApp", "WhatsApp")}</a>
+ <a class="mb" href="https://wa.me/{PHONE_WA}?text={esc(wa_msg)}" target="_blank" rel="noopener">{WA_SVG}{tx(lang, "WhatsApp", "WhatsApp")}</a>
  <a class="mb mb-go" href="{u("/contact")}">{tx(lang, "Nous contacter", "Contact us")}</a>
 </nav>
-<script src="/assets/main.js?v=8" defer></script>
+<script src="/assets/main.js?v=9" defer></script>
 </body>
 </html>'''
 
@@ -613,6 +615,138 @@ def contact(lang):
  </form>
  </div></div></section>'''
 
+# ----------------------------------------------------------------- PROJECTS / PARTNERS / NEWS
+IC_BOX = '<path d="M3 8l9-5 9 5v8l-9 5-9-5z"/><path d="M3 8l9 5 9-5M12 13v8"/>'
+IC_CART = '<circle cx="9" cy="20" r="1.5"/><circle cx="17" cy="20" r="1.5"/><path d="M3 4h2l2.5 11h10l2-8H6.5"/>'
+IC_USERS = '<circle cx="9" cy="8" r="3"/><circle cx="17" cy="9" r="2.5"/><path d="M3 20c0-3.500 2.700-6 6-6s6 2.500 6 6M15 14.500c3 0 6 1.500 6 5"/>'
+IC_CAP = '<path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11v5c0 1.500 3 3 6 3s6-1.500 6-3v-5"/>'
+IC_BUILD = '<path d="M4 21V8l8-5 8 5v13M9 21v-6h6v6M8 11h.01M12 11h.01M16 11h.01"/>'
+IC_NEWS = '<path d="M4 5h13v14H6a2 2 0 0 1-2-2zM17 9h3v8a2 2 0 0 1-2 2M7 9h7M7 13h7"/>'
+IC_CAL = '<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/>'
+IC_BRIEF = '<rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2M3 13h18"/>'
+
+def fcards(items, cols=4):
+    return f'<div class="fcards f{cols}">' + "".join(
+        f'<div class="fcard reveal"><span class="fc-ico">{SV(i, "1.6")}</span><h3>{a}</h3><p>{b}</p></div>' for i, a, b in items) + '</div>'
+
+def steps_block(lang):
+    s = STEPS[lang]
+    L = lambda fr, en: tx(lang, fr, en)
+    return f'<ol class="steps">' + "".join(
+        f'<li class="step s{i+1} reveal"><span class="step-ico">{STEP_ICONS[i]}</span><span class="step-bg" aria-hidden="true">0{i+1}</span><div class="step-txt"><span class="step-k">{L("Étape","Step")} {i+1}</span><h3>{a}</h3><p>{b}</p></div></li>'
+        for i, (a, b) in enumerate(s)) + '</ol>'
+
+def empty_state(icon_paths, h, p, buttons):
+    return f'<div class="empty reveal"><span class="em-ico">{SV(icon_paths, "1.5")}</span><h3>{h}</h3><p>{p}</p><div class="actions">{buttons}</div></div>'
+
+def lead_form(lang, h2, left_p, bullets, card_h, profile_label, profile_opts, subject, placeholder):
+    L = lambda fr, en: tx(lang, fr, en)
+    opts = "".join(f'<option value="{p["slug"]}">{p["name"][lang]}</option>' for p in POLES)
+    po = "".join(f"<option>{o}</option>" for o in profile_opts)
+    bl = "".join(f"<li>{b}</li>" for b in bullets)
+    return f'''
+<section class="sec sec-soft" id="submit"><div class="wrap contact">
+ <div class="c-info reveal">
+  <h2>{h2}</h2>
+  <p class="lead">{left_p}</p>
+  <ul class="c-dash">{bl}</ul>
+  <dl class="c-rows">
+   <div><dt>WhatsApp</dt><dd><a href="https://wa.me/{PHONE_WA}" target="_blank" rel="noopener">{PHONE1_D}</a></dd></div>
+   <div><dt>{L("E-mail","Email")}</dt><dd><a href="mailto:{EMAIL}">{EMAIL}</a></dd></div>
+  </dl>
+ </div>
+ <div class="c-card reveal">
+  <div class="c-card-h"><h2>{card_h}</h2><span class="c-badge">{L("Réponse sous 24 h","Reply within 24 h")}</span></div>
+  <form class="form" id="cform" novalidate data-lang="{lang}" data-email="{EMAIL}" data-wa="{PHONE_WA}" data-subject="{esc(subject)}" data-pl="{esc(profile_label)}">
+  <div class="row2">
+   <label>{L("Nom complet","Full name")}*<input name="name" required autocomplete="name"></label>
+   <label>{L("Entreprise / organisation","Company / organisation")}<input name="company" autocomplete="organization"></label></div>
+  <div class="row2">
+   <label>{L("E-mail","Email")}*<input name="email" type="email" required autocomplete="email"></label>
+   <label>{L("Téléphone / WhatsApp","Phone / WhatsApp")}<input name="phone" type="tel" autocomplete="tel"></label></div>
+  <div class="row2">
+   <label>{profile_label}<select name="profile">{po}</select></label>
+   <label>{L("Pôle concerné","Division of interest")}<select name="pole"><option value="">{L("Je ne sais pas encore","Not sure yet")}</option>{opts}</select></label></div>
+  <label>{L("Votre message","Your message")}*<textarea name="message" rows="5" required placeholder="{esc(placeholder)}"></textarea></label>
+  <p class="err" id="ferr" role="alert" hidden>{L("Merci de renseigner nom, e-mail et message.","Please fill in name, email and message.")}</p>
+  <div class="actions">
+   <button class="btn btn-wa" type="button" data-send="wa">{WA_SVG}{L("Envoyer sur WhatsApp","Send on WhatsApp")}</button>
+   <button class="btn btn-outline" type="button" data-send="mail">{MAIL_SVG}{L("Envoyer par e-mail","Send by email")}</button></div>
+  <p class="small muted">{L("Le message s’ouvre dans WhatsApp ou votre application e-mail, prêt à être envoyé.","Your message opens in WhatsApp or your email app, ready to send.")}</p>
+ </form></div></div></section>'''
+
+def projects(lang):
+    pre = LP(lang)
+    L = lambda fr, en: tx(lang, fr, en)
+    kinds = [
+     (IC_BOX, L("Offre de matières premières","Commodity offers"), L("Cacao, café, produits agricoles ou minerais : présentez vos volumes et vos conditions.","Cocoa, coffee, agricultural products or minerals: present your volumes and terms.")),
+     (IC_CART, L("Demande d’achat","Purchase requests"), L("Vous cherchez un fournisseur fiable ? Décrivez votre besoin et vos exigences.","Looking for a reliable supplier? Describe your need and requirements.")),
+     (I_TREND, L("Recherche d’investisseur ou de partenaire","Investor or partner search"), L("Un projet à financer ou une alliance à bâtir : nous vous orientons vers les bons profils.","A project to fund or an alliance to build: we point you to the right profiles.")),
+     (IC_CAP, L("Demande d’accompagnement ou de formation","Advisory or training request"), L("Export, structuration, montée en compétences : nous vous guidons pas à pas.","Export, structuring, skills development: we guide you step by step."))]
+    return f'''
+{phead(lang, t("nav_projects", lang), L("Nos projets et opportunités.","Our projects and opportunities."), L("Accueil","Home"), pre, "", L("Offres, demandes et projets d’investissement : déposez le vôtre ou découvrez ceux que nous accompagnons.","Offers, requests and investment projects: submit yours or discover those we support."))}
+<section class="sec"><div class="wrap">
+ <div class="sec-row reveal"><div><p class="eyebrow">{L("Soumettre une opportunité","Submit an opportunity")}</p><h2>{L("Quatre façons de nous soumettre une opportunité.","Four ways to submit an opportunity.")}</h2></div></div>
+ {fcards(kinds)}
+</div></section>
+<section class="sec sec-soft"><div class="wrap">
+ <div class="sec-row reveal"><div><p class="eyebrow">{t("nav_projects", lang)}</p><h2>{L("Opportunités à l’affiche","Featured opportunities")}</h2></div></div>
+ {empty_state(I_GLOBE, L("Les premières opportunités seront publiées ici.","The first opportunities will be published here."), L("Pour garantir des échanges sérieux, chaque opportunité est étudiée avant publication. Soumettez la vôtre dès maintenant.","To ensure serious exchanges, every opportunity is reviewed before publication. Submit yours now."), f'<a class="btn btn-gold" href="#submit">{L("Soumettre une opportunité","Submit an opportunity")} {SV(I_ARROW, "2.2")}</a>')}
+</div></section>
+<section class="sec"><div class="wrap">
+ <div class="sec-row reveal"><div><p class="eyebrow">{L("Notre approche","Our approach")}</p><h2>{L("Comment nous traitons votre demande.","How we handle your request.")}</h2></div></div>
+ {steps_block(lang)}
+</div></section>
+{lead_form(lang, L("Déposez votre opportunité","Submit your opportunity"), L("Offre, besoin ou projet : décrivez-le en quelques lignes et notre équipe vous répond rapidement.","Offer, need or project: describe it in a few lines and our team will reply quickly."),
+  [L("Offre de matières premières","Commodity offers"), L("Demande d’achat","Purchase requests"), L("Recherche d’investisseur ou de partenaire","Investor or partner search"), L("Demande d’accompagnement ou de formation","Advisory or training request")],
+  L("Décrivez votre opportunité","Describe your opportunity"), L("Type d’opportunité","Opportunity type"),
+  [L("Offre de matières premières","Commodity offers"), L("Demande d’achat","Purchase requests"), L("Recherche d’investisseur ou de partenaire","Investor or partner search"), L("Demande d’accompagnement ou de formation","Advisory or training request")],
+  L("Opportunité — ","Opportunity — "), L("Décrivez votre offre, votre besoin ou votre projet…","Describe your offer, need or project…"))}'''
+
+def partners(lang):
+    pre = LP(lang)
+    L = lambda fr, en: tx(lang, fr, en)
+    kinds = [
+     (IC_BRIEF, L("Partenariat commercial","Commercial partnership"), L("Achat, vente et approvisionnement entre producteurs, exportateurs et acheteurs.","Buying, selling and sourcing between producers, exporters and buyers.")),
+     (I_TREND, L("Partenariat d’investissement","Investment partnership"), L("Mise en relation d’investisseurs et de porteurs de projets à fort potentiel.","Connecting investors with high-potential project owners.")),
+     (IC_BUILD, L("Partenariat institutionnel","Institutional partnership"), L("Collaboration avec les institutions, ONG et organisations de développement.","Collaboration with institutions, NGOs and development organisations.")),
+     (IC_CAP, L("Partenariat de formation","Training partnership"), L("Renforcement des capacités et partage d’expertise avec les entrepreneurs.","Capacity building and expertise sharing with entrepreneurs."))]
+    names = [k[1] for k in kinds]
+    return f'''
+{phead(lang, t("nav_partners", lang), L("Construisons des partenariats durables.","Let’s build lasting partnerships."), L("Accueil","Home"), pre, "", L("Entreprises, investisseurs, institutions : collaborons pour créer de la valeur de part et d’autre.","Companies, investors, institutions: let’s collaborate to create value on both sides."))}
+<section class="sec"><div class="wrap">
+ <div class="sec-row reveal"><div><p class="eyebrow">{t("nav_partners", lang)}</p><h2>{L("Quels types de partenariats ?","What kinds of partnerships?")}</h2></div></div>
+ {fcards(kinds)}
+</div></section>
+<section class="sec sec-soft"><div class="wrap">
+ <div class="sec-row reveal"><div><p class="eyebrow">{L("À qui nous nous adressons","Who we work with")}</p><h2>{L("Qui peut devenir partenaire ?","Who can become a partner?")}</h2></div></div>
+ <ul class="aud reveal">{"".join(f'<li><span class="aud-ico">{SV(AUD_ICONS[i], "1.6")}</span><span class="aud-t">{esc(a)}</span></li>' for i, a in enumerate(AUDIENCE[lang]))}</ul>
+</div></section>
+<section class="sec"><div class="wrap">{values_panel(lang)}</div></section>
+{lead_form(lang, L("Proposer un partenariat","Propose a partnership"), L("Présentez votre organisation et le partenariat envisagé : nous revenons vers vous rapidement.","Present your organisation and the envisaged partnership: we will get back to you quickly."),
+  [L("Partenariat commercial","Commercial partnership"), L("Partenariat d’investissement","Investment partnership"), L("Partenariat institutionnel","Institutional partnership"), L("Partenariat de formation","Training partnership")],
+  L("Proposer un partenariat","Propose a partnership"), L("Type de partenariat","Partnership type"), names,
+  L("Demande de partenariat — ","Partnership request — "), L("Décrivez votre organisation et le partenariat envisagé…","Describe your organisation and the envisaged partnership…"))}'''
+
+def news(lang):
+    pre = LP(lang)
+    L = lambda fr, en: tx(lang, fr, en)
+    topics = [
+     (IC_NEWS, L("Vie de l’entreprise","Company life"), L("Projets, rencontres et avancées d’Africa Connect Group.","Projects, meetings and progress at Africa Connect Group.")),
+     (I_TREND, L("Marchés et opportunités","Markets and opportunities"), L("Tendances des filières et opportunités à saisir.","Sector trends and opportunities to seize.")),
+     (IC_CAL, L("Événements et partenariats","Events and partnerships"), L("Salons, missions et nouvelles collaborations.","Fairs, missions and new collaborations."))]
+    btns = (f'<a class="btn btn-wa" href="https://wa.me/{PHONE_WA}" target="_blank" rel="noopener">{WA_SVG}{L("Nous suivre sur WhatsApp","Follow us on WhatsApp")}</a>'
+            f'<a class="btn btn-outline" href="{pre}/contact">{L("Nous écrire","Write to us")}</a>')
+    return f'''
+{phead(lang, t("nav_news", lang), L("Actualités et mises à jour.","News and updates."), L("Accueil","Home"), pre, "", L("Suivez l’activité d’Africa Connect Group, les opportunités de marché et nos partenariats.","Follow Africa Connect Group’s activity, market opportunities and our partnerships."))}
+<section class="sec"><div class="wrap">
+ {empty_state(IC_NEWS, L("Nos premières actualités arrivent bientôt.","Our first news is coming soon."), L("Nous préparons nos premières publications. En attendant, suivez-nous sur WhatsApp ou écrivez-nous pour recevoir nos informations.","We are preparing our first posts. In the meantime, follow us on WhatsApp or write to us to receive our updates."), btns)}
+</div></section>
+<section class="sec sec-soft"><div class="wrap">
+ {fcards(topics, 3)}
+</div></section>'''
+
+
 # ----------------------------------------------------------------- BUILD
 def build():
     for lang in LANGS:
@@ -623,6 +757,12 @@ def build():
         write(lang, "/about", page(lang, "/about", L(f"À propos — {base}", f"About — {base}"), L("Vision, mission, positionnement et valeurs d’Africa Connect Group SARL.","Vision, mission, positioning and values of Africa Connect Group SARL."), about(lang), "/about"))
         write(lang, "/contact", page(lang, "/contact", L(f"Contact — {base}", f"Contact — {base}"), L("Contactez Africa Connect Group par WhatsApp, e-mail ou téléphone.","Contact Africa Connect Group by WhatsApp, email or phone."), contact(lang), "/contact"))
         write(lang, "/poles", page(lang, "/poles", L(f"Nos pôles — {base}", f"Our divisions — {base}"), L("Les sept pôles d’Africa Connect Group : cacao & café, agro-commodités, export, investissement, formation, mines et durabilité.","The seven divisions of Africa Connect Group: cocoa & coffee, agro-commodities, export, investment, training, mining and sustainability."), poles_index(lang), "/poles"))
+        for path, fn, desc_fr, desc_en in (
+            ("/projects", projects, "Déposez une offre, une demande d’achat ou un projet d’investissement auprès d’Africa Connect Group.", "Submit an offer, a purchase request or an investment project to Africa Connect Group."),
+            ("/partners", partners, "Proposez un partenariat commercial, d’investissement, institutionnel ou de formation avec Africa Connect Group.", "Propose a commercial, investment, institutional or training partnership with Africa Connect Group."),
+            ("/news", news, "Actualités, opportunités de marché et partenariats d’Africa Connect Group.", "News, market opportunities and partnerships from Africa Connect Group.")):
+            key = {"/projects": "nav_projects", "/partners": "nav_partners", "/news": "nav_news"}[path]
+            write(lang, path, page(lang, path, f"{t(key, lang)} — {base}", L(desc_fr, desc_en), fn(lang), path))
         for p in POLES:
             path = f"/poles/{p['slug']}"
             write(lang, path, page(lang, path, f"{p['name'][lang]} — {base}", p["intro"][lang], pole_page(p, lang), path))
