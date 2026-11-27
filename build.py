@@ -246,7 +246,7 @@ def _page(lang, path, title, desc, body, alt_path):
 {alts}
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 {fonts}
-<link rel="stylesheet" href="/assets/style.css?v=45">
+<link rel="stylesheet" href="/assets/style.css?v=46">
 </head>
 <body>
 <a class="skip" href="#main">{t("skip", lang)}</a>
@@ -531,6 +531,13 @@ def about(lang):
  <div class="reveal"><h2>{L("Notre ambition à long terme","Our long-term ambition")}</h2></div>
  <div class="reveal"><p>{L("Renforcer notre présence sur plusieurs marchés africains, développer des partenariats internationaux, accompagner des projets de valorisation des ressources et contribuer à la création d’opportunités économiques durables.","Strengthen our presence across several African markets, develop international partnerships, support resource value-addition projects and contribute to creating sustainable economic opportunities.")}</p>
  <p>{L("Une marque solide, crédible et reconnue pour sa capacité à connecter les acteurs économiques.","A solid, credible brand recognised for its ability to connect economic players.")}</p></div>
+</div></section>
+<section class="sec"><div class="wrap">
+ <div class="dl reveal">
+  <span class="dl-ico">{SV('<path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5M12 11v6M9.5 14.5 12 17l2.5-2.5"/>', "1.6")}</span>
+  <div class="dl-t"><h3>{L("Télécharger notre présentation","Download our presentation")}</h3><p>{L("Découvrez Africa Connect Group en quelques pages : vision, pôles d’activité et valeurs.","Discover Africa Connect Group in a few pages: vision, divisions and values.")}</p><small>PDF · 6 {L("pages","pages")} · {L("Français","French")}</small></div>
+  <a class="btn btn-gold" href="/assets/Presentation_Africa_Connect_Group_SARL.pdf" download>{L("Télécharger le PDF","Download the PDF")}</a>
+ </div>
 </div></section>
 {contact_band(lang, pre)}'''
 

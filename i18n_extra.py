@@ -58,4 +58,9 @@ EXTRA = {
  'Actualités, opportunités de marché et partenariats d’Africa Connect Group.': {"ar": 'أخبار وفرص السوق وشراكات Africa Connect Group.', "es": 'Noticias, oportunidades de mercado y alianzas de Africa Connect Group.'},
  'Lire la suite': {"ar": 'اقرأ المزيد', "es": 'Leer más'},
  'Réduire': {"ar": 'إغلاق', "es": 'Cerrar'},
+ 'Télécharger notre présentation': {"ar": 'حمّلوا عرضنا التقديمي', "es": 'Descargue nuestra presentación'},
+ 'Découvrez Africa Connect Group en quelques pages : vision, pôles d’activité et valeurs.': {"ar": 'اكتشفوا Africa Connect Group في بضع صفحات: الرؤية ومجالات النشاط والقيم.', "es": 'Descubra Africa Connect Group en pocas páginas: visión, áreas de actividad y valores.'},
+ 'pages': {"ar": 'صفحات', "es": 'páginas'},
+ 'Français': {"ar": 'الفرنسية', "es": 'Francés'},
+ 'Télécharger le PDF': {"ar": 'تحميل ملف PDF', "es": 'Descargar el PDF'},
 }
